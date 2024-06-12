@@ -19,13 +19,8 @@ import static com.event.booking.util.AppMessages.*;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    @Basic(optional = false)
-    private Long id;
-    @Column(name = "uuid")
+public class User extends BaseEntity implements Serializable {
+    @Column(name = "uuid", updatable = false, nullable = false)
     private String uuid;
     @Column(name = "name")
     @Max(value = 100, message = MAX_NAME_LIMIT_EXCEEDED)
@@ -58,10 +53,6 @@ public class User implements Serializable {
     private String otpExpireTime;
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
-    @Column(name = "last_modified")
-    private LocalDateTime lastModified;
-    @Column(name = "date_created")
-    private LocalDateTime dateCreated;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userrole")
     private List<UserRole> userRoles;
 }

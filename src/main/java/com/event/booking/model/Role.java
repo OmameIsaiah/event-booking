@@ -13,20 +13,13 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@Table(name = "roles")
+@Table(name = "roles", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 @Entity
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @TypeDef(name = "json", typeClass = JsonStringType.class)
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    @Basic(optional = false)
-    private Long id;
-    @Column(name = "uuid")
-    private String uuid;
+public class Role extends BaseEntity {
     @Column(unique = true, name = "name")
     private String name;
     @Column(name = "description")

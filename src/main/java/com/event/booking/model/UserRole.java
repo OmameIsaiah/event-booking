@@ -13,12 +13,7 @@ import java.time.LocalDateTime;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRole {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Long id;
+public class UserRole extends BaseEntity {
     @JoinColumn(name = "roleid", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore

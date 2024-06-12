@@ -1,0 +1,23 @@
+package com.event.booking.model;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+@MappedSuperclass
+public class BaseEntity implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    @Basic(optional = false)
+    private Long id;
+    @Column(name = "last_modified")
+    @UpdateTimestamp
+    private LocalDateTime lastModified;
+    @Column(name = "date_created")
+    @CreationTimestamp
+    private LocalDateTime dateCreated;
+}
