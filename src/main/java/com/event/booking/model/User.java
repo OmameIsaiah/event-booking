@@ -2,9 +2,8 @@ package com.event.booking.model;
 
 import com.event.booking.enums.OnboardingStage;
 import com.event.booking.enums.UserType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import com.event.booking.model.listener.EntityListener;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -19,6 +18,9 @@ import static com.event.booking.util.AppMessages.*;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
+@EntityListeners(EntityListener.class)
 public class User extends BaseEntity implements Serializable {
     @Column(name = "uuid", updatable = false, nullable = false)
     private String uuid;
@@ -55,4 +57,26 @@ public class User extends BaseEntity implements Serializable {
     private LocalDateTime lastLogin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userrole")
     private List<UserRole> userRoles;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + super.getId() +
+                ", lastModified=" + super.getLastModified() +
+                ", dateCreated=" + super.getDateCreated() +
+                ", uuid='" + uuid + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", userType=" + userType +
+                ", userToken='" + userToken + '\'' +
+                ", onboardingStage=" + onboardingStage +
+                ", verified=" + verified +
+                ", active=" + active +
+                ", otpCode='" + otpCode + '\'' +
+                ", otpExpireTime='" + otpExpireTime + '\'' +
+                ", lastLogin=" + lastLogin +
+                ", userRoles=" + userRoles +
+                '}';
+    }
 }

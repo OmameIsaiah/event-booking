@@ -1,9 +1,7 @@
 package com.event.booking.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +11,8 @@ import java.time.LocalDateTime;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 public class UserRole extends BaseEntity {
     @JoinColumn(name = "roleid", referencedColumnName = "id")
     @ManyToOne
@@ -22,6 +22,15 @@ public class UserRole extends BaseEntity {
     @ManyToOne
     @JsonIgnore
     private User userrole;
-    @Column(name = "date_created")
-    private LocalDateTime dateCreated;
+
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "id=" + super.getId() +
+                ", lastModified=" + super.getLastModified() +
+                ", dateCreated=" + super.getDateCreated() +
+                ", roleid=" + roleid +
+                ", userrole=" + userrole +
+                '}';
+    }
 }
