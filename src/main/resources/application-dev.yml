@@ -6,3 +6,6 @@ app:
   security:
     encryption:
       key: bf538f592a721cfed601da884f4a03cf294cf4507b2e40b11058950407ef3cfa
+  opt:
+    expire:
+      time: 600
