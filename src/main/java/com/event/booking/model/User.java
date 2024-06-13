@@ -22,8 +22,6 @@ import static com.event.booking.util.AppMessages.*;
 @Getter
 @EntityListeners(EntityListener.class)
 public class User extends BaseEntity implements Serializable {
-    @Column(name = "uuid", updatable = false, nullable = false)
-    private String uuid;
     @Column(name = "name")
     @Max(value = 100, message = MAX_NAME_LIMIT_EXCEEDED)
     private String name;
@@ -64,7 +62,7 @@ public class User extends BaseEntity implements Serializable {
                 "id=" + super.getId() +
                 ", lastModified=" + super.getLastModified() +
                 ", dateCreated=" + super.getDateCreated() +
-                ", uuid='" + uuid + '\'' +
+                ", uuid='" + super.getUuid() + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

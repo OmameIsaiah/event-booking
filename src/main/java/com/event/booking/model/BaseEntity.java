@@ -18,6 +18,8 @@ public class BaseEntity implements Serializable {
     @Column(name = "id", nullable = false)
     @Basic(optional = false)
     private Long id;
+    @Column(name = "uuid", updatable = false, nullable = false)
+    private String uuid;
     @Column(name = "last_modified")
     @UpdateTimestamp
     private LocalDateTime lastModified;

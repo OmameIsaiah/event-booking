@@ -35,6 +35,7 @@ public class Role extends BaseEntity {
     public String toString() {
         return "Role{" +
                 "id=" + super.getId() +
+                ", uuid='" + super.getUuid() + '\'' +
                 ", lastModified=" + super.getLastModified() +
                 ", dateCreated=" + super.getDateCreated() +
                 ", name='" + name + '\'' +

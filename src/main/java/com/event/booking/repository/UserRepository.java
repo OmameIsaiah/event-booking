@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("select us from User us where us.uid=:uuid")
+    @Query(nativeQuery = false, value = "SELECT us FROM User us WHERE us.uid=:uuid")
     Optional<User> findUserByUUID(@Param("uuid") String uuid);
 
-    @Query("select us from User us where us.email=:email")
+    @Query(nativeQuery = false, value = "SELECT us FROM User us WHERE us.email=:email")
     Optional<User> findUserByEmail(@Param("email") String email);
 
-    @Query("select us from User us where us.userType=:userType")
+    @Query(nativeQuery = false, value = "SELECT us FROM User us WHERE us.userType=:userType")
     List<User> findUsersByType(@Param("userType") UserType userType);
 }
