@@ -10,5 +10,6 @@ public class AppMessages {
     public static final String MAX_EVENT_DESCRIPTION_LIMIT_EXCEEDED = "Oops! Event description cannot exceed 500 characters, please check.";
     public static final String MIN_PASSWORD_LENGTH_NOT_REACHED = "Oops! Your password cannot be less than 8 characters, please check.";
     public static final String AVAILABLE_ATTENDEES_COUNT_EXCEEDED = "Oops! Available attendees count cannot exceed 1000, please check.";
+    public static final String MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED = "Oops! Available attendees count cannot be less than 0, please check.";
     public static final String NAGATIVE_AVAILABLE_ATTENDEES_COUNT = "Oops! Available attendees count cannot be negative, please check.";
 }

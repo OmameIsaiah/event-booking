@@ -23,7 +23,7 @@ import static com.event.booking.util.AppMessages.*;
 @EntityListeners(EntityListener.class)
 public class User extends BaseEntity implements Serializable {
     @Column(name = "name")
-    @Max(value = 100, message = MAX_NAME_LIMIT_EXCEEDED)
+    @Size(max = 100, message = MAX_NAME_LIMIT_EXCEEDED)
     private String name;
     @Column(name = "email", unique = true, nullable = false)
     @Email(message = "Email is not valid",
@@ -33,7 +33,7 @@ public class User extends BaseEntity implements Serializable {
     @NotNull(message = NULL_EMAIL)
     private String email;
     @Column(name = "password")
-    @Min(value = 8, message = MIN_PASSWORD_LENGTH_NOT_REACHED)
+    @Size(min = 8, message = MIN_PASSWORD_LENGTH_NOT_REACHED)
     private String password;
     @Column(name = "user_type")
     @Enumerated(EnumType.STRING)

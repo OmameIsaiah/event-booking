@@ -5,10 +5,7 @@ import com.event.booking.model.listener.EntityListener;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,18 +22,19 @@ import static com.event.booking.util.AppMessages.*;
 @EntityListeners(EntityListener.class)
 public class Event extends BaseEntity implements Serializable {
     @Column(name = "name", nullable = false)
-    @Max(value = 100, message = MAX_EVENT_NAME_LIMIT_EXCEEDED)
+    @Size(max = 100, message = MAX_EVENT_NAME_LIMIT_EXCEEDED)
     @NotEmpty(message = EMPTY_EVENT_NAME)
     @NotNull(message = NULL_EVENT_NAME)
     private String name;
     @Lob
     @Column(name = "description", columnDefinition = "TEXT")
-    @Max(value = 500, message = MAX_EVENT_DESCRIPTION_LIMIT_EXCEEDED)
+    @Size(max = 500, message = MAX_EVENT_DESCRIPTION_LIMIT_EXCEEDED)
     private String description;
     @Column(name = "event_date")
     private LocalDateTime eventDate;
     @Column(name = "available_attendees_count")
     @Max(value = 1000, message = AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
+    @Min(value = 0, message = MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Positive(message = NAGATIVE_AVAILABLE_ATTENDEES_COUNT)
     private Integer availableAttendeesCount;
     @Column(name = "category")
