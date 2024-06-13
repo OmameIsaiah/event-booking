@@ -56,6 +56,9 @@ public class User extends BaseEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userrole")
     private List<UserRole> userRoles;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userevent")
+    private List<UserEvent> userEvents;
+
     @Override
     public String toString() {
         return "User{" +
@@ -75,6 +78,7 @@ public class User extends BaseEntity implements Serializable {
                 ", otpExpireTime='" + otpExpireTime + '\'' +
                 ", lastLogin=" + lastLogin +
                 ", userRoles=" + userRoles +
+                ", userEvents=" + userEvents +
                 '}';
     }
 }
