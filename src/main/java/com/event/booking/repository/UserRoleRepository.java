@@ -8,18 +8,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
     @Query(nativeQuery = false, value = "SELECT ur FROM UserRole ur WHERE ur.userrole.id=:id")
-    Optional<UserRole> findUserRoleByUserId(@Param("id") Long id);
+    List<UserRole> findUserRoleByUserId(@Param("id") Long id);
 
     @Query(nativeQuery = false, value = "SELECT ur FROM UserRole ur WHERE ur.userrole.userToken=:userToken")
-    Optional<UserRole> findUserRoleByUserToken(@Param("userToken") String userToken);
+    List<UserRole> findUserRoleByUserToken(@Param("userToken") String userToken);
 
     @Query(nativeQuery = false, value = "SELECT ur FROM UserRole ur WHERE ur.userrole.email=:email")
-    Optional<UserRole> findUserRoleByEmail(@Param("email") String email);
+    List<UserRole> findUserRoleByEmail(@Param("email") String email);
 
     @Modifying
     @Transactional
