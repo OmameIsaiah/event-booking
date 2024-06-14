@@ -2,7 +2,16 @@ spring:
   application:
     name: event-booking
 
+server:
+  port: 8080
+  host: localhost
+  servlet:
+    contextPath: /event-booking
+
 app:
+  api:
+    auth:
+      url: http://${server.host}:${server.port}${server.servlet.contextPath}/api/v1/auth
   security:
     encryption:
       key: bf538f592a721cfed601da884f4a03cf294cf4507b2e40b11058950407ef3cfa
@@ -13,3 +22,8 @@ app:
     sender:
       name: Musala Soft
       email: isaiahomame@gmail.com
+
+
+API:
+  AUTH:
+    URL: http://${server.host}:${server.port}${server.servlet.contextPath}/api/v1/auth/login
