@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(nativeQuery = false, value = "SELECT us FROM User us WHERE us.uid=:uuid")
+    @Query(nativeQuery = false, value = "SELECT us FROM User us WHERE us.uuid=:uuid")
     Optional<User> findUserByUUID(@Param("uuid") String uuid);
 
     @Query(nativeQuery = false, value = "SELECT us FROM User us WHERE us.email=:email")
