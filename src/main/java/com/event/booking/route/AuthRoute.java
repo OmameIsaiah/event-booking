@@ -10,14 +10,17 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.event.booking.util.EndpointsURL.AUTH_BASE_URL;
+import static com.event.booking.util.EndpointsURL.AUTH_TOKEN_URL;
+
 @RestController
-@RequestMapping(value = "/api/v1", headers = "Accept=application/json")
+@RequestMapping(value = AUTH_BASE_URL, headers = "Accept=application/json")
 @Api(tags = "user authentication route", description = "API for user authentication", consumes = "application/json", produces = "application/json", protocols = "https", value = "user authentication route")
 @RequiredArgsConstructor
 public class AuthRoute {
     private final AuthenticationService authenticationService;
 
-    @PostMapping(value = "/auth", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = AUTH_TOKEN_URL, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for authenticating a user")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> authenticate(@RequestParam("username") String username,

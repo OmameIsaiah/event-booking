@@ -60,6 +60,9 @@ spring:
         debug: true
     protocol: smtp
     test-connection: false
+  security:
+    user.name: user
+    password: user
 
 app:
   api:

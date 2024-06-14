@@ -15,28 +15,30 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.event.booking.util.EndpointsURL.*;
+
 @RestController
-@RequestMapping(value = "/api/v1/users/onboarding", headers = "Accept=application/json")
+@RequestMapping(value = ONBOARDING_BASE_URL, headers = "Accept=application/json")
 @Api(tags = "user signup route", description = "API for user signup/onboarding", consumes = "application/json", produces = "application/json", protocols = "https", value = "user signup route")
 @RequiredArgsConstructor
 public class SignupRoute {
     private final SignUpService signUpService;
 
-    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ONBOARDING_SIGNUP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for creating new user account")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ApiResponse> signUp(@RequestBody @Valid SignUpRequest request) {
         return signUpService.signUp(request);
     }
 
-    @PostMapping(value = "/send/otp", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ONBOARDING_SEND_OTP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for sending or resending signup otp for email verification and account activation")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> sendOTP(@RequestBody @Valid SendOTPRequest request) {
         return signUpService.sendOTP(request);
     }
 
-    @PostMapping(value = "/verify/otp", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ONBOARDING_VERIFY_OTP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for verifying signup otp")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> verifyOTP(@RequestBody @Valid VerifyOTPRequest request) {
