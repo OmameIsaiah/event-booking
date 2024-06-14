@@ -20,6 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Collections;
 import java.util.List;
 
+import static com.event.booking.util.ConfigParams.*;
 import static org.hibernate.validator.internal.util.CollectionHelper.newArrayList;
 
 @Configuration
@@ -36,7 +37,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(enableSwagger)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.event.booking.route"))
+                .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(Collections.singletonList(securitySchema()))
@@ -60,7 +61,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         List<GrantType> grantTypes = newArrayList();
         GrantType creGrant = new ResourceOwnerPasswordCredentialsGrant(API_AUTHENTICATION_URL);
         grantTypes.add(creGrant);
-        return new OAuth("event-booking", authorizationScopeList, grantTypes);
+        return new OAuth(APP_NAME, authorizationScopeList, grantTypes);
     }
 
     private SecurityContext securityContext() {
@@ -77,18 +78,18 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 
     @Bean
     public SecurityConfiguration securityInfo() {
-        return new SecurityConfiguration("api-client", "api-secret", "", "event-booking", "", ApiKeyVehicle.HEADER, "", " ");
+        return new SecurityConfiguration(CLIENT_ID, CLIENT_SECRET, "", APP_NAME, "", ApiKeyVehicle.HEADER, "", " ");
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Event Booking API")
-                .description("This API allows customers to create, find and reserve tickets for events, view and manage their reservations, and be notified before the event kickoff")
-                .termsOfServiceUrl("https://www.musala.com/")
-                .contact(new Contact("Isaia Omame", "https://www.musala.com/", "omameazy@gmail.com"))
-                .license("Open Source")
-                .licenseUrl("https://www.musala.com/")
-                .version("1.0.0")
+                .title(API_TITLE)
+                .description(API_DESCRIPTION)
+                .termsOfServiceUrl(WEBSITE_URL)
+                .contact(new Contact(CONTACT_NAME, WEBSITE_URL, CONTACT_EMAIL))
+                .license(LICENSE)
+                .licenseUrl(WEBSITE_URL)
+                .version(VERSION)
                 .build();
     }
 
