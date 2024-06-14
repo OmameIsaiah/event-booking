@@ -9,3 +9,7 @@ app:
   opt:
     expire:
       time: 600
+  mail:
+    sender:
+      name: Musala Soft
+      email: isaiahomame@gmail.com
