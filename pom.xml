@@ -22,6 +22,7 @@
         <commons-validator.version>1.4.1</commons-validator.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <flyway-mysql.version>8.5.13</flyway-mysql.version>
     </properties>
     <dependencies>
         <dependency>
@@ -100,7 +101,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>8.5.13</version>
+            <version>${flyway-mysql.version}</version>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
