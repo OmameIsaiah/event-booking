@@ -16,8 +16,7 @@ import java.util.Base64;
 @Slf4j
 @RequiredArgsConstructor
 public class SecurityUtils {
-    @Value("${app.security.encryption.key}")
-    private static String SECRET_KEY;
+    private static String SECRET_KEY = "bf538f592a721cfed601da884f4a03cf294cf4507b2e40b11058950407ef3cfa";
     private static SecretKeySpec secretKey;
     private static byte[] key;
 
@@ -43,7 +42,7 @@ public class SecurityUtils {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
         } catch (Exception e) {
-            log.error("Error while encrypting text: {}", e.toString());
+            System.out.println("Error while encrypting: " + e.toString());
         }
         return null;
     }
@@ -55,12 +54,13 @@ public class SecurityUtils {
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
         } catch (Exception e) {
-            log.error("Error while decrypting text: {}", e.toString());
+            System.out.println("Error while decrypting: " + e.toString());
         }
         return null;
     }
 
     public static String encode(Object plainText) {
-        return new String(java.util.Base64.getEncoder().encode(encrypt(String.valueOf(plainText), SECRET_KEY).getBytes(StandardCharsets.UTF_8)));
+        return new String(java.util.Base64.getEncoder().encode(encrypt(String.valueOf(plainText), SECRET_KEY)
+                .getBytes(StandardCharsets.UTF_8)));
     }
 }

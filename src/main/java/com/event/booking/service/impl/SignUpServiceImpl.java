@@ -72,7 +72,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .userRoles(null)
                 .userEvents(null)
                 .build();
-        user = userRepository.save(user);
+        //user = userRepository.save(user);
         return user;
     }
 
@@ -86,16 +86,17 @@ public class SignUpServiceImpl implements SignUpService {
         if (!errorMessages.isEmpty()) {
             throw new BadRequestException(errorMessages.get(0));
         }
-        User finalUser = user;
+        user = userRepository.save(user);
+        User roleAssignedUser = user;
         List<UserRole> userRoleList = roles.stream()
                 .map(role -> UserRole.builder()
                         .roleid(role)
-                        .userrole(finalUser)
+                        .userrole(roleAssignedUser)
                         .build())
                 .peek(userRoleRepository::save)
                 .collect(Collectors.toList());
-        user.setUserRoles(userRoleList);
-        userRepository.save(user);
+        roleAssignedUser.setUserRoles(userRoleList);
+        userRepository.save(roleAssignedUser);
     }
 
     private void validateSignupRequest(SignUpRequest request) {

@@ -5,8 +5,6 @@ import com.event.booking.model.User;
 import com.event.booking.model.UserRole;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.security.SecurityUtils;
-import com.event.booking.security.jwt.JwtUtils;
-import com.event.booking.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,5 +43,4 @@ public class EntityListener {
             userRepository.save(user);
         }
     }
-
 }
