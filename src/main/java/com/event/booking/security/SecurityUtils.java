@@ -2,10 +2,12 @@ package com.event.booking.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -14,6 +16,8 @@ import java.util.Base64;
 @Slf4j
 @RequiredArgsConstructor
 public class SecurityUtils {
+    @Value("${app.security.encryption.key}")
+    private static String SECRET_KEY;
     private static SecretKeySpec secretKey;
     private static byte[] key;
 
@@ -54,5 +58,9 @@ public class SecurityUtils {
             log.error("Error while decrypting text: {}", e.toString());
         }
         return null;
+    }
+
+    public static String encode(Object plainText) {
+        return new String(java.util.Base64.getEncoder().encode(encrypt(String.valueOf(plainText), SECRET_KEY).getBytes(StandardCharsets.UTF_8)));
     }
 }

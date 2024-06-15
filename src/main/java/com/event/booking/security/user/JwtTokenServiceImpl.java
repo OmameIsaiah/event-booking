@@ -1,5 +1,6 @@
 package com.event.booking.security.user;
 
+import com.event.booking.security.SecurityUtils;
 import com.event.booking.security.jwt.JwtResponse;
 import com.event.booking.security.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

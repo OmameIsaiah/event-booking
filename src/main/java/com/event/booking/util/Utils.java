@@ -10,16 +10,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Utils {
-
-    @Value("${app.security.encryption.key}")
-    private static String SECRET_KEY;
-    @Value("${app.otp.expire.time}")
-    private static String OTP_EXPIRE_TIME;
-
-    public static String encode(Object plainText) {
-        return new String(java.util.Base64.getEncoder().encode(SecurityUtils.encrypt(String.valueOf(plainText), SECRET_KEY).getBytes(StandardCharsets.UTF_8)));
-    }
-
+    private static String OTP_EXPIRE_TIME = "600";
     static EmailValidator validator = EmailValidator.getInstance();
 
     public static Boolean isEmailValid(String email) {

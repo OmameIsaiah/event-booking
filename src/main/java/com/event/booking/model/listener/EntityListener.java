@@ -4,6 +4,8 @@ import com.event.booking.model.Role;
 import com.event.booking.model.User;
 import com.event.booking.model.UserRole;
 import com.event.booking.repository.UserRepository;
+import com.event.booking.security.SecurityUtils;
+import com.event.booking.security.jwt.JwtUtils;
 import com.event.booking.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,7 +41,7 @@ public class EntityListener {
     private void afterCreate(Object data) {
         if (data instanceof User) {
             User user = (User) data;
-            user.setUserToken(Utils.encode(user.getEmail() + user.getId()));
+            user.setUserToken(SecurityUtils.encode(user.getEmail() + user.getId()));
             userRepository.save(user);
         }
     }

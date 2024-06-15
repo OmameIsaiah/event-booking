@@ -2,6 +2,7 @@ package com.event.booking.security.jwt;
 
 import com.event.booking.exceptions.AccessDeniedException;
 import com.event.booking.repository.UserRepository;
+import com.event.booking.security.SecurityUtils;
 import com.event.booking.security.user.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
