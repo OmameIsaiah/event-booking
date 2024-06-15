@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Utils {
