@@ -29,6 +29,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
         mapper.writeValue(response.getOutputStream(),
                 new ApiResponse(
                         false,
+                        HttpStatus.UNAUTHORIZED.value(),
                         HttpStatus.UNAUTHORIZED,
                         authException.getMessage(),
                         request.getServletPath())

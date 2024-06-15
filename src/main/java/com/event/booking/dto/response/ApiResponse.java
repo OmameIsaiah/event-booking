@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +17,11 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApiResponse<T> implements Serializable {
-    private Boolean status;
-    private HttpStatus code;
+    private Boolean success;
+    private Integer code;
+    private HttpStatus status;
     private String message;
-    private T data;
+    private T data = (T) new ArrayList<>();
     private Map<String, Object> meta = new HashMap<>();
 
     public Map<String, Object> getMeta() {
@@ -31,32 +33,30 @@ public class ApiResponse<T> implements Serializable {
         return this;
     }
 
-    public ApiResponse(Boolean status, T data) {
-        this.status = status;
-        this.data = data;
-    }
-
-    public ApiResponse(Boolean status, HttpStatus code, T data) {
-        this.status = status;
+    public ApiResponse(Boolean success, Integer code, T data) {
+        this.success = success;
         this.code = code;
         this.data = data;
     }
 
-    public ApiResponse(Boolean status, HttpStatus code, String message) {
-        this.status = status;
+    public ApiResponse(Boolean success, Integer code, HttpStatus status, T data) {
+        this.success = success;
         this.code = code;
+        this.status = status;
+        this.data = data;
+    }
+
+    public ApiResponse(Boolean success, Integer code, HttpStatus status, String message) {
+        this.success = success;
+        this.code = code;
+        this.status = status;
         this.message = message;
     }
 
-    public ApiResponse(Boolean status, String message, T data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
-
-    public ApiResponse(Boolean status, HttpStatus code, String message, T data) {
-        this.status = status;
+    public ApiResponse(Boolean success, Integer code, HttpStatus status, String message, T data) {
+        this.success = success;
         this.code = code;
+        this.status = status;
         this.message = message;
         this.data = data;
     }

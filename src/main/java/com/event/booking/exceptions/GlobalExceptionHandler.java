@@ -33,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
-        return ResponseEntity.status(status).body(new ApiResponse<>(false, status, String.join(",", errors)));
+        return ResponseEntity.status(status).body(new ApiResponse<>(false, status.value(), status, String.join(",", errors)));
     }
 
     @ExceptionHandler(RecordNotFoundException.class)
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String requestUrl = webRequest.getContextPath();
         log.warn("{} access through {}", exception.getMessage(), requestUrl);
         exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, HttpStatus.NOT_FOUND, exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>(false, HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, exception.getMessage()));
     }
 
     @ExceptionHandler(BadRequestException.class)
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String requestUrl = webRequest.getContextPath();
         log.warn(" {} access through {}", exception.getMessage(), requestUrl);
         exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST, exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 
     @ExceptionHandler(DuplicateRecordException.class)
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String requestUrl = webRequest.getContextPath();
         log.warn(" {} access through {}", exception.getMessage(), requestUrl);
         exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse<>(false, HttpStatus.CONFLICT, exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse<>(false, HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT, exception.getMessage()));
     }
 
     @ExceptionHandler(UnauthorizedException.class)
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String requestUrl = webRequest.getContextPath();
         log.warn(" {} access through {}", exception.getMessage(), requestUrl);
         exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(false, HttpStatus.UNAUTHORIZED, exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ApiResponse<>(false, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED, exception.getMessage()));
     }
 
     @ExceptionHandler(AccessDeniedException.class)
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String requestUrl = webRequest.getContextPath();
         log.warn(" {} access through {}", exception.getMessage(), requestUrl);
         exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse<>(false, HttpStatus.FORBIDDEN, exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ApiResponse<>(false, HttpStatus.FORBIDDEN.value(), HttpStatus.FORBIDDEN, exception.getMessage()));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String requestUrl = webRequest.getContextPath();
         log.warn(" {} access through {}", exception.getMessage(), requestUrl);
         exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST, exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
@@ -90,13 +90,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String error = exception.getName() + " should be of type " + exception.getRequiredType().getName();
         log.warn(" {} access through {}", exception.getMessage(), requestUrl);
         exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST, error));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, error));
     }
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity handlerGlobalErrors(Exception exception) {
         exception.printStackTrace();
         log.warn("An error occur  {}", exception.fillInStackTrace());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST, exception.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse<>(false, HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 }

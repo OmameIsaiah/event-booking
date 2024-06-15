@@ -54,6 +54,7 @@ public class SignUpServiceImpl implements SignUpService {
         sendSignupOTP(user, otpAndTime);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ApiResponse<>(true,
+                        HttpStatus.CREATED.value(),
                         HttpStatus.CREATED,
                         ACCOUNT_CREATION_SUCCESSFUL));
     }
@@ -141,6 +142,7 @@ public class SignUpServiceImpl implements SignUpService {
         processAndSendOTP(request);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
+                        HttpStatus.OK.value(),
                         HttpStatus.OK,
                         OTP_SENT_SUCCESSFUL));
     }
@@ -171,12 +173,14 @@ public class SignUpServiceImpl implements SignUpService {
         if (user.getVerified()) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ApiResponse<>(true,
+                            HttpStatus.OK.value(),
                             HttpStatus.OK,
                             ACCOUNT_ALREADY_ACTIVATED));
         }
         verifyAndActivateUserAccount(request, user);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
+                        HttpStatus.OK.value(),
                         HttpStatus.OK,
                         OTP_VERIFIED_SUCCESSFULLY));
     }

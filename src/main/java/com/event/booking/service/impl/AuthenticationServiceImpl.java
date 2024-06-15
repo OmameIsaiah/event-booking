@@ -39,7 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String jwt = jwtTokenService.getAccessToken(username, password).getToken();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
-        return new ResponseEntity<>(new ApiResponse(true, HttpStatus.OK, jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse(true, HttpStatus.OK.value(), HttpStatus.OK, jwt), httpHeaders, HttpStatus.OK);
     }
 
     private static void validateUsernameAndPassword(String username, String password) {
