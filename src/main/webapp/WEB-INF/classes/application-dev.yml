@@ -8,7 +8,6 @@ spring:
   application:
     name: event-booking
   datasource:
-    #driverClassName: com.mysql.cj.jdbc.Driver
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${server.host}:3306/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     username: root
@@ -19,9 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
     hibernate:
-      #ddl-auto: create
       ddl-auto: update
-      #ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
@@ -60,9 +57,6 @@ spring:
         debug: true
     protocol: smtp
     test-connection: false
-  security:
-    user.name: user
-    password: user
 
 app:
   api:
@@ -78,4 +72,18 @@ app:
     sender:
       name: Event Booking Ltd.
       email: isaiahomame@gmail.com
-
+  jwt:
+    authorities:
+      key: roles
+    expirationDateInMs: 86400000
+    header:
+      string: Authorization
+    jwtCookieName: event-booking
+    jwtRefreshCookieName: event-booking-refresh
+    refreshExpiration: 8640
+    refreshExpirationDateInMs: 8640
+    signing:
+      key: 837f5b3ae7ccd9498d989595fab6da25b0ca2fbda6424b2d8d0bd24f43e39cd1
+    token:
+      prefix: Bearer
+      validity: 100

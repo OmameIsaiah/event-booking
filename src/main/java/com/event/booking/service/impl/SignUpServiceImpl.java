@@ -66,7 +66,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .userType(Objects.nonNull(request.getUserType()) ? request.getUserType() : UserType.USER)
                 .onboardingStage(OnboardingStage.STARTED)
                 .verified(false)
-                .active(false)
+                .isOnline(false)
                 .otpCode(otpAndTime[0])
                 .otpExpireTime(otpAndTime[1])
                 .userRoles(null)

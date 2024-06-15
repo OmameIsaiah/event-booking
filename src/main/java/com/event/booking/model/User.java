@@ -45,8 +45,8 @@ public class User extends BaseEntity implements Serializable {
     private OnboardingStage onboardingStage = OnboardingStage.STARTED;
     @Column(name = "verified")
     private Boolean verified = false;
-    @Column(name = "active")
-    private Boolean active = false;
+    @Column(name = "is_online")
+    private Boolean isOnline = false;
     @Column(name = "otp_code")
     private String otpCode;
     @Column(name = "otp_expire_time")
@@ -73,7 +73,7 @@ public class User extends BaseEntity implements Serializable {
                 ", userToken='" + userToken + '\'' +
                 ", onboardingStage=" + onboardingStage +
                 ", verified=" + verified +
-                ", active=" + active +
+                ", active=" + isOnline +
                 ", otpCode='" + otpCode + '\'' +
                 ", otpExpireTime='" + otpExpireTime + '\'' +
                 ", lastLogin=" + lastLogin +

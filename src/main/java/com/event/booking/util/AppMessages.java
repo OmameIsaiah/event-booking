@@ -1,8 +1,10 @@
 package com.event.booking.util;
 
 public class AppMessages {
+    public static final String EMAIL_NOT_FOUND = "Oops! No user found with this email: %s";
     public static final String INVALID_EMAIL = "Oops! Invalid email, please check.";
     public static final String WRONG_ACCOUNT_EMAIL = "Oops! No account with this email, please check.";
+    public static final String WRONG_ACCOUNT_PASSWORD = "Oops! Your password is incorrect, please check.";
     public static final String EMPTY_EMAIL = "Oops! Email cannot be empty, please check.";
     public static final String EMPTY_EVENT_NAME = "Oops! Event name cannot be empty, please check.";
     public static final String NULL_EMAIL = "Oops! Email cannot be null, please check.";
@@ -25,6 +27,8 @@ public class AppMessages {
     public static final String MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED = "Oops! Available attendees count cannot be less than 0, please check.";
     public static final String NEGATIVE_AVAILABLE_ATTENDEES_COUNT = "Oops! Available attendees count cannot be negative, please check.";
     public static final String INVALID_REQUEST_PARAMETERS = "Oops! Your request parameters is either incomplete or invalid, please check.";
+    public static final String INVALID_ACCESS_TOKEN = "Oops! Invalid access token, please check.";
+    public static final String ACCOUNT_NOT_VERIFIED = "Oops! Your account is not verified. Kindly check for the OTP sent to your email or resent a new one to verify your account";
 
     public static final String INVALID_USER_TYPE = "Oops! Invalid user type. Valid user types are: ADMIN and USER.";
     public static final String PASSWORD_MISMATCH = "Oops! Password mismatch, kindly retype your password.";

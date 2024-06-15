@@ -72,4 +72,18 @@ app:
     sender:
       name: Event Booking Ltd.
       email: isaiahomame@gmail.com
-
+  jwt:
+    authorities:
+      key: roles
+    expirationDateInMs: 86400000
+    header:
+      string: Authorization
+    jwtCookieName: event-booking
+    jwtRefreshCookieName: event-booking-refresh
+    refreshExpiration: 8640
+    refreshExpirationDateInMs: 8640
+    signing:
+      key: 837f5b3ae7ccd9498d989595fab6da25b0ca2fbda6424b2d8d0bd24f43e39cd1
+    token:
+      prefix: Bearer
+      validity: 100
