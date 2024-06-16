@@ -60,7 +60,7 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private User buildNewUserModel(SignUpRequest request, String[] otpAndTime) {
-        User user = User.builder()
+        return User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -73,8 +73,6 @@ public class SignUpServiceImpl implements SignUpService {
                 .userRoles(null)
                 .userEvents(null)
                 .build();
-        //user = userRepository.save(user);
-        return user;
     }
 
     private void assignRolesToNewUser(User user) {
@@ -90,10 +88,13 @@ public class SignUpServiceImpl implements SignUpService {
         user = userRepository.save(user);
         User roleAssignedUser = user;
         List<UserRole> userRoleList = roles.stream()
-                .map(role -> UserRole.builder()
-                        .roleid(role)
-                        .userrole(roleAssignedUser)
-                        .build())
+                .map(role -> {
+                    UserRole userRole = new UserRole();
+                    userRole.setRoleid(role);
+                    userRole.setUserrole(roleAssignedUser);
+                    userRole.setUuid(UUID.randomUUID().toString());
+                    return userRole;
+                })
                 .peek(userRoleRepository::save)
                 .collect(Collectors.toList());
         roleAssignedUser.setUserRoles(userRoleList);
@@ -157,7 +158,7 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private void sendSignupOTP(User user, String[] otpAndTime) {
-        //TODO SEND IT THROUGH KAFKA OR REDIS
+        //TODO SEND IT THROUGH KAFKA, RABBITMQ OR REDIS
         OTPNotificationRequest notificationRequest = OTPNotificationRequest
                 .builder()
                 .name(user.getName())
@@ -212,7 +213,6 @@ public class SignUpServiceImpl implements SignUpService {
         if (Objects.isNull(request.getOtp())) {
             throw new BadRequestException(NULL_OTP_PARAM);
         }
-        User user = validateUserByEmail(request.getEmail());
-        return user;
+        return validateUserByEmail(request.getEmail());
     }
 }

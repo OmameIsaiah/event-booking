@@ -34,8 +34,8 @@ public class AppMessages {
     public static final String PASSWORD_MISMATCH = "Oops! Password mismatch, kindly retype your password.";
     public static final String EMAIL_ALREADY_TAKEN = "Oops! An account with this email already exist in our record, kindly use another email.";
     public static final String ROLE_NOT_FOUND = "Oops! Role %s not found, please check!";
-    public static final String ACCOUNT_CREATION_SUCCESSFUL = "Awesome! Your account was created successfully. An OTP has been sent to your email for email verification and account activation.";
-    public static final String OTP_SENT_SUCCESSFUL = "Awesome! An OTP has been sent to your email for email verification and account activation.";
+    public static final String ACCOUNT_CREATION_SUCCESSFUL = "Awesome! Your account has been created successfully. An OTP has been sent to your registered email for verification.";
+    public static final String OTP_SENT_SUCCESSFUL = "Awesome! An OTP has been sent to your registered email for verification.";
     public static final String OTP_VERIFIED_SUCCESSFULLY = "Awesome! Your email has been verified and your account is activate, sign in to access your dashboard.";
     public static final String ACCOUNT_ALREADY_ACTIVATED = "Awesome! Your account is already activated. Please sign in to access your dashboard.";
 
