@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     @Basic(optional = false)
     private Long id;
-    @Column(name = "uuid", updatable = false, nullable = false)
+    @Column(name = "uuid")
     private String uuid;
     @Column(name = "last_modified")
     @UpdateTimestamp

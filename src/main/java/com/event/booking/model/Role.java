@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -43,5 +44,45 @@ public class Role extends BaseEntity {
                 ", permissions=" + permissions +
                 ", userRoles=" + userRoles +
                 '}';
+    }
+
+    @Override
+    public void setUuid(String uuid) {
+        super.setUuid(uuid);
+    }
+
+    @Override
+    public String getUuid() {
+        return super.getUuid();
+    }
+
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
+    }
+
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
+
+    @Override
+    public void setDateCreated(LocalDateTime dateCreated) {
+        super.setDateCreated(dateCreated);
+    }
+
+    @Override
+    public LocalDateTime getDateCreated() {
+        return super.getDateCreated();
+    }
+
+    @Override
+    public void setLastModified(LocalDateTime lastModified) {
+        super.setLastModified(lastModified);
+    }
+
+    @Override
+    public LocalDateTime getLastModified() {
+        return super.getLastModified();
     }
 }

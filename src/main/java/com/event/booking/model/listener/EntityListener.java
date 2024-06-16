@@ -3,8 +3,11 @@ package com.event.booking.model.listener;
 import com.event.booking.model.Role;
 import com.event.booking.model.User;
 import com.event.booking.model.UserRole;
+import com.event.booking.repository.RoleRepository;
 import com.event.booking.repository.UserRepository;
+import com.event.booking.repository.UserRoleRepository;
 import com.event.booking.security.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +16,7 @@ import javax.persistence.PrePersist;
 import java.util.UUID;
 
 @Component
+@Slf4j
 public class EntityListener {
     private static UserRepository userRepository;
 
