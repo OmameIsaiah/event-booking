@@ -15,7 +15,7 @@ import static com.event.booking.util.EndpointsURL.AUTH_TOKEN_URL;
 
 @RestController
 @RequestMapping(value = AUTH_BASE_URL, headers = "Accept=application/json")
-@Api(tags = "authentication route", description = "API for user authentication", consumes = "application/json", produces = "application/json", protocols = "https", value = "authentication route")
+@Api(tags = "authentication route", description = "Endpoint for user authentication.", consumes = "application/json", produces = "application/json", protocols = "https", value = "authentication route")
 @RequiredArgsConstructor
 public class AuthRoute {
     private final AuthenticationService authenticationService;

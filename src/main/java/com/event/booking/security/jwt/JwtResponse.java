@@ -5,10 +5,12 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.event.booking.util.AppMessages.TOKEN_PREFIX;
+
 @Data
 public class JwtResponse implements Serializable {
-    private String token;
-    private String type = "Bearer";
+    private String authorizationToken;
+    private String type = TOKEN_PREFIX;
     private String userType;
     private String username;
     private String password;
@@ -16,7 +18,7 @@ public class JwtResponse implements Serializable {
     private List<String> permissions;
 
     public JwtResponse(String accessToken, String userType, String username, List<String> roles, List<String> permission) {
-        this.token = accessToken;
+        this.authorizationToken = accessToken;
         this.userType = userType;
         this.username = username;
         this.roles = roles;

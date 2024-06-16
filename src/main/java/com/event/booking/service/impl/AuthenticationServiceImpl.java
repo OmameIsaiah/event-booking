@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         validateUsernameAndPassword(username, password);
         User user = validateUserByEmail(username);
         checkAccountVerificationStatusAndPassword(password, user);
-        String jwt = jwtTokenService.getAccessToken(username, password).getToken();
+        String jwt = jwtTokenService.getAccessToken(username, password).getAuthorizationToken();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
         return new ResponseEntity<>(new ApiResponse(true, HttpStatus.OK.value(), HttpStatus.OK, jwt), httpHeaders, HttpStatus.OK);

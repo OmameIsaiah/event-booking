@@ -15,8 +15,8 @@ public class SignInRequest implements Serializable {
     @NotEmpty(message = EMPTY_EMAIL)
     @NotNull(message = NULL_EMAIL)
     private String email;
-    @NotNull(message = NULL_PASSWORD_PARAM)
-    @NotEmpty(message = EMPTY_PASSWORD_PARAM)
+    @NotNull(message = NULL_PASSWORD)
+    @NotEmpty(message = EMPTY_PASSWORD)
     @Size(min = 8, message = MIN_PASSWORD_LENGTH_NOT_REACHED)
     private String password;
 }

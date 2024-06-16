@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UnauthorizedEntryPoint unauthorizedEntryPoint;
 
     private static final String[] AUTH_WHITELIST = {
-            "api-docs/**",
+            "/api-docs/**",
             "/v2/api-docs/**",
             "/v3/api-docs/**",
             "/swagger-resources",
@@ -41,7 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui/**",
             "/webjars/**",
             "/api/v1/users/onboarding/**",
-            "/api/v1/auth/**"
+            "/api/v1/auth/**",
+            "/api/v1/users/entrance/**"
     };
 
     @Override

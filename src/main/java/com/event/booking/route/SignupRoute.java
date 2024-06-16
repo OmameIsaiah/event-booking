@@ -19,7 +19,7 @@ import static com.event.booking.util.EndpointsURL.*;
 
 @RestController
 @RequestMapping(value = ONBOARDING_BASE_URL, headers = "Accept=application/json")
-@Api(tags = "user signup route", description = "API for user signup/onboarding", consumes = "application/json", produces = "application/json", protocols = "https", value = "user signup route")
+@Api(tags = "signup/onboarding route", description = "Endpoints for creating new user account and verifying the account.", consumes = "application/json", produces = "application/json", protocols = "https", value = "signup/onboarding route")
 @RequiredArgsConstructor
 public class SignupRoute {
     private final SignUpService signUpService;

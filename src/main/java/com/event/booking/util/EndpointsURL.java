@@ -8,4 +8,7 @@ public class EndpointsURL {
     public static final String ONBOARDING_SIGNUP = "/signup";
     public static final String ONBOARDING_SEND_OTP = "/send/otp";
     public static final String ONBOARDING_VERIFY_OTP = "/verify/otp";
+
+    public static final String ENTRANCE_BASE_URL = "/api/v1/users/entrance";
+    public static final String ENTRANCE_SIGNIN = "/signin";
 }
