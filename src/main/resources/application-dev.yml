@@ -14,6 +14,13 @@ spring:
     password: david_ISAIAH_1234#$
     jmx:
       default-domain: event-booking
+  liquibase:
+    contexts: dev, faker
+    url: jdbc:mysql://${server.host}:3306/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    user: root
+    password: david_ISAIAH_1234#$
+    change-log: classpath:db/changesets/liquibase/master.xml
+    enabled: true
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: true
