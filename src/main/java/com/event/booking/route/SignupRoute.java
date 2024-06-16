@@ -32,14 +32,14 @@ public class SignupRoute {
     }
 
     @PostMapping(value = ONBOARDING_SEND_OTP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint for sending or resending signup otp for email verification and account activation")
+    @ApiOperation("Endpoint for sending or resending signup otp for email verification")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> sendOTP(@RequestBody @Valid SendOTPRequest request) {
         return signUpService.sendOTP(request);
     }
 
     @PostMapping(value = ONBOARDING_VERIFY_OTP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint for verifying signup otp")
+    @ApiOperation("Endpoint for verifying account email via otp")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> verifyOTP(@RequestBody @Valid VerifyOTPRequest request) {
         return signUpService.verifyOTP(request);
