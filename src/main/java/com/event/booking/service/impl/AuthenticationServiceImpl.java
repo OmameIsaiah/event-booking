@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import static com.event.booking.util.AppMessages.*;
+import static com.event.booking.util.ConfigParams.TOKEN_PREFIX;
 
 @Service
 @RequiredArgsConstructor

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
-import static com.event.booking.util.AppMessages.TOKEN_PREFIX;
+import static com.event.booking.util.ConfigParams.TOKEN_PREFIX;
 
 @Data
 @Builder

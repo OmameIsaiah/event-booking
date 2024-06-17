@@ -74,10 +74,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/users/management/**").hasAnyRole("ADMIN", "")
                 .antMatchers("/api/v1/events/management/**").hasAnyRole("ADMIN", "")
                 .antMatchers("/api/v1/roles/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedEntryPoint)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

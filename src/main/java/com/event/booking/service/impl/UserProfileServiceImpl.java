@@ -11,7 +11,6 @@ import com.event.booking.repository.UserRepository;
 import com.event.booking.security.jwt.JwtUtils;
 import com.event.booking.service.UserProfileService;
 import com.event.booking.util.Mapper;
-import com.event.booking.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +68,6 @@ public class UserProfileServiceImpl implements UserProfileService {
                         Mapper.mapUserProfileResponse(user)
                 ));
     }
-
 
     @Override
     public ResponseEntity<ApiResponse> updateProfileInfo(HttpServletRequest httpServletRequest, UpdateProfileRequest request) {

@@ -114,7 +114,6 @@ public class SignUpServiceImpl implements SignUpService {
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             throw new BadRequestException(PASSWORD_MISMATCH);
         }
-
         Optional<User> userOptional = userRepository.findUserByEmail(request.getEmail());
         if (userOptional.isPresent()) {
             throw new DuplicateRecordException(EMAIL_ALREADY_TAKEN);

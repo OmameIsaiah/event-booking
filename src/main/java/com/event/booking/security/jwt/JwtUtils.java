@@ -16,9 +16,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.event.booking.security.user.UserDetailsImpl.getListOfPermissionsFromRoles;
-import static com.event.booking.util.AppMessages.*;
+import static com.event.booking.util.AppMessages.INVALID_ACCESS_TOKEN;
+import static com.event.booking.util.AppMessages.INVALID_AUTHORIZATION_TOKEN;
+import static com.event.booking.util.ConfigParams.TOKEN_PREFIX;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
@@ -199,7 +200,6 @@ public class JwtUtils {
                 Arrays.stream(claims.get(ROLES_KEY).toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
-        logger.info("USER: {}, HAS THE FOLLOWING ROLES: {}", userDetails.getUsername(), claims.get(ROLES_KEY).toString());
         return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
     }
 }

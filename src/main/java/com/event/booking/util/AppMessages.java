@@ -1,7 +1,6 @@
 package com.event.booking.util;
 
 public class AppMessages {
-    public static final String TOKEN_PREFIX = "Bearer";
     /////////////////////////////////////ERROR MESSAGES///////////////////////////////////
     public static final String EMAIL_NOT_FOUND = "Oops! No user found with this email: %s";
     public static final String INVALID_EMAIL = "Oops! Invalid email, please check.";
