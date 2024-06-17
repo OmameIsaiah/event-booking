@@ -1,11 +1,13 @@
 package com.event.booking.util;
 
 import com.event.booking.enums.UserType;
-import com.event.booking.security.SecurityUtils;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -47,5 +49,32 @@ public class Utils {
         long baseTime = (System.currentTimeMillis() / 1000) + Integer.parseInt(OTP_EXPIRE_TIME);
         String otpLimitTime = "" + baseTime + "";
         return otp + "_" + otpLimitTime;
+    }
+
+    public static String convertLocalDateTimeToString(LocalDateTime dateTime) {
+        if (Objects.isNull(dateTime)) {
+            return "";
+        }
+        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                .format(java.util.Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant()));
+    }
+
+    public static LocalDateTime convertDateStringToLocalDateTime(String date) {
+        if (Objects.isNull(date)) {
+            return null;
+        }
+        try {
+            if (date.length() <= 10) {
+                date += " 00:00:00";
+            }
+            return LocalDateTime
+                    .parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                    .atZone(ZoneId.systemDefault())
+                    .withZoneSameInstant(ZoneId.of("UTC+1"))
+                    .toLocalDateTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -23,7 +23,7 @@ import static com.event.booking.util.EndpointsURL.ENTRANCE_SIGNIN;
 public class SigninRoute {
     private final SignInService signInService;
 
-    @PostMapping(value = ENTRANCE_SIGNIN, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ENTRANCE_SIGNIN, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoints for user sign in")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> signIn(@RequestBody @Valid SignInRequest request) {

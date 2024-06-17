@@ -11,4 +11,10 @@ public class EndpointsURL {
 
     public static final String ENTRANCE_BASE_URL = "/api/v1/users/entrance";
     public static final String ENTRANCE_SIGNIN = "/signin";
+
+    public static final String PROFILE_BASE_URL = "/api/v1/users/profile";
+    public static final String PROFILE_INFO = "";
+    public static final String PROFILE_UPDATE_INFO = "/update";
+    public static final String PROFILE_UPDATE_PASSWORD = "/update-password";
+    public static final String PROFILE_SIGNOUT = "/signout";
 }

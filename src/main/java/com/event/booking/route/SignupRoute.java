@@ -24,21 +24,21 @@ import static com.event.booking.util.EndpointsURL.*;
 public class SignupRoute {
     private final SignUpService signUpService;
 
-    @PostMapping(value = ONBOARDING_SIGNUP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ONBOARDING_SIGNUP, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for creating new user account")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ApiResponse> signUp(@RequestBody @Valid SignUpRequest request) {
         return signUpService.signUp(request);
     }
 
-    @PostMapping(value = ONBOARDING_SEND_OTP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ONBOARDING_SEND_OTP, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for sending or resending signup otp for email verification")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> sendOTP(@RequestBody @Valid SendOTPRequest request) {
         return signUpService.sendOTP(request);
     }
 
-    @PostMapping(value = ONBOARDING_VERIFY_OTP, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = ONBOARDING_VERIFY_OTP, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for verifying account email via otp")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> verifyOTP(@RequestBody @Valid VerifyOTPRequest request) {

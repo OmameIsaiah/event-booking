@@ -36,21 +36,27 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         List<ResponseMessage> list = new java.util.ArrayList<>();
         return new Docket(DocumentationType.SWAGGER_2)
                 .enable(enableSwagger)
+                //.select()
+                .apiInfo(apiInfo())
+                .securitySchemes(Collections.singletonList(apiKey()))
+                .securityContexts(Collections.singletonList(securityContext()))
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(BASE_PACKAGE))
                 .paths(PathSelectors.any())
                 .build()
-                .securitySchemes(Collections.singletonList(securitySchema()))
-                .securityContexts(Collections.singletonList(securityContext()))
-                .pathMapping("/")
+                //.pathMapping("/")
                 .useDefaultResponseMessages(false)
-                .apiInfo(apiInfo())
                 .globalResponseMessage(RequestMethod.GET, list)
                 .globalResponseMessage(RequestMethod.PATCH, list)
                 .globalResponseMessage(RequestMethod.OPTIONS, list)
                 .globalResponseMessage(RequestMethod.PUT, list)
                 .globalResponseMessage(RequestMethod.DELETE, list)
                 .globalResponseMessage(RequestMethod.POST, list);
+    }
+
+
+    private ApiKey apiKey() {
+        return new ApiKey("Authorization", "Authorization", "header");
     }
 
     private OAuth securitySchema() {
@@ -64,17 +70,36 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         return new OAuth(APP_NAME, authorizationScopeList, grantTypes);
     }
 
-    private SecurityContext securityContext() {
-        return SecurityContext.builder().securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+                = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Collections.singletonList(
+                new SecurityReference("Authorization", authorizationScopes));
     }
 
-    private List<SecurityReference> defaultAuth() {
+
+  /*  private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .build();
+    }*/
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder()
+                .securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any())
+                .build();
+    }
+
+/*    private List<SecurityReference> defaultAuth() {
         final AuthorizationScope[] authorizationScopes = new AuthorizationScope[3];
         authorizationScopes[0] = new AuthorizationScope("read", "read all");
         authorizationScopes[1] = new AuthorizationScope("trust", "trust all");
         authorizationScopes[2] = new AuthorizationScope("write", "write all");
         return Collections.singletonList(new SecurityReference("oauth2schema", authorizationScopes));
-    }
+    }*/
 
     @Bean
     public SecurityConfiguration securityInfo() {

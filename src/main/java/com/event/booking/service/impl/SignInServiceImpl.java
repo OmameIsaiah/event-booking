@@ -12,6 +12,7 @@ import com.event.booking.repository.UserRepository;
 import com.event.booking.security.jwt.JwtResponse;
 import com.event.booking.security.user.JwtTokenService;
 import com.event.booking.service.SignInService;
+import com.event.booking.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,7 +68,7 @@ public class SignInServiceImpl implements SignInService {
                 .userType(user.getUserType())
                 .userToken(user.getUserToken())
                 .isOnline(user.getIsOnline())
-                .lastLogin(user.getLastLogin())
+                .lastLogin(Utils.convertLocalDateTimeToString(user.getLastLogin()))
                 .build();
     }
 

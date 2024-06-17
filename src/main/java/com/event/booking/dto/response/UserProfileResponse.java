@@ -7,16 +7,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserData implements Serializable {
+public class UserProfileResponse implements Serializable {
     private String name;
     private String email;
     private UserType userType;
     private String userToken;
     private Boolean isOnline;
     private String lastLogin;
+    private List<String> roles;
+    private List<String> permissions;
 }

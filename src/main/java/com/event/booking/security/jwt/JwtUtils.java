@@ -1,8 +1,8 @@
 package com.event.booking.security.jwt;
 
 import com.event.booking.exceptions.AccessDeniedException;
+import com.event.booking.exceptions.UnauthorizedException;
 import com.event.booking.repository.UserRepository;
-import com.event.booking.security.SecurityUtils;
 import com.event.booking.security.user.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -13,10 +13,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.util.StringUtils;
 
-import java.nio.charset.StandardCharsets;
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -24,7 +29,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.event.booking.security.user.UserDetailsImpl.getListOfPermissionsFromRoles;
-import static com.event.booking.util.AppMessages.INVALID_ACCESS_TOKEN;
+import static com.event.booking.util.AppMessages.*;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 public class JwtUtils {
@@ -66,6 +72,41 @@ public class JwtUtils {
                 .setExpiration(Date.from(Instant.now().plus(TOKEN_VALIDITY, ChronoUnit.MINUTES)))
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
+    }
+
+    public String getUsernameFromHttpServletRequest(HttpServletRequest httpServletRequest) {
+        return getUserNameFromJwtToken(getTokenFromRequestHeader(httpServletRequest));
+    }
+
+    private String getTokenFromRequestHeader(HttpServletRequest httpServletRequest) {
+        String bearerToken = httpServletRequest.getHeader(AUTHORIZATION);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+
+    public static Optional<String> getCurrentUserLogin() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(extractPrincipal(securityContext.getAuthentication()));
+    }
+
+    public String getUsernameFromAuthentication(Authentication authentication) {
+        return Optional.ofNullable(extractPrincipal(authentication))
+                .orElseThrow(() -> new UnauthorizedException(INVALID_AUTHORIZATION_TOKEN));
+    }
+
+    private static String extractPrincipal(Authentication authentication) {
+        if (Objects.isNull(authentication)) {
+            return null;
+        } else if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
+            return springSecurityUser.getUsername();
+        } else if (authentication.getPrincipal() instanceof Jwt jwt) {
+            return jwt.getSubject();
+        } else if (authentication.getPrincipal() instanceof String s) {
+            return s;
+        }
+        return null;
     }
 
     private String getAuthorityData(Authentication authentication) {

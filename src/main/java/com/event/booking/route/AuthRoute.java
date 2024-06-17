@@ -20,7 +20,7 @@ import static com.event.booking.util.EndpointsURL.AUTH_TOKEN_URL;
 public class AuthRoute {
     private final AuthenticationService authenticationService;
 
-    @PostMapping(value = AUTH_TOKEN_URL, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = AUTH_TOKEN_URL, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for authenticating a user")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> authenticate(@RequestParam("username") String username,

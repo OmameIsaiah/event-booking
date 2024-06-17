@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import static com.event.booking.util.AppMessages.*;
@@ -32,14 +33,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> authenticate(String username, String password) {
+    public ResponseEntity authenticate(String username, String password) {
         validateUsernameAndPassword(username, password);
         User user = validateUserByEmail(username);
         checkAccountVerificationStatusAndPassword(password, user);
         String jwt = jwtTokenService.getAccessToken(username, password).getAuthorizationToken();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
-        return new ResponseEntity<>(new ApiResponse(true, HttpStatus.OK.value(), HttpStatus.OK, jwt), httpHeaders, HttpStatus.OK);
+        HashMap<String, String> data = new HashMap<>();
+        data.put("authorizationToken", TOKEN_PREFIX + " " + jwt);
+        data.put("type", TOKEN_PREFIX);
+        return new ResponseEntity<>(
+                new ApiResponse(true, HttpStatus.OK.value(), HttpStatus.OK,
+                        AUTHORIZATION_PROCESSED_SUCCESSFULLY,
+                        data),
+                httpHeaders, HttpStatus.OK);
     }
 
     private static void validateUsernameAndPassword(String username, String password) {
