@@ -64,7 +64,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        FETCH_PROFILE_SUCCESSFUL,
+                        PROFILE_RETRIEVED_SUCCESSFUL,
                         Mapper.mapUserProfileResponse(user)
                 ));
     }

@@ -24,7 +24,7 @@ public class SigninRoute {
     private final SignInService signInService;
 
     @PostMapping(value = ENTRANCE_SIGNIN, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoints for user sign in")
+    @ApiOperation("Endpoint for user sign in")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> signIn(@RequestBody @Valid SignInRequest request) {
         return signInService.signIn(request);

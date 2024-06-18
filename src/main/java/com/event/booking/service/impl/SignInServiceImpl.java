@@ -63,6 +63,7 @@ public class SignInServiceImpl implements SignInService {
         user.setLastLogin(LocalDateTime.now());
         userRepository.save(user);
         return UserData.builder()
+                .uuid(user.getUuid())
                 .name(user.getName())
                 .email(user.getEmail())
                 .userType(user.getUserType())

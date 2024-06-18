@@ -39,6 +39,10 @@ public class AppMessages {
     public static final String EMAIL_ALREADY_TAKEN = "Oops! An account with this email already exist in our record, kindly use another email.";
     public static final String ROLE_NOT_FOUND = "Oops! Role %s not found, please check!";
     public static final String INVALID_AUTHORIZATION_TOKEN = "Oops! Invalid authorization, please provide your authorization token in the request header.";
+    public static final String NO_USER_FOUND = "Oops! No user found.";
+    public static final String NO_USER_FOUND_WITH_UUID = "Oops! No user found with the uuid provided, please check.";
+    public static final String NULL_KEYWORD_PARAM = "Oops! Keyword cannot be null, please check.";
+    public static final String NULL_UUID_PARAM = "Oops! UUID cannot be null, please check.";
     /////////////////////////////////////SUCCESS MESSAGES///////////////////////////////////
     public static final String ACCOUNT_CREATION_SUCCESSFUL = "Awesome! Your account has been created successfully. An OTP has been sent to your registered email for verification.";
     public static final String OTP_SENT_SUCCESSFUL = "Awesome! An OTP has been sent to your registered email for verification.";
@@ -46,7 +50,9 @@ public class AppMessages {
     public static final String ACCOUNT_ALREADY_ACTIVATED = "Awesome! Your account is already activated. Please sign in to access your dashboard.";
     public static final String SIGN_IN_SUCCESSFUL = "Awesome! You have signed in successfully.";
     public static final String SIGN_OUT_SUCCESSFUL = "Awesome! You have signed out successfully.";
-    public static final String FETCH_PROFILE_SUCCESSFUL = "Awesome! User profile retrieved successfully.";
+    public static final String PROFILE_RETRIEVED_SUCCESSFUL = "Awesome! User profile retrieved successfully.";
+    public static final String USERS_RETRIEVED_SUCCESSFUL = "Awesome! Users retrieved successfully.";
+    public static final String USERS_DELETED_SUCCESSFUL = "Awesome! User deleted successfully.";
     public static final String PROFILE_UPDATED_SUCCESSFUL = "Awesome! User profile updated successfully.";
     public static final String PASSWORD_UPDATED_SUCCESSFUL = "Awesome! Password updated successfully.";
     public static final String AUTHORIZATION_PROCESSED_SUCCESSFULLY = "Awesome! Your authorization token is ready. Use the prefix 'Bearer ' followed by the token in the Authorization header.";

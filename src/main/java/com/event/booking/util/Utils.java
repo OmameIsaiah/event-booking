@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 public class Utils {
     private static String OTP_EXPIRE_TIME = "600";
+    public static String DATE_CREATED = "date_created";
     static EmailValidator validator = EmailValidator.getInstance();
 
     public static Boolean isEmailValid(String email) {

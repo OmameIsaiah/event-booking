@@ -13,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserData implements Serializable {
+    private String uuid;
     private String name;
     private String email;
     private UserType userType;

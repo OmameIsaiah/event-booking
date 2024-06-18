@@ -19,34 +19,34 @@ import static com.event.booking.util.EndpointsURL.*;
 
 @RestController
 @RequestMapping(value = PROFILE_BASE_URL, headers = "Accept=application/json")
-@Api(tags = "profile route", description = "Endpoints for fetching and updating user profile info, updating password and signing out ", consumes = "application/json", produces = "application/json", protocols = "https", value = "profile route")
+@Api(tags = "profile route", description = "Endpoints for fetching and updating user profile info, updating password and signing out", consumes = "application/json", produces = "application/json", protocols = "https", value = "profile route")
 @RequiredArgsConstructor
 public class UserProfileRoute {
     private final UserProfileService userProfileService;
 
     @GetMapping(value = PROFILE_INFO, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoints fetching user profile info")
+    @ApiOperation("Endpoint fetching user profile info")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> getProfileInfo(HttpServletRequest httpServletRequest) {
         return userProfileService.getProfileInfo(httpServletRequest);
     }
 
     @PostMapping(value = PROFILE_UPDATE_INFO, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoints updating user profile info")
+    @ApiOperation("Endpoint updating user profile info")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> updateProfileInfo(@RequestBody @Valid UpdateProfileRequest request, HttpServletRequest httpServletRequest) {
         return userProfileService.updateProfileInfo(httpServletRequest, request);
     }
 
     @PostMapping(value = PROFILE_UPDATE_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoints updating password")
+    @ApiOperation("Endpoint updating password")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> updatePassword(@RequestBody @Valid UpdatePasswordRequest request, HttpServletRequest httpServletRequest) {
         return userProfileService.updatePassword(httpServletRequest, request);
     }
 
     @PostMapping(value = PROFILE_SIGNOUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoints signing out")
+    @ApiOperation("Endpoint signing out")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> signOut(HttpServletRequest httpServletRequest) {
         return userProfileService.signOut(httpServletRequest);

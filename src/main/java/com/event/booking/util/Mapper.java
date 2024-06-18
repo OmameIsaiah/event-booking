@@ -17,6 +17,7 @@ public class Mapper {
             return null;
         }
         return UserProfileResponse.builder()
+                .uuid(user.getUuid())
                 .name(user.getName())
                 .email(user.getEmail())
                 .userType(user.getUserType())

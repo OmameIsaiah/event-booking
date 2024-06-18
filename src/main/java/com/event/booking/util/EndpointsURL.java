@@ -17,4 +17,10 @@ public class EndpointsURL {
     public static final String PROFILE_UPDATE_INFO = "/update";
     public static final String PROFILE_UPDATE_PASSWORD = "/update-password";
     public static final String PROFILE_SIGNOUT = "/signout";
+
+    public static final String USER_MANAGEMENT_BASE_URL = "/api/v1/users/management";
+    public static final String USER_MANAGEMENT_FIND_ALL = "/find-all";
+    public static final String USER_MANAGEMENT_FILTER = "/filter";
+    public static final String USER_MANAGEMENT_SEARCH = "/search";
+    public static final String USER_MANAGEMENT_DELETE = "/delete/{uuid}";
 }
