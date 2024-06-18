@@ -6,12 +6,12 @@ import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.model.User;
 import com.event.booking.repository.UserRepository;
+import com.event.booking.repository.UserRoleRepository;
 import com.event.booking.service.UserManagementService;
 import com.event.booking.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.event.booking.util.AppMessages.*;
-import static com.event.booking.util.Utils.DATE_CREATED;
 
 @Service
 @RequiredArgsConstructor
 public class UserManagementServiceImpl implements UserManagementService {
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
     @Override
     public ResponseEntity<ApiResponse> getAllUsers(Integer page, Integer size) {
@@ -51,8 +51,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     public ResponseEntity<ApiResponse> filterUsers(Integer page, Integer size, UserType userType) {
         Page<User> list = userRepository.findUsersByType(
                 userType,
-                PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size),
-                        Sort.by(DATE_CREATED).descending()));
+                PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size)));
         if (list.isEmpty() || Objects.isNull(list)) {
             throw new RecordNotFoundException(NO_USER_FOUND);
         }
@@ -98,7 +97,9 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (optional.isEmpty()) {
             throw new RecordNotFoundException(NO_USER_FOUND_WITH_UUID);
         }
-        userRepository.deleteUserByUUID(uuid);
+        userRoleRepository.deleteUserRoleByUserId(optional.get().getId());
+        userRepository.deleteById(optional.get().getId());
+        //userRepository.deleteUserByUUID(uuid);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
