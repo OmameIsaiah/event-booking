@@ -1,6 +1,6 @@
 package com.event.booking.model;
 
-import com.event.booking.enums.EventCategory;
+import com.event.booking.enums.Category;
 import com.event.booking.model.listener.EntityListener;
 import lombok.*;
 
@@ -39,7 +39,7 @@ public class Event extends BaseEntity implements Serializable {
     private Integer availableAttendeesCount;
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
-    private EventCategory category;
+    private Category category;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventid")
     private List<UserEvent> userEvents;
 

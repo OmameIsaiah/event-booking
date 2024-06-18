@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public class Utils {
     private static String OTP_EXPIRE_TIME = "600";
     public static String DATE_CREATED = "date_created";
+    public static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     static EmailValidator validator = EmailValidator.getInstance();
 
     public static Boolean isEmailValid(String email) {

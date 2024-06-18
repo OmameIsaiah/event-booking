@@ -1,5 +1,6 @@
 package com.event.booking.service.impl;
 
+import com.event.booking.dto.request.Credentials;
 import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
@@ -34,11 +35,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public ResponseEntity authenticate(String username, String password) {
-        validateUsernameAndPassword(username, password);
-        User user = validateUserByEmail(username);
-        checkAccountVerificationStatusAndPassword(password, user);
-        String jwt = jwtTokenService.getAccessToken(username, password).getAuthorizationToken();
+    public ResponseEntity authenticate(Credentials credentials) {
+        validateUsernameAndPassword(credentials.getEmail(), credentials.getPassword());
+        User user = validateUserByEmail(credentials.getEmail());
+        checkAccountVerificationStatusAndPassword(credentials.getPassword(), user);
+        String jwt = jwtTokenService.getAccessToken(credentials.getEmail(), credentials.getPassword()).getAuthorizationToken();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
         HashMap<String, String> data = new HashMap<>();

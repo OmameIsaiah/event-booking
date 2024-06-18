@@ -1,5 +1,6 @@
 package com.event.booking.route;
 
+import com.event.booking.dto.request.Credentials;
 import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.service.AuthenticationService;
 import io.swagger.annotations.Api;
@@ -23,8 +24,7 @@ public class AuthRoute {
     @PostMapping(value = AUTH_TOKEN_URL, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for authenticating a user")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ApiResponse> authenticate(@RequestParam("username") String username,
-                                                    @RequestParam("password") String password) {
-        return authenticationService.authenticate(username, password);
+    public ResponseEntity<ApiResponse> authenticate(Credentials credentials) {
+        return authenticationService.authenticate(credentials);
     }
 }

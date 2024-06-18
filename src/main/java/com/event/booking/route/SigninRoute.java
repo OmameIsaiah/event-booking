@@ -1,6 +1,6 @@
 package com.event.booking.route;
 
-import com.event.booking.dto.request.SignInRequest;
+import com.event.booking.dto.request.Credentials;
 import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.service.SignInService;
 import io.swagger.annotations.Api;
@@ -26,7 +26,7 @@ public class SigninRoute {
     @PostMapping(value = ENTRANCE_SIGNIN, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for user sign in")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ApiResponse> signIn(@RequestBody @Valid SignInRequest request) {
-        return signInService.signIn(request);
+    public ResponseEntity<ApiResponse> signIn(@RequestBody @Valid Credentials credentials) {
+        return signInService.signIn(credentials);
     }
 }

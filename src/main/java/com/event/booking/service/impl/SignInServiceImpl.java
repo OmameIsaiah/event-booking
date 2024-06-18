@@ -1,6 +1,6 @@
 package com.event.booking.service.impl;
 
-import com.event.booking.dto.request.SignInRequest;
+import com.event.booking.dto.request.Credentials;
 import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.dto.response.JwtData;
 import com.event.booking.dto.response.SignInResponse;
@@ -37,10 +37,10 @@ public class SignInServiceImpl implements SignInService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> signIn(SignInRequest request) {
-        User user = validateSignInParamAndPassword(request);
+    public ResponseEntity<ApiResponse> signIn(Credentials credentials) {
+        User user = validateSignInParamAndPassword(credentials);
         UserData userData = getUserData(user);
-        JwtResponse jwtResponse = jwtTokenService.getAccessToken(request.getEmail(), request.getPassword());
+        JwtResponse jwtResponse = jwtTokenService.getAccessToken(credentials.getEmail(), credentials.getPassword());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
@@ -73,21 +73,21 @@ public class SignInServiceImpl implements SignInService {
                 .build();
     }
 
-    private User validateSignInParamAndPassword(SignInRequest request) {
-        if (Objects.isNull(request)) {
+    private User validateSignInParamAndPassword(Credentials credentials) {
+        if (Objects.isNull(credentials)) {
             throw new BadRequestException(INVALID_REQUEST_PARAMETERS);
         }
-        if (Objects.isNull(request.getEmail()) || "".equals(request.getEmail())) {
+        if (Objects.isNull(credentials.getEmail()) || "".equals(credentials.getEmail())) {
             throw new BadRequestException(NULL_EMAIL);
         }
-        if (Objects.isNull(request.getPassword()) || "".equals(request.getPassword())) {
+        if (Objects.isNull(credentials.getPassword()) || "".equals(credentials.getPassword())) {
             throw new BadRequestException(NULL_PASSWORD);
         }
-        User user = validateUserByEmail(request.getEmail());
+        User user = validateUserByEmail(credentials.getEmail());
         if (Objects.isNull(user.getVerified()) || !user.getVerified()) {
             throw new BadRequestException(ACCOUNT_NOT_VERIFIED);
         }
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword())) {
             throw new BadRequestException(WRONG_ACCOUNT_PASSWORD);
         }
         return user;

@@ -9,8 +9,11 @@ public class AppMessages {
     public static final String WRONG_CURRENT_PASSWORD = "Oops! Your current password is incorrect, please check.";
     public static final String EMPTY_EMAIL = "Oops! Email cannot be empty, please check.";
     public static final String EMPTY_EVENT_NAME = "Oops! Event name cannot be empty, please check.";
+    public static final String EMPTY_EVENT_ID = "Oops! Event id cannot be empty, please check.";
     public static final String NULL_EMAIL = "Oops! Email cannot be null, please check.";
     public static final String NULL_EVENT_NAME = "Oops! Event name cannot be null, please check.";
+    public static final String NULL_EVENT_DATE = "Oops! Event date cannot be null, please check.";
+    public static final String NULL_EVENT_ID = "Oops! Event id cannot be null, please check.";
     public static final String MAX_NAME_LIMIT_EXCEEDED = "Oops! Your name cannot exceed 100 characters, please check.";
     public static final String NULL_NAME_PARAM = "Oops! Name cannot be null, please check.";
     public static final String EMPTY_NAME_PARAM = "Oops! Name cannot be empty, please check.";
@@ -30,7 +33,9 @@ public class AppMessages {
     public static final String INVALID_OTP_LENGTH = "Oops! Your OTP is a 4 dig number, please check.";
     public static final String AVAILABLE_ATTENDEES_COUNT_EXCEEDED = "Oops! Available attendees count cannot exceed 1000, please check.";
     public static final String MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED = "Oops! Available attendees count cannot be less than 0, please check.";
+    public static final String MIN_ATTENDEES_COUNT_EXCEEDED = "Oops! Attendees count cannot be less than 1, please check.";
     public static final String NEGATIVE_AVAILABLE_ATTENDEES_COUNT = "Oops! Available attendees count cannot be negative, please check.";
+    public static final String NEGATIVE_ATTENDEES_COUNT = "Oops! Attendees count cannot be negative, please check.";
     public static final String INVALID_REQUEST_PARAMETERS = "Oops! Your request parameters is either incomplete or invalid, please check.";
     public static final String INVALID_ACCESS_TOKEN = "Oops! Invalid access token, please check.";
     public static final String ACCOUNT_NOT_VERIFIED = "Oops! Your account is not verified. Kindly check for the OTP sent to your registered email or resent a new one to verify your account";

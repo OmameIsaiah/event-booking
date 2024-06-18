@@ -99,7 +99,6 @@ public class UserManagementServiceImpl implements UserManagementService {
         }
         userRoleRepository.deleteUserRoleByUserId(optional.get().getId());
         userRepository.deleteById(optional.get().getId());
-        //userRepository.deleteUserByUUID(uuid);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),

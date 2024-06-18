@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum UserType {
-    USER("User"),
-    ADMIN("Admin");
-
+    ADMIN("Admin"),
+    USER("User");
     public final String label;
     private static final Map<String, UserType> map = new HashMap<>();
 
