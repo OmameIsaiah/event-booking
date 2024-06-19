@@ -1,6 +1,7 @@
 package com.event.booking.util;
 
 import com.event.booking.dto.request.TicketRequest;
+import com.event.booking.dto.response.ReservationResponseDTO;
 import com.event.booking.enums.UserType;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
@@ -13,14 +14,19 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static com.event.booking.util.AppMessages.*;
 
 public class Utils {
+    public static String OTP_EMAIL_SUBJECT = "Email Verification";
+    public static String OTP_EMAIL_TEMPLATE = "OTPNotification.ftl";
+    public static String RESERVATION_EMAIL_SUBJECT = "Event Reservation Ticket";
+    public static String RESERVATION_EMAIL_TEMPLATE = "TicketReservation.ftl";
+    public static String EVENT_REMINDER_EMAIL_SUBJECT = "Event Reminder!!!";
+    public static String EVENT_REMINDER_EMAIL_TEMPLATE = "EventReminder.ftl";
+    public static String EMAIL_TEMPLATES_DIR = "/templates/notification";
     private static String OTP_EXPIRE_TIME = "600";
     public static String DATE_CREATED = "date_created";
     public static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -115,5 +121,26 @@ public class Utils {
         return event;
     }
 
+    public static void validateEventUsersAndDate(Event event) {
+        if (Objects.isNull(event.getUserEvents())) {
+            throw new BadRequestException(NO_RECORD_OF_USERS_FOR_THE_EVENT);
+        }
+        if (event.getEventDate().isBefore(LocalDateTime.now())) {
+            throw new BadRequestException(EVENT_DATE_PASSED);
+        }
+    }
 
+    public static Map mapReservationAndEventReminderModel(ReservationResponseDTO request) {
+        Map model = new HashMap();
+        model.put("email", request.getEmail());
+        model.put("name", request.getName());
+        model.put("reservationNo", request.getReservationNo());
+        model.put("eventName", request.getEventName());
+        model.put("eventId", request.getEventId());
+        model.put("eventDescription", request.getEventDescription());
+        model.put("eventDate", request.getEventDate());
+        model.put("attendeesCount", request.getAttendeesCount());
+        model.put("eventCategory", request.getEventCategory());
+        return model;
+    }
 }

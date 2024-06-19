@@ -1,5 +1,6 @@
 package com.event.booking.service;
 
+import com.event.booking.dto.request.EventReminderRequest;
 import com.event.booking.dto.request.EventRequestDTO;
 import com.event.booking.dto.request.EventUpdateRequestDTO;
 import com.event.booking.dto.response.ApiResponse;
@@ -16,4 +17,6 @@ public interface EventManagementService {
     ResponseEntity<ApiResponse> viewAllEventsReservations(Integer page, Integer size);
 
     ResponseEntity<ApiResponse> filterAllEventsReservations(Integer page, Integer size, Category category);
+
+    ResponseEntity<ApiResponse> sendEventReminder(EventReminderRequest eventReminder);
 }

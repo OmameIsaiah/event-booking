@@ -7,4 +7,6 @@ public interface EmailNotificationService {
     void sendOTPNotification(OTPNotificationRequest request);
 
     void sendTicketReservationEmail(ReservationResponseDTO request);
+
+    void sendEventReminder(ReservationResponseDTO request);
 }

@@ -1,5 +1,6 @@
 package com.event.booking.route;
 
+import com.event.booking.dto.request.EventReminderRequest;
 import com.event.booking.dto.request.EventRequestDTO;
 import com.event.booking.dto.request.EventUpdateRequestDTO;
 import com.event.booking.dto.response.ApiResponse;
@@ -60,5 +61,12 @@ public class EventManagementRoute {
                                                                    @RequestParam(value = "size", defaultValue = "50") Integer size,
                                                                    @RequestParam(value = "category", defaultValue = "CONCERT") Category category) {
         return eventManagementService.filterAllEventsReservations(page, size, category);
+    }
+
+    @PostMapping(value = EVENT_REMINDER, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Endpoint for sending event reminder to all users that reserve a ticket for an event")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ApiResponse> sendEventReminder(@RequestBody @Valid EventReminderRequest eventReminder) {
+        return eventManagementService.sendEventReminder(eventReminder);
     }
 }

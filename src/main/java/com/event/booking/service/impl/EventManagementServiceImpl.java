@@ -1,14 +1,17 @@
 package com.event.booking.service.impl;
 
+import com.event.booking.dto.request.EventReminderRequest;
 import com.event.booking.dto.request.EventRequestDTO;
 import com.event.booking.dto.request.EventUpdateRequestDTO;
 import com.event.booking.dto.response.ApiResponse;
+import com.event.booking.dto.response.ReservationResponseDTO;
 import com.event.booking.enums.Category;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.DuplicateRecordException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.model.Event;
 import com.event.booking.model.UserEvent;
+import com.event.booking.notification.EmailNotificationService;
 import com.event.booking.repository.EventRepository;
 import com.event.booking.repository.UserEventRepository;
 import com.event.booking.service.EventManagementService;
@@ -21,6 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,6 +38,7 @@ import static com.event.booking.util.AppMessages.*;
 public class EventManagementServiceImpl implements EventManagementService {
     private final EventRepository eventRepository;
     private final UserEventRepository userEventRepository;
+    private final EmailNotificationService notificationService;
 
     @Override
     public ResponseEntity<ApiResponse> createEvent(EventRequestDTO event) {
@@ -94,7 +100,7 @@ public class EventManagementServiceImpl implements EventManagementService {
 
     @Override
     public ResponseEntity<ApiResponse> deleteEvent(Long eventId) {
-        validateDeleteEventId(eventId);
+        validateEventId(eventId);
         eventRepository.deleteById(eventId);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
@@ -104,7 +110,7 @@ public class EventManagementServiceImpl implements EventManagementService {
                 ));
     }
 
-    private void validateDeleteEventId(Long eventId) {
+    private Event validateEventId(Long eventId) {
         if (Objects.isNull(eventId)) {
             throw new BadRequestException(NULL_EVENT_ID);
         }
@@ -112,6 +118,7 @@ public class EventManagementServiceImpl implements EventManagementService {
         if (optional.isEmpty()) {
             throw new BadRequestException(NO_EVENT_FOUND_WITH_ID);
         }
+        return optional.get();
     }
 
     @Override
@@ -149,6 +156,21 @@ public class EventManagementServiceImpl implements EventManagementService {
                                 .map(Mapper::mapUserEventToReservationResponseDTO)
                                 .filter(Objects::nonNull)
                                 .collect(Collectors.toList())
+                ));
+    }
+
+    @Override
+    public ResponseEntity<ApiResponse> sendEventReminder(EventReminderRequest eventReminder) {
+        Event event = validateEventId(eventReminder.getEventId());
+        Utils.validateEventUsersAndDate(event);
+        for (UserEvent userEvent : event.getUserEvents()) {
+            notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ApiResponse<>(true,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK,
+                        EVENT_REMINDER_SENT_SUCCESSFULLY
                 ));
     }
 }

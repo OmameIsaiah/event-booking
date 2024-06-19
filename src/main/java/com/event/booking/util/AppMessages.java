@@ -55,6 +55,8 @@ public class AppMessages {
     public static final String NO_EVENT_RESERVATIONS_FOUND = "Oops! No event reservations found.";
     public static final String NO_USER_FOUND_WITH_UUID = "Oops! No user found with the uuid provided, please check.";
     public static final String NO_EVENT_FOUND_WITH_ID = "Oops! No event found with the id provided, please check.";
+    public static final String NO_RECORD_OF_USERS_FOR_THE_EVENT = "Oops! No user(s) have reserve ticket for this event, please check.";
+    public static final String EVENT_DATE_PASSED = "Oops! This event has already occurred, the date is in the passed, please check.";
     public static final String NO_RESERVATION_FOUND_WITH_NO = "Oops! No reservation found with the number provided, please check.";
     public static final String NO_SPACE_AVAILABLE = "Oops! No more space available for this event.";
     public static final String ATTENDEES_COUNT_MORE_THAN_AVAILABLE_SPACE = "Oops! Your attendees count is more that the available space left for this event.";
@@ -76,6 +78,7 @@ public class AppMessages {
     public static final String USER_RESERVATION_DELETED_SUCCESSFULLY = "Awesome! Your reservations has been deleted successfully.";
     public static final String EVENT_RETRIEVED_SUCCESSFULLY = "Awesome! Events retrieved successfully.";
     public static final String EVENT_RESERVED_SUCCESSFULLY = "Awesome! Your reservation was successful. An email has been sent to you with the details of your reservation.";
+    public static final String EVENT_REMINDER_SENT_SUCCESSFULLY = "Awesome! Event reminder sent successfully.";
     public static final String USERS_DELETED_SUCCESSFULLY = "Awesome! User deleted successfully.";
     public static final String PROFILE_UPDATED_SUCCESSFULLY = "Awesome! User profile updated successfully.";
     public static final String PASSWORD_UPDATED_SUCCESSFULLY = "Awesome! Password updated successfully.";
