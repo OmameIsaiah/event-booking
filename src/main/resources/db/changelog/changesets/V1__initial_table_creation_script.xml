@@ -33,7 +33,7 @@
                   `uuid` varchar(255) DEFAULT NULL,
                   `description` varchar(255) DEFAULT NULL,
                   `name` varchar(255) DEFAULT NULL,
-                  `permissions` varchar(255) DEFAULT NULL,
+                  `permissions` text DEFAULT NULL,
                   PRIMARY KEY (`id`),
                   UNIQUE KEY `UK_ofx66keruapi6vyqpv6f2or37` (`name`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

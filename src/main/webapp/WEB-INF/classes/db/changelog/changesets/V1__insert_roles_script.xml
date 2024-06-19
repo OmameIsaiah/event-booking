@@ -8,7 +8,7 @@
             <![CDATA[
 
                 INSERT IGNORE INTO `event_booking_container`.`roles`(`id`,`date_created`,`last_modified`,`uuid`,`description`,`name`,`permissions`)
-                VALUES(0,'2024-06-5 10:30:10','2024-06-5 10:30:10',"18b56dc6-9813-440a-8c82-baf2eb10f264",'Role for administrators','ROLE_ADMIN','["CAN_VIEW_EVENTS","CAN_SEARCH_EVENTS","CAN_RESERVE_EVENT_TICKET","CAN_CREATE_EVENT","CAN_SEND_EVENT_NOTIFICATION","CAN_VIEW_USERS","CAN_DELETE_USERS","CAN_ADD_ROLE","CAN_UPDATE_ROLE","CAN_DELETE_ROLE"]');
+                VALUES(0,'2024-06-5 10:30:10','2024-06-5 10:30:10',"18b56dc6-9813-440a-8c82-baf2eb10f264",'Role for administrators','ROLE_ADMIN','["CAN_VIEW_EVENTS","CAN_SEARCH_EVENTS","CAN_RESERVE_EVENT_TICKET","CAN_CREATE_EVENT","CAN_UPDATE_EVENT","CAN_DELETE_EVENT","CAN_VIEW_ALL_RESERVATIONS","CAN_SEND_EVENT_NOTIFICATION","CAN_VIEW_USERS","CAN_DELETE_USERS","CAN_ADD_ROLE","CAN_UPDATE_ROLE","CAN_DELETE_ROLE"]');
 
                 INSERT IGNORE INTO `event_booking_container`.`roles`(`id`,`date_created`,`last_modified`,`uuid`,`description`,`name`,`permissions`)
                 VALUES(0,'2024-06-5 10:30:10','2024-06-5 10:30:10',"cae15553-1148-49c1-8e9d-f3dea70fb4d1",'Role for users','ROLE_USER','["CAN_VIEW_EVENTS","CAN_SEARCH_EVENTS","CAN_RESERVE_EVENT_TICKET"]');
