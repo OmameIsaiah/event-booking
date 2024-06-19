@@ -19,7 +19,7 @@ import static com.event.booking.util.EndpointsURL.*;
 
 @RestController
 @RequestMapping(value = PROFILE_BASE_URL, headers = "Accept=application/json")
-@Api(tags = "profile route", description = "Endpoints for fetching and updating user profile info, updating password and signing out", consumes = "application/json", produces = "application/json", protocols = "https", value = "profile route")
+@Api(tags = "profile route", description = "Endpoints for fetching and updating user profile info, updating password and signing out [Accessible to ALL users with valid authorization]", consumes = "application/json", produces = "application/json", protocols = "https", value = "profile route")
 @RequiredArgsConstructor
 public class UserProfileRoute {
     private final UserProfileService userProfileService;

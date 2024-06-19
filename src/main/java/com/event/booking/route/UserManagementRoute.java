@@ -15,7 +15,7 @@ import static com.event.booking.util.EndpointsURL.*;
 
 @RestController
 @RequestMapping(value = USER_MANAGEMENT_BASE_URL, headers = "Accept=application/json")
-@Api(tags = "user management route", description = "Endpoints for searching, filtering and deleting users [Accessible only to ADMIN users]", consumes = "application/json", produces = "application/json", protocols = "https", value = "user management route")
+@Api(tags = "user management route", description = "Endpoints for searching, filtering and deleting users [Accessible only to ADMIN users with valid authorization]", consumes = "application/json", produces = "application/json", protocols = "https", value = "user management route")
 @RequiredArgsConstructor
 public class UserManagementRoute {
     private final UserManagementService userManagementService;

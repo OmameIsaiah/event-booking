@@ -1,15 +1,24 @@
 package com.event.booking.util;
 
+import com.event.booking.dto.request.TicketRequest;
 import com.event.booking.enums.UserType;
+import com.event.booking.exceptions.BadRequestException;
+import com.event.booking.exceptions.RecordNotFoundException;
+import com.event.booking.model.Event;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.data.domain.Page;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static com.event.booking.util.AppMessages.*;
 
 public class Utils {
     private static String OTP_EXPIRE_TIME = "600";
@@ -79,4 +88,28 @@ public class Utils {
             return null;
         }
     }
+
+    public static void checkIfEventsAreFound(Page<Event> events) {
+        if (events.isEmpty() || Objects.isNull(events)) {
+            throw new RecordNotFoundException(NO_EVENT_FOUND);
+        }
+    }
+
+    public static void checkIfEventsAreFound(List<Event> events) {
+        if (events.isEmpty() || Objects.isNull(events)) {
+            throw new RecordNotFoundException(NO_EVENT_FOUND);
+        }
+    }
+    public static Event validateReservationEvent(TicketRequest ticketRequest, Optional<Event> optional) {
+        Event event = optional.get();
+        if (event.getAvailableAttendeesCount() <= 0) {
+            throw new BadRequestException(NO_SPACE_AVAILABLE);
+        }
+        if (event.getAvailableAttendeesCount() < ticketRequest.getAttendeesCount()) {
+            throw new BadRequestException(ATTENDEES_COUNT_MORE_THAN_AVAILABLE_SPACE);
+        }
+        return event;
+    }
+
+
 }

@@ -20,7 +20,5 @@ public interface EventReservationService {
 
     ResponseEntity<ApiResponse> viewMyReservations(HttpServletRequest httpServletRequest, Integer page, Integer size);
 
-    ResponseEntity<ApiResponse> deleteEventReservation(HttpServletRequest httpServletRequest, Long eventId);
-
-    ResponseEntity<ApiResponse> updateEventReservation(HttpServletRequest httpServletRequest, Long eventId, TicketRequest ticketRequest);
+    ResponseEntity<ApiResponse> deleteMyEventReservation(HttpServletRequest httpServletRequest, String reservationNo);
 }

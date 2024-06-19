@@ -26,7 +26,9 @@ public class EventRequestDTO implements Serializable {
     @Max(value = 1000, message = AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Min(value = 0, message = MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Positive(message = NEGATIVE_AVAILABLE_ATTENDEES_COUNT)
+    @NotNull(message = NULL_AVAILABLE_ATTENDEES_COUNT)
     private Integer availableAttendeesCount;
     @Enumerated(EnumType.STRING)
+    @NotNull(message = NULL_CATEGORY)
     private Category category;
 }

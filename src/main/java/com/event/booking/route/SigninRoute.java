@@ -18,7 +18,7 @@ import static com.event.booking.util.EndpointsURL.ENTRANCE_SIGNIN;
 
 @RestController
 @RequestMapping(value = ENTRANCE_BASE_URL, headers = "Accept=application/json")
-@Api(tags = "signin/entrance route", description = "Endpoints for user sign in.", consumes = "application/json", produces = "application/json", protocols = "https", value = "signin/entrance route")
+@Api(tags = "signin/entrance route", description = "Endpoints for user sign in [Accessible to ALL users, authorization NOT required]", consumes = "application/json", produces = "application/json", protocols = "https", value = "signin/entrance route")
 @RequiredArgsConstructor
 public class SigninRoute {
     private final SignInService signInService;

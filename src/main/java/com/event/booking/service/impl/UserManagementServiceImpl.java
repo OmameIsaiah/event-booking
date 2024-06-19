@@ -5,6 +5,7 @@ import com.event.booking.enums.UserType;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.model.User;
+import com.event.booking.repository.UserEventRepository;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.repository.UserRoleRepository;
 import com.event.booking.service.UserManagementService;
@@ -28,6 +29,7 @@ import static com.event.booking.util.AppMessages.*;
 public class UserManagementServiceImpl implements UserManagementService {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
+    private final UserEventRepository userEventRepository;
 
     @Override
     public ResponseEntity<ApiResponse> getAllUsers(Integer page, Integer size) {
@@ -39,7 +41,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        USERS_RETRIEVED_SUCCESSFUL,
+                        USERS_RETRIEVED_SUCCESSFULLY,
                         list.stream()
                                 .map(Mapper::mapUserProfileResponse)
                                 .filter(Objects::nonNull)
@@ -59,7 +61,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        USERS_RETRIEVED_SUCCESSFUL,
+                        USERS_RETRIEVED_SUCCESSFULLY,
                         list.stream()
                                 .map(Mapper::mapUserProfileResponse)
                                 .filter(Objects::nonNull)
@@ -80,7 +82,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        USERS_RETRIEVED_SUCCESSFUL,
+                        USERS_RETRIEVED_SUCCESSFULLY,
                         list.stream()
                                 .map(Mapper::mapUserProfileResponse)
                                 .filter(Objects::nonNull)
@@ -98,12 +100,13 @@ public class UserManagementServiceImpl implements UserManagementService {
             throw new RecordNotFoundException(NO_USER_FOUND_WITH_UUID);
         }
         userRoleRepository.deleteUserRoleByUserId(optional.get().getId());
+        userEventRepository.deleteUserEventByUserId(optional.get().getId());
         userRepository.deleteById(optional.get().getId());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        USERS_DELETED_SUCCESSFUL
+                        USERS_DELETED_SUCCESSFULLY
                 ));
     }
 }

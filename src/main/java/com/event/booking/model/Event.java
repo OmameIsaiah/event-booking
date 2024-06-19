@@ -36,6 +36,7 @@ public class Event extends BaseEntity implements Serializable {
     @Max(value = 1000, message = AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Min(value = 0, message = MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Positive(message = NEGATIVE_AVAILABLE_ATTENDEES_COUNT)
+    @NotNull(message = NULL_AVAILABLE_ATTENDEES_COUNT)
     private Integer availableAttendeesCount;
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
@@ -57,5 +58,45 @@ public class Event extends BaseEntity implements Serializable {
                 ", category=" + category +
                 ", userEvents=" + userEvents +
                 '}';
+    }
+
+    @Override
+    public void setUuid(String uuid) {
+        super.setUuid(uuid);
+    }
+
+    @Override
+    public String getUuid() {
+        return super.getUuid();
+    }
+
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
+    }
+
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
+
+    @Override
+    public void setDateCreated(LocalDateTime dateCreated) {
+        super.setDateCreated(dateCreated);
+    }
+
+    @Override
+    public LocalDateTime getDateCreated() {
+        return super.getDateCreated();
+    }
+
+    @Override
+    public void setLastModified(LocalDateTime lastModified) {
+        super.setLastModified(lastModified);
+    }
+
+    @Override
+    public LocalDateTime getLastModified() {
+        return super.getLastModified();
     }
 }

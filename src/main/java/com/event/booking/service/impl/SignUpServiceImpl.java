@@ -56,7 +56,7 @@ public class SignUpServiceImpl implements SignUpService {
                 new ApiResponse<>(true,
                         HttpStatus.CREATED.value(),
                         HttpStatus.CREATED,
-                        ACCOUNT_CREATION_SUCCESSFUL));
+                        ACCOUNT_CREATED_SUCCESSFULLY));
     }
 
     private User buildNewUserModel(SignUpRequest request, String[] otpAndTime) {
@@ -144,7 +144,7 @@ public class SignUpServiceImpl implements SignUpService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        OTP_SENT_SUCCESSFUL));
+                        OTP_SENT_SUCCESSFULLY));
     }
 
     private void processAndSendOTP(SendOTPRequest request) {

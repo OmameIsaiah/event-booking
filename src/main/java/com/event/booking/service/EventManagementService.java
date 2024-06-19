@@ -11,7 +11,7 @@ public interface EventManagementService {
 
     ResponseEntity<ApiResponse> updateEvent(EventUpdateRequestDTO eventUpdate);
 
-    ResponseEntity<ApiResponse> deleteEvent(String eventId);
+    ResponseEntity<ApiResponse> deleteEvent(Long eventId);
 
     ResponseEntity<ApiResponse> viewAllEventsReservations(Integer page, Integer size);
 

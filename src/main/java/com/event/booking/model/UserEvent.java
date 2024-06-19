@@ -3,11 +3,14 @@ package com.event.booking.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
+
+import static com.event.booking.util.AppMessages.*;
 
 @Entity
 @Table(name = "user_event")
@@ -17,6 +20,11 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class UserEvent extends BaseEntity {
+    @Column(name = "attendees_count")
+    @Min(value = 1, message = MIN_ATTENDEES_COUNT_EXCEEDED)
+    @Positive(message = NEGATIVE_ATTENDEES_COUNT)
+    @NotNull(message = NULL_ATTENDEES_COUNT)
+    private Integer attendeesCount;
     @JoinColumn(name = "eventid", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore
@@ -33,6 +41,7 @@ public class UserEvent extends BaseEntity {
                 ", uuid='" + super.getUuid() + '\'' +
                 ", lastModified=" + super.getLastModified() +
                 ", dateCreated=" + super.getDateCreated() +
+                ", attendeesCount=" + attendeesCount +
                 ", eventid=" + eventid +
                 ", userevent=" + userevent +
                 '}';

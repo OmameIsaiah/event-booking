@@ -35,17 +35,6 @@ public class UserProfileServiceImpl implements UserProfileService {
                 .orElseThrow(() -> new RecordNotFoundException(WRONG_ACCOUNT_EMAIL));
     }
 
-    private String validateAuthorizedUser(Authentication authentication) {
-        if (Objects.isNull(authentication)) {
-            throw new UnauthorizedException(INVALID_AUTHORIZATION_TOKEN);
-        }
-        String username = jwtUtils.getUsernameFromAuthentication(authentication);
-        if (Objects.isNull(username)) {
-            throw new UnauthorizedException(INVALID_AUTHORIZATION_TOKEN);
-        }
-        return username;
-    }
-
     private String validateAuthorizedUser(HttpServletRequest httpServletRequest) {
         if (Objects.isNull(httpServletRequest)) {
             throw new UnauthorizedException(INVALID_AUTHORIZATION_TOKEN);
@@ -64,7 +53,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        PROFILE_RETRIEVED_SUCCESSFUL,
+                        PROFILE_RETRIEVED_SUCCESSFULLY,
                         Mapper.mapUserProfileResponse(user)
                 ));
     }
@@ -79,7 +68,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        PROFILE_UPDATED_SUCCESSFUL,
+                        PROFILE_UPDATED_SUCCESSFULLY,
                         Mapper.mapUserProfileResponse(user)
                 ));
     }
@@ -106,7 +95,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        PASSWORD_UPDATED_SUCCESSFUL,
+                        PASSWORD_UPDATED_SUCCESSFULLY,
                         Mapper.mapUserProfileResponse(user)
                 ));
     }
@@ -138,7 +127,7 @@ public class UserProfileServiceImpl implements UserProfileService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        SIGN_OUT_SUCCESSFUL
+                        SIGN_OUT_SUCCESSFULLY
                 ));
     }
 }

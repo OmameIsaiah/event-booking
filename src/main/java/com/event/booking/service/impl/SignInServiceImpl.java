@@ -45,7 +45,7 @@ public class SignInServiceImpl implements SignInService {
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
-                        SIGN_IN_SUCCESSFUL,
+                        SIGN_IN_SUCCESSFULLY,
                         SignInResponse.builder()
                                 .userAccountData(userData)
                                 .jwtTokenData(JwtData.builder()
