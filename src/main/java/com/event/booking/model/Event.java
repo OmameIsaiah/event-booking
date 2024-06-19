@@ -35,7 +35,7 @@ public class Event extends BaseEntity implements Serializable {
     @Column(name = "available_attendees_count")
     @Max(value = 1000, message = AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Min(value = 0, message = MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
-    @Positive(message = NEGATIVE_AVAILABLE_ATTENDEES_COUNT)
+    @PositiveOrZero(message = NEGATIVE_AVAILABLE_ATTENDEES_COUNT)
     @NotNull(message = NULL_AVAILABLE_ATTENDEES_COUNT)
     private Integer availableAttendeesCount;
     @Column(name = "category")

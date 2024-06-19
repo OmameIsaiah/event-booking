@@ -25,28 +25,28 @@ public class UserProfileRoute {
     private final UserProfileService userProfileService;
 
     @GetMapping(value = PROFILE_INFO, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint fetching user profile info")
+    @ApiOperation("Endpoint for fetching user profile info")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> getProfileInfo(HttpServletRequest httpServletRequest) {
         return userProfileService.getProfileInfo(httpServletRequest);
     }
 
-    @PostMapping(value = PROFILE_UPDATE_INFO, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint updating user profile info")
+    @PutMapping(value = PROFILE_UPDATE_INFO, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Endpoint for updating user profile info")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> updateProfileInfo(@RequestBody @Valid UpdateProfileRequest request, HttpServletRequest httpServletRequest) {
         return userProfileService.updateProfileInfo(httpServletRequest, request);
     }
 
-    @PostMapping(value = PROFILE_UPDATE_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint updating password")
+    @PutMapping(value = PROFILE_UPDATE_PASSWORD, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation("Endpoint for updating password")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> updatePassword(@RequestBody @Valid UpdatePasswordRequest request, HttpServletRequest httpServletRequest) {
         return userProfileService.updatePassword(httpServletRequest, request);
     }
 
     @PostMapping(value = PROFILE_SIGNOUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint signing out")
+    @ApiOperation("Endpoint for signing out")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> signOut(HttpServletRequest httpServletRequest) {
         return userProfileService.signOut(httpServletRequest);

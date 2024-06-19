@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.event.booking.util.EndpointsURL.AUTH_BASE_URL;
 import static com.event.booking.util.EndpointsURL.AUTH_TOKEN_URL;
 
@@ -24,7 +26,7 @@ public class AuthRoute {
     @PostMapping(value = AUTH_TOKEN_URL, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for authenticating a user")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ApiResponse> authenticate(Credentials credentials) {
+    public ResponseEntity<ApiResponse> authenticate(@RequestBody @Valid Credentials credentials) {
         return authenticationService.authenticate(credentials);
     }
 }

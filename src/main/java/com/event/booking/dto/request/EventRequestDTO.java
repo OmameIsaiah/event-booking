@@ -24,7 +24,7 @@ public class EventRequestDTO implements Serializable {
     @NotNull(message = NULL_EVENT_DATE)
     private String eventDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
     @Max(value = 1000, message = AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
-    @Min(value = 0, message = MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
+    @Min(value = 1, message = MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Positive(message = NEGATIVE_AVAILABLE_ATTENDEES_COUNT)
     @NotNull(message = NULL_AVAILABLE_ATTENDEES_COUNT)
     private Integer availableAttendeesCount;

@@ -24,6 +24,9 @@ public class Utils {
     private static String OTP_EXPIRE_TIME = "600";
     public static String DATE_CREATED = "date_created";
     public static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DEFAULT_DATE = "2024-06-30 10:30:00";
+    public static final String DEFAULT_START_DATE = "2024-06-15 10:30:00";
+    public static final String DEFAULT_END_DATE = "2024-10-31 11:59:59";
     static EmailValidator validator = EmailValidator.getInstance();
 
     public static Boolean isEmailValid(String email) {
@@ -100,6 +103,7 @@ public class Utils {
             throw new RecordNotFoundException(NO_EVENT_FOUND);
         }
     }
+
     public static Event validateReservationEvent(TicketRequest ticketRequest, Optional<Event> optional) {
         Event event = optional.get();
         if (event.getAvailableAttendeesCount() <= 0) {

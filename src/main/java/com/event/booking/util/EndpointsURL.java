@@ -23,4 +23,22 @@ public class EndpointsURL {
     public static final String USER_MANAGEMENT_FILTER = "/filter";
     public static final String USER_MANAGEMENT_SEARCH = "/search";
     public static final String USER_MANAGEMENT_DELETE = "/delete/{uuid}";
+
+
+    public static final String EVENT_MANAGEMENT_BASE_URL = "/api/v1/events";
+    public static final String CREATE_EVENT = "";
+    public static final String UPDATE_EVENT = "";
+    public static final String DELETE_EVENT = "/{eventId}";
+    public static final String EVENTS_RESERVATIONS = "/all/reservations";
+    public static final String EVENTS_FILTER = "/all/reservations/filter";
+
+
+    public static final String EVENT_RESERVATION_BASE_URL = "/api/v1/events";
+    public static final String FIND_ALL_EVENTS = "";
+    public static final String FILTER_EVENTS = "/filter";
+    public static final String SEARCH_EVENTS_NAME = "/search/name";
+    public static final String SEARCH_EVENTS_DATE_RANGE = "/search/date-range";
+    public static final String RESERVE_TICKET = "/{eventId}/tickets";
+    public static final String VIEW_MY_RESERVATIONS = "/my-reservations";
+    public static final String DELETE_MY_RESERVATIONS = "/reservations/{reservationNo}";
 }
