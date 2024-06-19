@@ -23,9 +23,5 @@ public class SignUpRequest implements Serializable {
     @NotEmpty(message = EMPTY_PASSWORD_PARAM)
     @Size(min = 8, message = MIN_PASSWORD_LENGTH_NOT_REACHED)
     private String password;
-    @NotNull(message = NULL_PASSWORD_PARAM)
-    @NotEmpty(message = EMPTY_PASSWORD_PARAM)
-    @Size(min = 8, message = MIN_PASSWORD_LENGTH_NOT_REACHED)
-    private String confirmPassword;
     private UserType userType = UserType.ADMIN;
 }

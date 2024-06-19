@@ -31,7 +31,7 @@ public class EndpointsURL {
     public static final String DELETE_EVENT = "/{eventId}";
     public static final String EVENTS_RESERVATIONS = "/all/reservations";
     public static final String EVENTS_FILTER = "/all/reservations/filter";
-    public static final String EVENT_REMINDER = "/send/reminder";
+    public static final String EVENT_REMINDER = "/send-reminder";
 
 
     public static final String EVENT_RESERVATION_BASE_URL = "/api/v1/events";

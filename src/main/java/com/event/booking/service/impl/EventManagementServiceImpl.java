@@ -1,10 +1,8 @@
 package com.event.booking.service.impl;
 
-import com.event.booking.dto.request.EventReminderRequest;
 import com.event.booking.dto.request.EventRequestDTO;
 import com.event.booking.dto.request.EventUpdateRequestDTO;
 import com.event.booking.dto.response.ApiResponse;
-import com.event.booking.dto.response.ReservationResponseDTO;
 import com.event.booking.enums.Category;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.DuplicateRecordException;
@@ -18,11 +16,14 @@ import com.event.booking.service.EventManagementService;
 import com.event.booking.util.Mapper;
 import com.event.booking.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,6 +36,7 @@ import static com.event.booking.util.AppMessages.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EventManagementServiceImpl implements EventManagementService {
     private final EventRepository eventRepository;
     private final UserEventRepository userEventRepository;
@@ -160,8 +162,8 @@ public class EventManagementServiceImpl implements EventManagementService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> sendEventReminder(EventReminderRequest eventReminder) {
-        Event event = validateEventId(eventReminder.getEventId());
+    public ResponseEntity<ApiResponse> sendEventReminder(Long eventId) {
+        Event event = validateEventId(eventId);
         Utils.validateEventUsersAndDate(event);
         for (UserEvent userEvent : event.getUserEvents()) {
             notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
@@ -172,5 +174,32 @@ public class EventManagementServiceImpl implements EventManagementService {
                         HttpStatus.OK,
                         EVENT_REMINDER_SENT_SUCCESSFULLY
                 ));
+    }
+
+    @Scheduled(cron = "0 * * * * *")
+    @Transactional
+    public void sendEventReminderJob() {
+        List<Event> eventList = eventRepository.findAll();
+        if (!eventList.isEmpty()) {
+            for (Event event : eventList) {
+                if (Objects.isNull(event.getUserEvents())) {
+                    log.info(NO_RECORD_OF_USERS_FOR_THE_EVENT);
+                    continue;
+                }
+                if (event.getUserEvents().isEmpty()) {
+                    log.info(NO_RECORD_OF_USERS_FOR_THE_EVENT);
+                    continue;
+                }
+                if (event.getEventDate().isBefore(LocalDateTime.now())) {
+                    log.info(EVENT_DATE_PASSED);
+                    continue;
+                }
+                if (Utils.checkIfTimeIsExactly1HourToEventTime(event.getEventDate())) {
+                    for (UserEvent userEvent : event.getUserEvents()) {
+                        notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
+                    }
+                }
+            }
+        }
     }
 }

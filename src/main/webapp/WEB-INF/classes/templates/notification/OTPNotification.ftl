@@ -39,7 +39,7 @@
     </div>
 </div>
 <div style="padding: 40px;">
-    <div style="font-size: 15px; margin-bottom: 25px; margin-top: 25px; text-align: center; line-height: 30px; color: #666666;">
+    <div style="font-size: 15px; margin-bottom: 10px; margin-top: -40px; text-align: left; line-height: 30px; color: #666666;">
         Kindly note that this OTP is temporary and will expire in few minutes. If you did not create an account with Event Booking
         Ltd., please disregard this email.
     </div>

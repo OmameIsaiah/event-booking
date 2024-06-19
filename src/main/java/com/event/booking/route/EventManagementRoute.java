@@ -1,6 +1,5 @@
 package com.event.booking.route;
 
-import com.event.booking.dto.request.EventReminderRequest;
 import com.event.booking.dto.request.EventRequestDTO;
 import com.event.booking.dto.request.EventUpdateRequestDTO;
 import com.event.booking.dto.response.ApiResponse;
@@ -20,7 +19,7 @@ import static com.event.booking.util.EndpointsURL.*;
 
 @RestController
 @RequestMapping(value = EVENT_MANAGEMENT_BASE_URL, headers = "Accept=application/json")
-@Api(tags = "event management route", description = "Endpoints for creating, updating, deleting and viewing all events [Accessible only to ADMIN users with valid authorization]", consumes = "application/json", produces = "application/json", protocols = "https", value = "event management route")
+@Api(tags = "event management route", description = "Endpoints for creating, updating, deleting, viewing and sending event reminders [Accessible only to ADMIN users with valid authorization]", consumes = "application/json", produces = "application/json", protocols = "https", value = "event management route")
 @RequiredArgsConstructor
 public class EventManagementRoute {
     private final EventManagementService eventManagementService;
@@ -66,7 +65,7 @@ public class EventManagementRoute {
     @PostMapping(value = EVENT_REMINDER, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation("Endpoint for sending event reminder to all users that reserve a ticket for an event")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ApiResponse> sendEventReminder(@RequestBody @Valid EventReminderRequest eventReminder) {
-        return eventManagementService.sendEventReminder(eventReminder);
+    public ResponseEntity<ApiResponse> sendEventReminder(@RequestParam("eventId") Long eventId) {
+        return eventManagementService.sendEventReminder(eventId);
     }
 }

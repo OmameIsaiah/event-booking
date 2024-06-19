@@ -10,6 +10,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.Page;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -125,6 +126,9 @@ public class Utils {
         if (Objects.isNull(event.getUserEvents())) {
             throw new BadRequestException(NO_RECORD_OF_USERS_FOR_THE_EVENT);
         }
+        if (event.getUserEvents().isEmpty()) {
+            throw new BadRequestException(NO_RECORD_OF_USERS_FOR_THE_EVENT);
+        }
         if (event.getEventDate().isBefore(LocalDateTime.now())) {
             throw new BadRequestException(EVENT_DATE_PASSED);
         }
@@ -142,5 +146,10 @@ public class Utils {
         model.put("attendeesCount", request.getAttendeesCount());
         model.put("eventCategory", request.getEventCategory());
         return model;
+    }
+    public static boolean checkIfTimeIsExactly1HourToEventTime(LocalDateTime eventTime) {
+        if (Objects.isNull(eventTime))
+            return false;
+        return Duration.between(LocalDateTime.now(), eventTime).getSeconds() == 3600;
     }
 }
