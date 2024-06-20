@@ -70,7 +70,7 @@ public class EventReservationRoute {
     }
 
     @GetMapping(value = VIEW_MY_RESERVATIONS, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint for viewing all reservations for a user")
+    @ApiOperation("Endpoint for viewing all reservations/booked events by a user")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> viewMyReservations(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                           @RequestParam(value = "size", defaultValue = "50") Integer size,

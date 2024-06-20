@@ -12,6 +12,7 @@ import com.event.booking.model.Event;
 import com.event.booking.model.User;
 import com.event.booking.model.UserEvent;
 import com.event.booking.notification.EmailNotificationService;
+import com.event.booking.notification.kafka.MessageProducer;
 import com.event.booking.repository.EventRepository;
 import com.event.booking.repository.UserEventRepository;
 import com.event.booking.repository.UserRepository;
@@ -35,6 +36,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.event.booking.util.AppMessages.*;
+import static com.event.booking.util.Utils.EMAIL_SIGNUP_OTP;
+import static com.event.booking.util.Utils.EMAIL_TICKET_RESERVATION;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +45,8 @@ public class EventReservationServiceImpl implements EventReservationService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final UserEventRepository userEventRepository;
-    private final EmailNotificationService notificationService;
+    //private final EmailNotificationService notificationService;
+    private final MessageProducer messageProducer;
     private final JwtUtils jwtUtils;
 
     private User validateUserByEmail(String email) {
@@ -107,7 +111,8 @@ public class EventReservationServiceImpl implements EventReservationService {
         event = eventRepository.save(event);
         UserEvent userEvent = buildNewUserEventModel(ticketRequest, user, event);
         ReservationResponseDTO reservationResponseDTO = Mapper.mapUserEventToReservationResponseDTO(userEvent);
-        notificationService.sendTicketReservationEmail(reservationResponseDTO);
+        messageProducer.sendMessage(EMAIL_TICKET_RESERVATION, reservationResponseDTO);
+        //notificationService.sendTicketReservationEmail(reservationResponseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ApiResponse<>(true,
                         HttpStatus.CREATED.value(),

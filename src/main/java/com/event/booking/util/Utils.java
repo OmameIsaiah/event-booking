@@ -6,6 +6,8 @@ import com.event.booking.enums.UserType;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.model.Event;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.Page;
 
@@ -18,6 +20,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static com.event.booking.config.UnixEpochDateTypeAdapter.getUnixEpochDateTypeAdapter;
 import static com.event.booking.util.AppMessages.*;
 
 public class Utils {
@@ -31,9 +34,23 @@ public class Utils {
     private static String OTP_EXPIRE_TIME = "600";
     public static String DATE_CREATED = "date_created";
     public static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String DEFAULT_DATE = "2024-06-30 10:30:00";
+    public static final String DEFAULT_DATE_FORMAT = "2024-06-30 10:30:00";
     public static final String DEFAULT_START_DATE = "2024-06-15 10:30:00";
     public static final String DEFAULT_END_DATE = "2024-10-31 11:59:59";
+    public static final String ONE_MINUTE_CRON_JOB = "0 * * * * *";
+
+    public static final String TOPIC_NOTIFICATION = "email-notification";
+    public static final String EMAIL_SIGNUP_OTP = "signup-otp";
+    public static final String EMAIL_TICKET_RESERVATION = "ticket-reservation";
+    public static final String EMAIL_EVENT_REMINDER = "event-reminder";
+    public static final String SMS_TOPIC = "sms-topic";
+    public static Gson getGson() {
+        final Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Date.class, getUnixEpochDateTypeAdapter())
+                .create();
+
+        return gson;
+    }
     static EmailValidator validator = EmailValidator.getInstance();
 
     public static Boolean isEmailValid(String email) {
@@ -147,6 +164,7 @@ public class Utils {
         model.put("eventCategory", request.getEventCategory());
         return model;
     }
+
     public static boolean checkIfTimeIsExactly1HourToEventTime(LocalDateTime eventTime) {
         if (Objects.isNull(eventTime))
             return false;

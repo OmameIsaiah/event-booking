@@ -9,7 +9,7 @@ import com.event.booking.exceptions.DuplicateRecordException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.model.Event;
 import com.event.booking.model.UserEvent;
-import com.event.booking.notification.EmailNotificationService;
+import com.event.booking.notification.kafka.MessageProducer;
 import com.event.booking.repository.EventRepository;
 import com.event.booking.repository.UserEventRepository;
 import com.event.booking.service.EventManagementService;
@@ -33,6 +33,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.event.booking.util.AppMessages.*;
+import static com.event.booking.util.Utils.EMAIL_EVENT_REMINDER;
+import static com.event.booking.util.Utils.ONE_MINUTE_CRON_JOB;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +42,8 @@ import static com.event.booking.util.AppMessages.*;
 public class EventManagementServiceImpl implements EventManagementService {
     private final EventRepository eventRepository;
     private final UserEventRepository userEventRepository;
-    private final EmailNotificationService notificationService;
+    //private final EmailNotificationService notificationService;
+    private final MessageProducer messageProducer;
 
     @Override
     public ResponseEntity<ApiResponse> createEvent(EventRequestDTO event) {
@@ -166,7 +169,8 @@ public class EventManagementServiceImpl implements EventManagementService {
         Event event = validateEventId(eventId);
         Utils.validateEventUsersAndDate(event);
         for (UserEvent userEvent : event.getUserEvents()) {
-            notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
+            messageProducer.sendMessage(EMAIL_EVENT_REMINDER, Mapper.mapUserEventToReservationResponseDTO(userEvent));
+            //notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
@@ -176,7 +180,7 @@ public class EventManagementServiceImpl implements EventManagementService {
                 ));
     }
 
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = ONE_MINUTE_CRON_JOB)
     @Transactional
     public void sendEventReminderJob() {
         List<Event> eventList = eventRepository.findAll();
@@ -196,7 +200,8 @@ public class EventManagementServiceImpl implements EventManagementService {
                 }
                 if (Utils.checkIfTimeIsExactly1HourToEventTime(event.getEventDate())) {
                     for (UserEvent userEvent : event.getUserEvents()) {
-                        notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
+                        messageProducer.sendMessage(EMAIL_EVENT_REMINDER, Mapper.mapUserEventToReservationResponseDTO(userEvent));
+                        //notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
                     }
                 }
             }

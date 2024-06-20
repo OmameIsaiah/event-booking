@@ -15,10 +15,12 @@ import com.event.booking.model.Role;
 import com.event.booking.model.User;
 import com.event.booking.model.UserRole;
 import com.event.booking.notification.EmailNotificationService;
+import com.event.booking.notification.kafka.MessageProducer;
 import com.event.booking.repository.RoleRepository;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.repository.UserRoleRepository;
 import com.event.booking.service.SignUpService;
+import com.event.booking.util.Mapper;
 import com.event.booking.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.event.booking.util.AppMessages.*;
+import static com.event.booking.util.Utils.EMAIL_EVENT_REMINDER;
+import static com.event.booking.util.Utils.EMAIL_SIGNUP_OTP;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +42,8 @@ public class SignUpServiceImpl implements SignUpService {
     private final RoleRepository roleRepository;
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmailNotificationService notificationService;
+    //private final EmailNotificationService notificationService;
+    private final MessageProducer messageProducer;
 
     private User validateUserByEmail(String email) {
         return userRepository.findUserByEmail(email)
@@ -154,13 +159,14 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private void sendSignupOTP(User user, String[] otpAndTime) {
-        OTPNotificationRequest notificationRequest = OTPNotificationRequest
-                .builder()
-                .name(user.getName())
-                .email(user.getEmail())
-                .otp(otpAndTime[0])
-                .build();
-        notificationService.sendOTPNotification(notificationRequest);
+        messageProducer.sendMessage(EMAIL_SIGNUP_OTP,
+                OTPNotificationRequest
+                        .builder()
+                        .name(user.getName())
+                        .email(user.getEmail())
+                        .otp(otpAndTime[0])
+                        .build());
+        // notificationService.sendOTPNotification(notificationRequest);
     }
 
     @Override

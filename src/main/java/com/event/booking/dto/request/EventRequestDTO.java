@@ -7,11 +7,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static com.event.booking.util.AppMessages.*;
-import static com.event.booking.util.Utils.DATE_FORMAT;
+import static com.event.booking.util.Utils.DEFAULT_DATE_FORMAT;
 
 @Data
 public class EventRequestDTO implements Serializable {
@@ -22,7 +20,7 @@ public class EventRequestDTO implements Serializable {
     @Size(max = 500, message = MAX_EVENT_DESCRIPTION_LIMIT_EXCEEDED)
     private String description;
     @NotNull(message = NULL_EVENT_DATE)
-    private String eventDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT));
+    private String eventDate = DEFAULT_DATE_FORMAT;
     @Max(value = 1000, message = AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Min(value = 1, message = MIN_AVAILABLE_ATTENDEES_COUNT_EXCEEDED)
     @Positive(message = NEGATIVE_AVAILABLE_ATTENDEES_COUNT)
