@@ -11,22 +11,26 @@ spring:
     consumer:
       group-id: event-booking-group-id
     producer:
-      bootstrap-servers: http://${server.host}:19092
+      bootstrap-servers: http://event_booking_kafka:19092
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${server.host}:3388/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    url: jdbc:mysql://127.0.0.1:3388/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://event_booking_mysql:3306/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     username: root
     password: eVen20tBoo_ING_24
     jmx:
       default-domain: event-booking
-  liquibase:
-    contexts: dev
-    url: jdbc:mysql://${server.host}:3388/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+  flyway:
+    baselineOnMigrate: true
+    validateOnMigrate: false
+    enabled: true
+    locations: classpath:db/migration/mysql
+    schemas: event_booking_container
+    url: jdbc:mysql://127.0.0.1:3388/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://event_booking_mysql:3306/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
     user: root
     password: eVen20tBoo_ING_24
-    change-log: classpath:/db/changelog/db.changelog-master.xml
-    enabled: true
-    dropFirst: false
+    depends-on: entityManagerFactory
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: false

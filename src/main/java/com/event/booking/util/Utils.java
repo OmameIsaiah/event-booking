@@ -33,7 +33,7 @@ public class Utils {
     public static String EMAIL_TEMPLATES_DIR = "/templates/notification";
     private static String OTP_EXPIRE_TIME = "600";
     public static String DATE_CREATED = "date_created";
-    public static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String DEFAULT_DATE_FORMAT = "2024-06-30 10:30:00";
     public static final String DEFAULT_START_DATE = "2024-06-15 10:30:00";
     public static final String DEFAULT_END_DATE = "2024-10-31 11:59:59";
@@ -44,6 +44,7 @@ public class Utils {
     public static final String EMAIL_TICKET_RESERVATION = "ticket-reservation";
     public static final String EMAIL_EVENT_REMINDER = "event-reminder";
     public static final String SMS_TOPIC = "sms-topic";
+
     public static Gson getGson() {
         final Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Date.class, getUnixEpochDateTypeAdapter())
@@ -51,6 +52,7 @@ public class Utils {
 
         return gson;
     }
+
     static EmailValidator validator = EmailValidator.getInstance();
 
     public static Boolean isEmailValid(String email) {

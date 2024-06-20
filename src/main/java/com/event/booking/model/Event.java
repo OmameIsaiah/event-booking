@@ -2,6 +2,7 @@ package com.event.booking.model;
 
 import com.event.booking.enums.Category;
 import com.event.booking.model.listener.EntityListener;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.event.booking.util.AppMessages.*;
+import static com.event.booking.util.Utils.DATE_FORMAT;
 
 @Entity
 @Table(name = "event")
@@ -31,6 +33,7 @@ public class Event extends BaseEntity implements Serializable {
     @Size(max = 500, message = MAX_EVENT_DESCRIPTION_LIMIT_EXCEEDED)
     private String description;
     @Column(name = "event_date")
+    @JsonFormat(pattern = DATE_FORMAT)
     private LocalDateTime eventDate;
     @Column(name = "available_attendees_count")
     @Max(value = 1000, message = AVAILABLE_ATTENDEES_COUNT_EXCEEDED)

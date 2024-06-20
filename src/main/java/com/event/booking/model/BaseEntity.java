@@ -1,5 +1,6 @@
 package com.event.booking.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static com.event.booking.util.Utils.DATE_FORMAT;
 
 @MappedSuperclass
 @Setter
@@ -22,8 +25,10 @@ public class BaseEntity implements Serializable {
     private String uuid;
     @Column(name = "last_modified")
     @UpdateTimestamp
+    @JsonFormat(pattern = DATE_FORMAT)
     private LocalDateTime lastModified;
     @Column(name = "date_created")
     @CreationTimestamp
+    @JsonFormat(pattern = DATE_FORMAT)
     private LocalDateTime dateCreated;
 }
