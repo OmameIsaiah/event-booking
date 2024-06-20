@@ -11,29 +11,39 @@ spring:
     consumer:
       group-id: event-booking-group-id
     producer:
-      bootstrap-servers: http://event_booking_kafka:19092
+      bootstrap-servers: http://${server.host}:19092
+  h2:
+    console.enabled: true
+    console:
+      path: /h2-console
+      settings.trace: false
+      settings.web-allow-others: false
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://event_booking_mysql:3306/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
-    username: root
-    password: eVen20tBoo_ING_24
-    jmx:
-      default-domain: event-booking
+    #url: jdbc:h2:mem:event_booking_db
+    url: jdbc:h2:file:/data/event_booking_db4
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+    jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+
   flyway:
     baselineOnMigrate: true
     validateOnMigrate: false
     enabled: true
-    locations: classpath:db/migration/mysql
-    schemas: event_booking_container
-    url: jdbc:mysql://event_booking_mysql:3306/event_booking_container?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
-    user: root
-    password: eVen20tBoo_ING_24
+    locations: classpath:db/migration/h2
+    schemas: event_booking_db4
+    url: jdbc:h2:file:/data/event_booking_db4
+    #url: jdbc:mysql://${server.host}:3388/event_booking_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    user: sa
+    password: password
     depends-on: entityManagerFactory
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: false
     hibernate:
       ddl-auto: none #none, create, create-drop, update
+      show-sql: 'true'
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
