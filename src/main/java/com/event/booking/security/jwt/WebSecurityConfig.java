@@ -41,6 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html/**",
             "/swagger-ui/**",
             "/webjars/**",
+            "/console/**",
+            "/h2-console/**",
             "/api/v1/users/onboarding/**",
             "/api/v1/auth/**",
             "/api/v1/users/entrance/**"
@@ -70,6 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
+                .headers().frameOptions().disable()
+                .and()
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/api/v1/users/management/find-all").hasAnyRole("CAN_VIEW_USERS", "CAN_DELETE_USERS")

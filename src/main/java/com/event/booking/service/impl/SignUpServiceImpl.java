@@ -12,15 +12,13 @@ import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.DuplicateRecordException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.model.Role;
-import com.event.booking.model.User;
+import com.event.booking.model.UsersTable;
 import com.event.booking.model.UserRole;
-import com.event.booking.notification.EmailNotificationService;
 import com.event.booking.notification.kafka.MessageProducer;
 import com.event.booking.repository.RoleRepository;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.repository.UserRoleRepository;
 import com.event.booking.service.SignUpService;
-import com.event.booking.util.Mapper;
 import com.event.booking.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,7 +30,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.event.booking.util.AppMessages.*;
-import static com.event.booking.util.Utils.EMAIL_EVENT_REMINDER;
 import static com.event.booking.util.Utils.EMAIL_SIGNUP_OTP;
 
 @Service
@@ -45,7 +42,7 @@ public class SignUpServiceImpl implements SignUpService {
     //private final EmailNotificationService notificationService;
     private final MessageProducer messageProducer;
 
-    private User validateUserByEmail(String email) {
+    private UsersTable validateUserByEmail(String email) {
         return userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new RecordNotFoundException(WRONG_ACCOUNT_EMAIL));
     }
@@ -54,9 +51,9 @@ public class SignUpServiceImpl implements SignUpService {
     public ResponseEntity<ApiResponse> signUp(SignUpRequest request) {
         validateSignupRequest(request);
         String otpAndTime[] = Utils.generate4DigitOTPAndExpireTime().split("_");
-        User user = buildNewUserModel(request, otpAndTime);
-        assignRolesToNewUser(user);
-        sendSignupOTP(user, otpAndTime);
+        UsersTable users = buildNewUserModel(request, otpAndTime);
+        assignRolesToNewUser(users);
+        sendSignupOTP(users, otpAndTime);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ApiResponse<>(true,
                         HttpStatus.CREATED.value(),
@@ -64,8 +61,8 @@ public class SignUpServiceImpl implements SignUpService {
                         ACCOUNT_CREATED_SUCCESSFULLY));
     }
 
-    private User buildNewUserModel(SignUpRequest request, String[] otpAndTime) {
-        return User.builder()
+    private UsersTable buildNewUserModel(SignUpRequest request, String[] otpAndTime) {
+        return UsersTable.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -80,8 +77,8 @@ public class SignUpServiceImpl implements SignUpService {
                 .build();
     }
 
-    private void assignRolesToNewUser(User user) {
-        Set<String> strRoles = user.getUserType().label.equalsIgnoreCase(UserType.USER.label) ?
+    private void assignRolesToNewUser(UsersTable users) {
+        Set<String> strRoles = users.getUserType().label.equalsIgnoreCase(UserType.USER.label) ?
                 Set.of(DefaultRoles.ROLE_USER.label) :
                 Set.of(DefaultRoles.ROLE_USER.label, DefaultRoles.ROLE_ADMIN.label);
 
@@ -90,20 +87,20 @@ public class SignUpServiceImpl implements SignUpService {
         if (!errorMessages.isEmpty()) {
             throw new BadRequestException(errorMessages.get(0));
         }
-        user = userRepository.save(user);
-        User roleAssignedUser = user;
+        users = userRepository.save(users);
+        UsersTable roleAssignedUsers = users;
         List<UserRole> userRoleList = roles.stream()
                 .map(role -> {
                     UserRole userRole = new UserRole();
                     userRole.setRoleid(role);
-                    userRole.setUserrole(roleAssignedUser);
+                    userRole.setUserrole(roleAssignedUsers);
                     userRole.setUuid(UUID.randomUUID().toString());
                     return userRole;
                 })
                 .peek(userRoleRepository::save)
                 .collect(Collectors.toList());
-        roleAssignedUser.setUserRoles(userRoleList);
-        userRepository.save(roleAssignedUser);
+        roleAssignedUsers.setUserRoles(userRoleList);
+        userRepository.save(roleAssignedUsers);
     }
 
     private void validateSignupRequest(SignUpRequest request) {
@@ -116,7 +113,7 @@ public class SignUpServiceImpl implements SignUpService {
         if (Objects.nonNull(request.getUserType()) && !Utils.isValidUserType(request.getUserType())) {
             throw new BadRequestException(INVALID_USER_TYPE);
         }
-        Optional<User> userOptional = userRepository.findUserByEmail(request.getEmail());
+        Optional<UsersTable> userOptional = userRepository.findUserByEmail(request.getEmail());
         if (userOptional.isPresent()) {
             throw new DuplicateRecordException(EMAIL_ALREADY_TAKEN);
         }
@@ -150,20 +147,20 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private void processAndSendOTP(SendOTPRequest request) {
-        User user = validateUserByEmail(request.getEmail());
+        UsersTable users = validateUserByEmail(request.getEmail());
         String otpAndTime[] = Utils.generate4DigitOTPAndExpireTime().split("_");
-        user.setOtpCode(otpAndTime[0]);
-        user.setOtpExpireTime(otpAndTime[1]);
-        userRepository.save(user);
-        sendSignupOTP(user, otpAndTime);
+        users.setOtpCode(otpAndTime[0]);
+        users.setOtpExpireTime(otpAndTime[1]);
+        userRepository.save(users);
+        sendSignupOTP(users, otpAndTime);
     }
 
-    private void sendSignupOTP(User user, String[] otpAndTime) {
+    private void sendSignupOTP(UsersTable users, String[] otpAndTime) {
         messageProducer.sendMessage(EMAIL_SIGNUP_OTP,
                 OTPNotificationRequest
                         .builder()
-                        .name(user.getName())
-                        .email(user.getEmail())
+                        .name(users.getName())
+                        .email(users.getEmail())
                         .otp(otpAndTime[0])
                         .build());
         // notificationService.sendOTPNotification(notificationRequest);
@@ -171,15 +168,15 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Override
     public ResponseEntity<ApiResponse> verifyOTP(VerifyOTPRequest request) {
-        User user = validateOTPVerificationRequest(request);
-        if (user.getVerified()) {
+        UsersTable users = validateOTPVerificationRequest(request);
+        if (users.getVerified()) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ApiResponse<>(true,
                             HttpStatus.OK.value(),
                             HttpStatus.OK,
                             ACCOUNT_ALREADY_ACTIVATED));
         }
-        verifyAndActivateUserAccount(request, user);
+        verifyAndActivateUserAccount(request, users);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
@@ -187,9 +184,9 @@ public class SignUpServiceImpl implements SignUpService {
                         OTP_VERIFIED_SUCCESSFULLY));
     }
 
-    private void verifyAndActivateUserAccount(VerifyOTPRequest request, User user) {
-        String otpCode = user.getOtpCode();
-        long previousTime = Long.parseLong(Objects.isNull(user.getOtpExpireTime()) ? "0" : user.getOtpExpireTime());
+    private void verifyAndActivateUserAccount(VerifyOTPRequest request, UsersTable users) {
+        String otpCode = users.getOtpCode();
+        long previousTime = Long.parseLong(Objects.isNull(users.getOtpExpireTime()) ? "0" : users.getOtpExpireTime());
         long current = System.currentTimeMillis() / 1000;
         if (current >= previousTime) {
             throw new BadRequestException(EXPIRED_OTP);
@@ -197,14 +194,14 @@ public class SignUpServiceImpl implements SignUpService {
         if (!otpCode.equals(request.getOtp())) {
             throw new BadRequestException(INVALID_OTP);
         }
-        user.setVerified(true);
-        user.setOnboardingStage(OnboardingStage.VERIFIED);
-        user.setOtpCode(null);
-        user.setOtpExpireTime(null);
-        userRepository.save(user);
+        users.setVerified(true);
+        users.setOnboardingStage(OnboardingStage.VERIFIED);
+        users.setOtpCode(null);
+        users.setOtpExpireTime(null);
+        userRepository.save(users);
     }
 
-    private User validateOTPVerificationRequest(VerifyOTPRequest request) {
+    private UsersTable validateOTPVerificationRequest(VerifyOTPRequest request) {
         if (Objects.isNull(request)) {
             throw new BadRequestException(INVALID_REQUEST_PARAMETERS);
         }

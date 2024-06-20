@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@Table(name = "roles", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@Table(name = "\"roles\"", uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
 @Entity
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -21,12 +21,12 @@ import java.util.Set;
 @Getter
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Role extends BaseEntity {
-    @Column(unique = true, name = "name")
+    @Column(unique = true, name = "\"name\"")
     private String name;
-    @Column(name = "description")
+    @Column(name = "\"description\"")
     private String description;
     @JsonIgnore
-    @Column(name = "permissions")
+    @Column(name = "\"permissions\"")
     @Type(type = "json")
     private Set<Permissions> permissions;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleid")

@@ -4,7 +4,7 @@ import com.event.booking.dto.request.Credentials;
 import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
-import com.event.booking.model.User;
+import com.event.booking.model.UsersTable;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.security.user.JwtTokenService;
 import com.event.booking.service.AuthenticationService;
@@ -29,7 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtTokenService jwtTokenService;
     private final PasswordEncoder passwordEncoder;
 
-    private User validateUserByEmail(String email) {
+    private UsersTable validateUserByEmail(String email) {
         return userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new RecordNotFoundException(WRONG_ACCOUNT_EMAIL));
     }
@@ -37,8 +37,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public ResponseEntity authenticate(Credentials credentials) {
         validateUsernameAndPassword(credentials.getEmail(), credentials.getPassword());
-        User user = validateUserByEmail(credentials.getEmail());
-        checkAccountVerificationStatusAndPassword(credentials.getPassword(), user);
+        UsersTable users = validateUserByEmail(credentials.getEmail());
+        checkAccountVerificationStatusAndPassword(credentials.getPassword(), users);
         String jwt = jwtTokenService.getAccessToken(credentials.getEmail(), credentials.getPassword()).getAuthorizationToken();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
@@ -61,11 +61,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
-    private void checkAccountVerificationStatusAndPassword(String password, User user) {
-        if (Objects.isNull(user.getVerified()) || !user.getVerified()) {
+    private void checkAccountVerificationStatusAndPassword(String password, UsersTable users) {
+        if (Objects.isNull(users.getVerified()) || !users.getVerified()) {
             throw new BadRequestException(ACCOUNT_NOT_VERIFIED);
         }
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(password, users.getPassword())) {
             throw new BadRequestException(WRONG_ACCOUNT_PASSWORD);
         }
     }

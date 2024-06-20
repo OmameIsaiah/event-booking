@@ -1,3 +1,22 @@
+CREATE TABLE IF NOT EXISTS `users_table` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `date_created` datetime(6) DEFAULT NULL,
+  `last_modified` datetime(6) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `is_online` bit(1) DEFAULT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `onboarding_stage` varchar(255) DEFAULT NULL,
+  `otp_code` varchar(255) DEFAULT NULL,
+  `otp_expire_time` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `user_token` varchar(255) DEFAULT NULL,
+  `user_type` varchar(255) DEFAULT NULL,
+  `verified` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_ob8kqyqqgmefl0aco34akdtpe` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `date_created` datetime(6) DEFAULT NULL,
@@ -20,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   PRIMARY KEY (`id`),
   KEY `FKss07htsrasc17qsq2o9422nyh` (`roleid`),
   KEY `FK9vb9b0eakvmg912uiyvfg5on8` (`userrole`),
-  CONSTRAINT `FK9vb9b0eakvmg912uiyvfg5on8` FOREIGN KEY (`userrole`) REFERENCES `user` (`id`),
+  CONSTRAINT `FK9vb9b0eakvmg912uiyvfg5on8` FOREIGN KEY (`userrole`) REFERENCES `users_table` (`id`),
   CONSTRAINT `FKss07htsrasc17qsq2o9422nyh` FOREIGN KEY (`roleid`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -49,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `user_event` (
   KEY `FK4w2e77q9ih94m2rkhhvbvrp6x` (`eventid`),
   KEY `FKf5foeefltn4x3y408gfun9py7` (`userevent`),
   CONSTRAINT `FK4w2e77q9ih94m2rkhhvbvrp6x` FOREIGN KEY (`eventid`) REFERENCES `event` (`id`),
-  CONSTRAINT `FKf5foeefltn4x3y408gfun9py7` FOREIGN KEY (`userevent`) REFERENCES `user` (`id`)
+  CONSTRAINT `FKf5foeefltn4x3y408gfun9py7` FOREIGN KEY (`userevent`) REFERENCES `users_table` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

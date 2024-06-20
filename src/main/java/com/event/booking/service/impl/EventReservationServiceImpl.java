@@ -1,6 +1,5 @@
 package com.event.booking.service.impl;
 
-import com.event.booking.dto.request.OTPNotificationRequest;
 import com.event.booking.dto.request.TicketRequest;
 import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.dto.response.ReservationResponseDTO;
@@ -9,9 +8,8 @@ import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.exceptions.UnauthorizedException;
 import com.event.booking.model.Event;
-import com.event.booking.model.User;
+import com.event.booking.model.UsersTable;
 import com.event.booking.model.UserEvent;
-import com.event.booking.notification.EmailNotificationService;
 import com.event.booking.notification.kafka.MessageProducer;
 import com.event.booking.repository.EventRepository;
 import com.event.booking.repository.UserEventRepository;
@@ -25,7 +23,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +33,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.event.booking.util.AppMessages.*;
-import static com.event.booking.util.Utils.EMAIL_SIGNUP_OTP;
 import static com.event.booking.util.Utils.EMAIL_TICKET_RESERVATION;
 
 @Service
@@ -49,7 +45,7 @@ public class EventReservationServiceImpl implements EventReservationService {
     private final MessageProducer messageProducer;
     private final JwtUtils jwtUtils;
 
-    private User validateUserByEmail(String email) {
+    private UsersTable validateUserByEmail(String email) {
         return userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new RecordNotFoundException(WRONG_ACCOUNT_EMAIL));
     }
@@ -105,11 +101,11 @@ public class EventReservationServiceImpl implements EventReservationService {
     @Override
     public ResponseEntity<ApiResponse> reserveTicketForEvent(HttpServletRequest httpServletRequest, Long eventId, TicketRequest ticketRequest) {
         Optional<Event> optional = validateTicketReservationParam(eventId, ticketRequest);
-        User user = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
+        UsersTable users = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
         Event event = Utils.validateReservationEvent(ticketRequest, optional);
         event.setAvailableAttendeesCount(event.getAvailableAttendeesCount() - ticketRequest.getAttendeesCount());
         event = eventRepository.save(event);
-        UserEvent userEvent = buildNewUserEventModel(ticketRequest, user, event);
+        UserEvent userEvent = buildNewUserEventModel(ticketRequest, users, event);
         ReservationResponseDTO reservationResponseDTO = Mapper.mapUserEventToReservationResponseDTO(userEvent);
         messageProducer.sendMessage(EMAIL_TICKET_RESERVATION, reservationResponseDTO);
         //notificationService.sendTicketReservationEmail(reservationResponseDTO);
@@ -122,12 +118,12 @@ public class EventReservationServiceImpl implements EventReservationService {
                 ));
     }
 
-    private UserEvent buildNewUserEventModel(TicketRequest ticketRequest, User user, Event event) {
+    private UserEvent buildNewUserEventModel(TicketRequest ticketRequest, UsersTable users, Event event) {
         UserEvent userEvent = new UserEvent();
         userEvent.setUuid(UUID.randomUUID().toString());
         userEvent.setAttendeesCount(ticketRequest.getAttendeesCount());
         userEvent.setEventid(event);
-        userEvent.setUserevent(user);
+        userEvent.setUserevent(users);
         userEvent = userEventRepository.save(userEvent);
         return userEvent;
     }
@@ -149,8 +145,8 @@ public class EventReservationServiceImpl implements EventReservationService {
 
     @Override
     public ResponseEntity<ApiResponse> viewMyReservations(HttpServletRequest httpServletRequest, Integer page, Integer size) {
-        User user = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
-        Page<UserEvent> list = userEventRepository.findUserEventByUserId(user.getId(), PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size)));
+        UsersTable users = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
+        Page<UserEvent> list = userEventRepository.findUserEventByUserId(users.getId(), PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size)));
         if (list.isEmpty() || Objects.isNull(list)) {
             throw new RecordNotFoundException(NO_EVENT_RESERVATIONS_FOUND);
         }

@@ -1,6 +1,5 @@
 package com.event.booking.security.user;
 
-import com.event.booking.model.User;
 import com.event.booking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

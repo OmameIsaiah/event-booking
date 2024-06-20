@@ -1,7 +1,7 @@
 package com.event.booking.security.user;
 
 import com.event.booking.model.Role;
-import com.event.booking.model.User;
+import com.event.booking.model.UsersTable;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -68,25 +68,25 @@ public class UserDetailsImpl implements UserDetails {
                 .collect(Collectors.toList());
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(UsersTable users) {
         return new UserDetailsImpl(
-                user.getName(),
-                user.getUserType().label,
-                user.getEmail(),
-                user.getPassword(),
-                processUserRoles(user),
-                processUserAuthorities(user));
+                users.getName(),
+                users.getUserType().label,
+                users.getEmail(),
+                users.getPassword(),
+                processUserRoles(users),
+                processUserAuthorities(users));
     }
 
-    private static List<GrantedAuthority> processUserRoles(User user) {
-        return user.getUserRoles().stream()
+    private static List<GrantedAuthority> processUserRoles(UsersTable users) {
+        return users.getUserRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleid().getName()))
                 .collect(Collectors.toList());
     }
 
-    private static List<GrantedAuthority> processUserAuthorities(User user) {
+    private static List<GrantedAuthority> processUserAuthorities(UsersTable users) {
         return removeDuplicatesFromAuthorities(
-                user.getUserRoles().stream()
+                users.getUserRoles().stream()
                         .map(role -> new SimpleGrantedAuthority(getListOfPermissionsFromRoles(role.getRoleid())))
                         .collect(Collectors.toList())
         );

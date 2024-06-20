@@ -8,9 +8,11 @@ services:
     restart: always
     container_name: event-booking-service
     networks:
-      - event_booking_network
+      - event_b_network
     ports:
       - "8080:8080"
+
 networks:
-  event_booking_network:
+  event_b_network:
+    external: true
     driver: bridge

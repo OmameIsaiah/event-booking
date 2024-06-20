@@ -73,19 +73,19 @@ public class Mapper {
                 .orElse(null);
     }
 
-    public static UserProfileResponse mapUserProfileResponse(User user) {
+    public static UserProfileResponse mapUserProfileResponse(UsersTable users) {
         return Optional.ofNullable(
-                        Objects.isNull(user) ? null :
+                        Objects.isNull(users) ? null :
                                 UserProfileResponse.builder()
-                                        .uuid(user.getUuid())
-                                        .name(user.getName())
-                                        .email(user.getEmail())
-                                        .userType(user.getUserType())
-                                        .userToken(user.getUserToken())
-                                        .isOnline(user.getIsOnline())
-                                        .lastLogin(Utils.convertLocalDateTimeToString(user.getLastLogin()))
-                                        .roles(getRoles(user.getUserRoles()))
-                                        .permissions(getPermissions(user.getUserRoles()))
+                                        .uuid(users.getUuid())
+                                        .name(users.getName())
+                                        .email(users.getEmail())
+                                        .userType(users.getUserType())
+                                        .userToken(users.getUserToken())
+                                        .isOnline(users.getIsOnline())
+                                        .lastLogin(Utils.convertLocalDateTimeToString(users.getLastLogin()))
+                                        .roles(getRoles(users.getUserRoles()))
+                                        .permissions(getPermissions(users.getUserRoles()))
                                         .build())
                 .orElse(null);
     }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -13,26 +12,26 @@ import java.time.LocalDateTime;
 import static com.event.booking.util.AppMessages.*;
 
 @Entity
-@Table(name = "user_event")
+@Table(name = "\"user_event\"")
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 public class UserEvent extends BaseEntity {
-    @Column(name = "attendees_count")
+    @Column(name = "\"attendees_count\"")
     @Min(value = 1, message = MIN_ATTENDEES_COUNT_EXCEEDED)
     @Positive(message = NEGATIVE_ATTENDEES_COUNT)
     @NotNull(message = NULL_ATTENDEES_COUNT)
     private Integer attendeesCount;
-    @JoinColumn(name = "eventid", referencedColumnName = "id")
+    @JoinColumn(name = "\"eventid\"", referencedColumnName = "\"id\"")
     @ManyToOne
     @JsonIgnore
     private Event eventid;
-    @JoinColumn(name = "userevent", referencedColumnName = "id")
+    @JoinColumn(name = "\"userevent\"", referencedColumnName = "\"id\"")
     @ManyToOne
     @JsonIgnore
-    private User userevent;
+    private UsersTable userevent;
 
     @Override
     public String toString() {

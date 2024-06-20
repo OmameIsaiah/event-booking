@@ -1,51 +1,24 @@
 version: '3'
 
 services:
-
-  event_booking_mysql:
-    image: mysql:latest
-    restart: always
-    container_name: event_booking_mysql
-    volumes:
-      - event_booking_mysql_data:/var/lib/mysql
-      - ./config/mysql:/etc/mysql/conf.d
-    environment:
-      MYSQL_ROOT_PASSWORD: "eVen20tBoo_ING_24"
-      MYSQL_USER: 'eventDbUser'
-      MYSQL_PASSWORD: "eVen20tBoo_ING_24"
-      MYSQL_DATABASE: 'event_booking_container'
-    command: >
-      --max-connections=10000 --bind-address=0.0.0.0
-
-    ports:
-      - "3388:3306"
-    healthcheck:
-      test: [ 'CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1' ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    networks:
-      - event_booking_network
-
-
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     restart: always
     container_name: zookeeper
     hostname: zookeeper
     environment:
-      ZOOKEEPER_CLIENT_PORT: 2182
+      ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - "2182:2182"
+      - "2181:2181"
     networks:
-      - event_booking_network
+      - event_b_network
 
   kafka:
     image: confluentinc/cp-kafka:latest
     restart: always
-    container_name: event_booking_kafka
-    hostname: event_booking_kafka
+    container_name: kafka
+    hostname: kafka
     depends_on:
       - zookeeper
     ports:
@@ -53,22 +26,16 @@ services:
       - "19092:19092"
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2182'
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://event_booking_kafka:9092,PLAINTEXT_INTERNAL://localhost:19092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_INTERNAL://localhost:19092
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_ADVERTISED_HOST_NAME: event_booking_kafka
+      KAFKA_ADVERTISED_HOST_NAME: kafka
     networks:
-      - event_booking_network
-
-volumes:
-  event_booking_mysql_data:
+      - event_b_network
 
 networks:
-  event_booking_network:
-    #external: true
+  event_b_network:
+    external: true
     driver: bridge
-
-#docker network create --driver bridge event_booking_network
-#docker-compose -f src/main/docker/services.yml up -d --build

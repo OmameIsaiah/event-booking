@@ -6,7 +6,7 @@ import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
 import com.event.booking.exceptions.UnauthorizedException;
-import com.event.booking.model.User;
+import com.event.booking.model.UsersTable;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.security.jwt.JwtUtils;
 import com.event.booking.service.UserProfileService;
@@ -14,7 +14,6 @@ import com.event.booking.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
 
-    private User validateUserByEmail(String email) {
+    private UsersTable validateUserByEmail(String email) {
         return userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new RecordNotFoundException(WRONG_ACCOUNT_EMAIL));
     }
@@ -48,28 +47,28 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public ResponseEntity<ApiResponse> getProfileInfo(HttpServletRequest httpServletRequest) {
-        User user = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
+        UsersTable users = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
                         PROFILE_RETRIEVED_SUCCESSFULLY,
-                        Mapper.mapUserProfileResponse(user)
+                        Mapper.mapUserProfileResponse(users)
                 ));
     }
 
     @Override
     public ResponseEntity<ApiResponse> updateProfileInfo(HttpServletRequest httpServletRequest, UpdateProfileRequest request) {
         validateProfileUpdateRequest(request);
-        User user = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
-        user.setName(request.getName());
-        user = userRepository.save(user);
+        UsersTable users = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
+        users.setName(request.getName());
+        users = userRepository.save(users);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
                         PROFILE_UPDATED_SUCCESSFULLY,
-                        Mapper.mapUserProfileResponse(user)
+                        Mapper.mapUserProfileResponse(users)
                 ));
     }
 
@@ -85,18 +84,18 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public ResponseEntity<ApiResponse> updatePassword(HttpServletRequest httpServletRequest, UpdatePasswordRequest request) {
         validatePasswordUpdateRequest(request);
-        User user = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
-        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+        UsersTable users = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
+        if (!passwordEncoder.matches(request.getCurrentPassword(), users.getPassword())) {
             throw new BadRequestException(WRONG_CURRENT_PASSWORD);
         }
-        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        user = userRepository.save(user);
+        users.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        users = userRepository.save(users);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
                         HttpStatus.OK,
                         PASSWORD_UPDATED_SUCCESSFULLY,
-                        Mapper.mapUserProfileResponse(user)
+                        Mapper.mapUserProfileResponse(users)
                 ));
     }
 
@@ -120,9 +119,9 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public ResponseEntity<ApiResponse> signOut(HttpServletRequest httpServletRequest) {
-        User user = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
-        user.setIsOnline(false);
-        userRepository.save(user);
+        UsersTable users = validateUserByEmail(validateAuthorizedUser(httpServletRequest));
+        users.setIsOnline(false);
+        userRepository.save(users);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),

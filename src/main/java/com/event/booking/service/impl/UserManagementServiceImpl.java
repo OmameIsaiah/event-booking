@@ -4,7 +4,7 @@ import com.event.booking.dto.response.ApiResponse;
 import com.event.booking.enums.UserType;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
-import com.event.booking.model.User;
+import com.event.booking.model.UsersTable;
 import com.event.booking.repository.UserEventRepository;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.repository.UserRoleRepository;
@@ -33,7 +33,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public ResponseEntity<ApiResponse> getAllUsers(Integer page, Integer size) {
-        Page<User> list = userRepository.findAll(PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size)));
+        Page<UsersTable> list = userRepository.findAll(PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size)));
         if (list.isEmpty() || Objects.isNull(list)) {
             throw new RecordNotFoundException(NO_USER_FOUND);
         }
@@ -51,7 +51,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public ResponseEntity<ApiResponse> filterUsers(Integer page, Integer size, UserType userType) {
-        Page<User> list = userRepository.findUsersByType(
+        Page<UsersTable> list = userRepository.findUsersByType(
                 userType,
                 PageRequest.of((Objects.isNull(page) ? 0 : page), (Objects.isNull(size) ? 50 : size)));
         if (list.isEmpty() || Objects.isNull(list)) {
@@ -74,7 +74,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (Objects.isNull(keyword)) {
             throw new BadRequestException(NULL_KEYWORD_PARAM);
         }
-        List<User> list = userRepository.searchUsers(keyword);
+        List<UsersTable> list = userRepository.searchUsers(keyword);
         if (list.isEmpty() || Objects.isNull(list)) {
             throw new RecordNotFoundException(NO_USER_FOUND);
         }
@@ -95,7 +95,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (Objects.isNull(uuid)) {
             throw new BadRequestException(NULL_UUID_PARAM);
         }
-        Optional<User> optional = userRepository.findUserByUUID(uuid);
+        Optional<UsersTable> optional = userRepository.findUserByUUID(uuid);
         if (optional.isEmpty()) {
             throw new RecordNotFoundException(NO_USER_FOUND_WITH_UUID);
         }

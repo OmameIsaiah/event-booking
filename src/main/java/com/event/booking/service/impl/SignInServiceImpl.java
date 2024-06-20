@@ -7,7 +7,7 @@ import com.event.booking.dto.response.SignInResponse;
 import com.event.booking.dto.response.UserData;
 import com.event.booking.exceptions.BadRequestException;
 import com.event.booking.exceptions.RecordNotFoundException;
-import com.event.booking.model.User;
+import com.event.booking.model.UsersTable;
 import com.event.booking.repository.UserRepository;
 import com.event.booking.security.jwt.JwtResponse;
 import com.event.booking.security.user.JwtTokenService;
@@ -31,15 +31,15 @@ public class SignInServiceImpl implements SignInService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
 
-    private User validateUserByEmail(String email) {
+    private UsersTable validateUserByEmail(String email) {
         return userRepository.findUserByEmail(email)
                 .orElseThrow(() -> new RecordNotFoundException(WRONG_ACCOUNT_EMAIL));
     }
 
     @Override
     public ResponseEntity<ApiResponse> signIn(Credentials credentials) {
-        User user = validateSignInParamAndPassword(credentials);
-        UserData userData = getUserData(user);
+        UsersTable users = validateSignInParamAndPassword(credentials);
+        UserData userData = getUserData(users);
         JwtResponse jwtResponse = jwtTokenService.getAccessToken(credentials.getEmail(), credentials.getPassword());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
@@ -58,22 +58,22 @@ public class SignInServiceImpl implements SignInService {
                 ));
     }
 
-    private UserData getUserData(User user) {
-        user.setIsOnline(true);
-        user.setLastLogin(LocalDateTime.now());
-        userRepository.save(user);
+    private UserData getUserData(UsersTable users) {
+        users.setIsOnline(true);
+        users.setLastLogin(LocalDateTime.now());
+        userRepository.save(users);
         return UserData.builder()
-                .uuid(user.getUuid())
-                .name(user.getName())
-                .email(user.getEmail())
-                .userType(user.getUserType())
-                .userToken(user.getUserToken())
-                .isOnline(user.getIsOnline())
-                .lastLogin(Utils.convertLocalDateTimeToString(user.getLastLogin()))
+                .uuid(users.getUuid())
+                .name(users.getName())
+                .email(users.getEmail())
+                .userType(users.getUserType())
+                .userToken(users.getUserToken())
+                .isOnline(users.getIsOnline())
+                .lastLogin(Utils.convertLocalDateTimeToString(users.getLastLogin()))
                 .build();
     }
 
-    private User validateSignInParamAndPassword(Credentials credentials) {
+    private UsersTable validateSignInParamAndPassword(Credentials credentials) {
         if (Objects.isNull(credentials)) {
             throw new BadRequestException(INVALID_REQUEST_PARAMETERS);
         }
@@ -83,13 +83,13 @@ public class SignInServiceImpl implements SignInService {
         if (Objects.isNull(credentials.getPassword()) || "".equals(credentials.getPassword())) {
             throw new BadRequestException(NULL_PASSWORD);
         }
-        User user = validateUserByEmail(credentials.getEmail());
-        if (Objects.isNull(user.getVerified()) || !user.getVerified()) {
+        UsersTable users = validateUserByEmail(credentials.getEmail());
+        if (Objects.isNull(users.getVerified()) || !users.getVerified()) {
             throw new BadRequestException(ACCOUNT_NOT_VERIFIED);
         }
-        if (!passwordEncoder.matches(credentials.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(credentials.getPassword(), users.getPassword())) {
             throw new BadRequestException(WRONG_ACCOUNT_PASSWORD);
         }
-        return user;
+        return users;
     }
 }

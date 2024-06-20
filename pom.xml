@@ -117,6 +117,11 @@
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <build>
         <resources>
@@ -152,7 +157,7 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <configuration>
-                    <url>jdbc:h2:file:/data/event_booking_db4</url>
+                    <url>jdbc:h2:file:~/event_booking_store;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</url>
                     <user>sa</user>
                     <password>password</password>
                 </configuration>

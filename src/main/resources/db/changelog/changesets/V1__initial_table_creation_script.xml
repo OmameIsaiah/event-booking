@@ -6,7 +6,7 @@
     <changeSet author="Isaiah Omame" id="create_tables_1">
         <sql>
             <![CDATA[
-                CREATE TABLE IF NOT EXISTS `user` (
+                CREATE TABLE IF NOT EXISTS `users_table` (
                   `id` bigint NOT NULL AUTO_INCREMENT,
                   `date_created` datetime(6) DEFAULT NULL,
                   `last_modified` datetime(6) DEFAULT NULL,
@@ -48,7 +48,7 @@
                   PRIMARY KEY (`id`),
                   KEY `FKss07htsrasc17qsq2o9422nyh` (`roleid`),
                   KEY `FK9vb9b0eakvmg912uiyvfg5on8` (`userrole`),
-                  CONSTRAINT `FK9vb9b0eakvmg912uiyvfg5on8` FOREIGN KEY (`userrole`) REFERENCES `user` (`id`),
+                  CONSTRAINT `FK9vb9b0eakvmg912uiyvfg5on8` FOREIGN KEY (`userrole`) REFERENCES `users_table` (`id`),
                   CONSTRAINT `FKss07htsrasc17qsq2o9422nyh` FOREIGN KEY (`roleid`) REFERENCES `roles` (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -77,7 +77,7 @@
                   KEY `FK4w2e77q9ih94m2rkhhvbvrp6x` (`eventid`),
                   KEY `FKf5foeefltn4x3y408gfun9py7` (`userevent`),
                   CONSTRAINT `FK4w2e77q9ih94m2rkhhvbvrp6x` FOREIGN KEY (`eventid`) REFERENCES `event` (`id`),
-                  CONSTRAINT `FKf5foeefltn4x3y408gfun9py7` FOREIGN KEY (`userevent`) REFERENCES `user` (`id`)
+                  CONSTRAINT `FKf5foeefltn4x3y408gfun9py7` FOREIGN KEY (`userevent`) REFERENCES `users_table` (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
              
             ]]>
