@@ -39,6 +39,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
     @Override
     @Async
     public void sendOTPNotification(OTPNotificationRequest request) {
+        //TODO SEND IT THROUGH KAFKA OR REDIS
         try {
             Map model = new HashMap();
             model.put("email", request.getEmail());
@@ -61,6 +62,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
 
     @Override
     public void sendTicketReservationEmail(ReservationResponseDTO request) {
+        //TODO SEND IT THROUGH KAFKA OR REDIS
         try {
             Map model = Utils.mapReservationAndEventReminderModel(request);
             freemarkerConfig.setClassForTemplateLoading(this.getClass(), EMAIL_TEMPLATES_DIR);
@@ -80,6 +82,7 @@ public class EmailNotificationServiceImpl implements EmailNotificationService {
 
     @Override
     public void sendEventReminder(ReservationResponseDTO request) {
+        //TODO SEND IT THROUGH KAFKA OR REDIS
         try {
             Map model = Utils.mapReservationAndEventReminderModel(request);
             freemarkerConfig.setClassForTemplateLoading(this.getClass(), EMAIL_TEMPLATES_DIR);

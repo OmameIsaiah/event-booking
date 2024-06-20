@@ -154,7 +154,6 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private void sendSignupOTP(User user, String[] otpAndTime) {
-        //TODO SEND IT THROUGH KAFKA, RABBITMQ OR REDIS
         OTPNotificationRequest notificationRequest = OTPNotificationRequest
                 .builder()
                 .name(user.getName())

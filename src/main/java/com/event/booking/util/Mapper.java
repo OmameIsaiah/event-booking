@@ -1,10 +1,7 @@
 package com.event.booking.util;
 
 import com.event.booking.dto.request.EventRequestDTO;
-import com.event.booking.dto.response.ApiResponse;
-import com.event.booking.dto.response.EventResponseDTO;
-import com.event.booking.dto.response.ReservationResponseDTO;
-import com.event.booking.dto.response.UserProfileResponse;
+import com.event.booking.dto.response.*;
 import com.event.booking.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,6 +16,18 @@ import java.util.stream.Collectors;
 import static com.event.booking.util.AppMessages.EVENT_RETRIEVED_SUCCESSFULLY;
 
 public class Mapper {
+    public static RoleResponse mapRoleToRoleResponse(Role role) {
+        return Optional.ofNullable(
+                        Objects.isNull(role) ? null :
+                                RoleResponse.builder()
+                                        .uuid(role.getUuid())
+                                        .name(role.getName())
+                                        .description(role.getDescription())
+                                        .permissions(role.getPermissions())
+                                        .build())
+                .orElse(null);
+    }
+
     public static ReservationResponseDTO mapUserEventToReservationResponseDTO(UserEvent userEvent) {
         return Optional.ofNullable(
                         Objects.isNull(userEvent) ? null :

@@ -82,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/v1/events/all/reservations").hasAnyRole("CAN_CREATE_EVENT", "CAN_UPDATE_EVENT", "CAN_DELETE_EVENT")
                 .antMatchers(HttpMethod.GET, "/api/v1/events/all/reservations/filter").hasAnyRole("CAN_CREATE_EVENT", "CAN_VIEW_ALL_RESERVATIONS")
                 .antMatchers("/api/v1/events/send-reminder").hasRole("CAN_SEND_EVENT_NOTIFICATION")
+                .antMatchers("/api/v1/roles/**").hasAnyRole("CAN_ADD_ROLE", "CAN_UPDATE_ROLE", "CAN_DELETE_ROLE")
                 .anyRequest()
                 .authenticated()
                 .and()

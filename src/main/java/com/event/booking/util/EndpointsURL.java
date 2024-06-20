@@ -42,4 +42,11 @@ public class EndpointsURL {
     public static final String RESERVE_TICKET = "/{eventId}/tickets";
     public static final String VIEW_MY_RESERVATIONS = "/my-reservations";
     public static final String DELETE_MY_RESERVATIONS = "/reservations/{reservationNo}";
+
+    public static final String ROLES_BASE_URL = "/api/v1/roles";
+    public static final String VIEW_PERMISSIONS = "/permissions";
+    public static final String ADD_NEW_ROLE = "";
+    public static final String UPDATE_ROLE = "";
+    public static final String VIEW_ALL_ROLES = "";
+    public static final String VIEW_ROLE_BY_UUID = "/{uuid}";
 }

@@ -22,9 +22,15 @@ public class AppMessages {
     public static final String NULL_NAME_PARAM = "Oops! Name cannot be null, please check.";
     public static final String EMPTY_NAME_PARAM = "Oops! Name cannot be empty, please check.";
     public static final String NULL_PASSWORD = "Oops! Password cannot be null, please check.";
+    public static final String NULL_ROLE_NAME = "Oops! Role name cannot be null, please check.";
+    public static final String NULL_ROLE_UUID = "Oops! Role uuid cannot be null, please check.";
     public static final String NULL_PASSWORD_PARAM = "Oops! Password/confirm password cannot be null, please check.";
     public static final String NULL_CURRENT_PASSWORD_PARAM = "Oops! Current password cannot be null, please check.";
+    public static final String NULL_PERMISSIONS_PARAM = "Oops! Permissions list cannot be null or empty, please check.";
+    public static final String DUPLICATE_ROLE_NAME = "Oops! A role with the same name already exists, please check.";
     public static final String EMPTY_PASSWORD = "Oops! Password cannot be empty, please check.";
+    public static final String EMPTY_ROLE_NAME = "Oops! Role name cannot be empty, please check.";
+    public static final String EMPTY_ROLE_UUID = "Oops! Role uuid cannot be empty, please check.";
     public static final String EMPTY_PASSWORD_PARAM = "Oops! Password/confirm password cannot be empty, please check.";
     public static final String EMPTY_CURRENT_PASSWORD_PARAM = "Oops! Current password cannot be empty, please check.";
     public static final String NULL_OTP_PARAM = "Oops! OTP cannot be null, please check.";
@@ -52,6 +58,9 @@ public class AppMessages {
     public static final String INVALID_AUTHORIZATION_TOKEN = "Oops! Invalid authorization, please provide your authorization token in the request header.";
     public static final String NO_USER_FOUND = "Oops! No user found.";
     public static final String NO_EVENT_FOUND = "Oops! No event found.";
+    public static final String NO_ROLES_FOUND = "Oops! No roles found.";
+    public static final String NO_PERMISSIONS_FOUND = "Oops! No permissions found.";
+    public static final String NO_ROLE_FOUND_WITH_UUID = "Oops! No role found with the uuid provided, please check.";
     public static final String NO_EVENT_RESERVATIONS_FOUND = "Oops! No event reservations found.";
     public static final String NO_USER_FOUND_WITH_UUID = "Oops! No user found with the uuid provided, please check.";
     public static final String NO_EVENT_FOUND_WITH_ID = "Oops! No event found with the id provided, please check.";
@@ -77,6 +86,11 @@ public class AppMessages {
     public static final String USER_RESERVATION_RETRIEVED_SUCCESSFULLY = "Awesome! Your reservations has been retrieved successfully.";
     public static final String USER_RESERVATION_DELETED_SUCCESSFULLY = "Awesome! Your reservations has been deleted successfully.";
     public static final String EVENT_RETRIEVED_SUCCESSFULLY = "Awesome! Events retrieved successfully.";
+    public static final String PERMISSIONS_RETRIEVED_SUCCESSFULLY = "Awesome! Permissions retrieved successfully.";
+    public static final String ROLES_RETRIEVED_SUCCESSFULLY = "Awesome! Roles retrieved successfully.";
+    public static final String ROLE_RETRIEVED_SUCCESSFULLY = "Awesome! Role retrieved successfully.";
+    public static final String ROLE_CREATED_SUCCESSFULLY = "Awesome! Role created successfully.";
+    public static final String ROLE_UPDATED_SUCCESSFULLY = "Awesome! Role updated successfully.";
     public static final String EVENT_RESERVED_SUCCESSFULLY = "Awesome! Your reservation was successful. An email has been sent to you with the details of your reservation.";
     public static final String EVENT_REMINDER_SENT_SUCCESSFULLY = "Awesome! Event reminder sent successfully.";
     public static final String USERS_DELETED_SUCCESSFULLY = "Awesome! User deleted successfully.";

@@ -50,7 +50,6 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .globalResponseMessage(RequestMethod.POST, list);
     }
 
-
     private ApiKey apiKey() {
         return new ApiKey(HttpHeaders.AUTHORIZATION, HttpHeaders.AUTHORIZATION, AUTHORIZATION_PASSED_IN);
     }
