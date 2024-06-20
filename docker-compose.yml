@@ -1,0 +1,16 @@
+version: '3'
+services:
+  event-booking-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: event-booking-service:1.0
+    restart: always
+    container_name: event-booking-service
+    networks:
+      - event_booking_network
+    ports:
+      - "8080:8080"
+networks:
+  event_booking_network:
+    driver: bridge
