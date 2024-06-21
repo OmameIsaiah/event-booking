@@ -25,6 +25,10 @@
         <jjwt.version>0.9.1</jjwt.version>
         <flyway-mysql.version>8.5.13</flyway-mysql.version>
         <gson.version>2.10.1</gson.version>
+        <junit-jupiter-engine.version>5.10.2</junit-jupiter-engine.version>
+        <mockito-core.version>5.11.0</mockito-core.version>
+        <junit-bom.version>5.10.1</junit-bom.version>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -122,7 +126,30 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter-engine.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${junit-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <resources>
             <resource>
@@ -148,7 +175,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
+                <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <skipTests>${tests.skip}</skipTests>
                 </configuration>

@@ -42,7 +42,6 @@ import static com.event.booking.util.Utils.ONE_MINUTE_CRON_JOB;
 public class EventManagementServiceImpl implements EventManagementService {
     private final EventRepository eventRepository;
     private final UserEventRepository userEventRepository;
-    //private final EmailNotificationService notificationService;
     private final MessageProducer messageProducer;
 
     @Override
@@ -101,7 +100,7 @@ public class EventManagementServiceImpl implements EventManagementService {
         }
         Optional<Event> optional = eventRepository.findById(eventUpdate.getEventId());
         if (optional.isEmpty()) {
-            throw new BadRequestException(NO_EVENT_FOUND_WITH_ID);
+            throw new RecordNotFoundException(NO_EVENT_FOUND_WITH_ID);
         }
         return optional;
     }
@@ -173,7 +172,6 @@ public class EventManagementServiceImpl implements EventManagementService {
         Utils.validateEventUsersAndDate(event);
         for (UserEvent userEvent : event.getUserEvents()) {
             messageProducer.sendMessage(EMAIL_EVENT_REMINDER, Mapper.mapUserEventToReservationResponseDTO(userEvent));
-            //notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
         }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
@@ -204,7 +202,6 @@ public class EventManagementServiceImpl implements EventManagementService {
                 if (Utils.checkIfTimeIsExactly1HourToEventTime(event.getEventDate())) {
                     for (UserEvent userEvent : event.getUserEvents()) {
                         messageProducer.sendMessage(EMAIL_EVENT_REMINDER, Mapper.mapUserEventToReservationResponseDTO(userEvent));
-                        //notificationService.sendEventReminder(Mapper.mapUserEventToReservationResponseDTO(userEvent));
                     }
                 }
             }

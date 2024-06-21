@@ -85,7 +85,7 @@ public class AppMessages {
     public static final String PROFILE_RETRIEVED_SUCCESSFULLY = "Awesome! User profile retrieved successfully.";
     public static final String USERS_RETRIEVED_SUCCESSFULLY = "Awesome! Users retrieved successfully.";
     public static final String USER_RESERVATION_RETRIEVED_SUCCESSFULLY = "Awesome! Your reservations has been retrieved successfully.";
-    public static final String USER_RESERVATION_DELETED_SUCCESSFULLY = "Awesome! Your reservations has been deleted successfully.";
+    public static final String USER_RESERVATION_DELETED_SUCCESSFULLY = "Awesome! Your reservations has been cancelled successfully.";
     public static final String EVENT_RETRIEVED_SUCCESSFULLY = "Awesome! Events retrieved successfully.";
     public static final String PERMISSIONS_RETRIEVED_SUCCESSFULLY = "Awesome! Permissions retrieved successfully.";
     public static final String ROLES_RETRIEVED_SUCCESSFULLY = "Awesome! Roles retrieved successfully.";
