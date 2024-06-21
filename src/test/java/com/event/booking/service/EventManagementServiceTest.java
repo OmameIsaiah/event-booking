@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Optional;
 
 import static com.event.booking.util.AppMessages.*;
-import static com.event.booking.utils.EventManagementServiceTestData.*;
+import static com.event.booking.utils.EventTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class EventManagementServiceTest {
     @InjectMocks
-    private EventManagementServiceImpl eventManagementServiceImpl;
+    private EventManagementServiceImpl eventManagementService;
     @Mock
     private EventRepository eventRepository;
     @Mock
@@ -39,7 +39,7 @@ public class EventManagementServiceTest {
 
     @BeforeEach
     public void setUp() {
-        eventManagementServiceImpl = spy(
+        eventManagementService = spy(
                 new EventManagementServiceImpl(eventRepository, userEventRepository, messageProducer));
     }
 
@@ -48,17 +48,17 @@ public class EventManagementServiceTest {
         when(eventRepository.findEventByName(anyString())).thenReturn(Optional.empty());
         when(eventRepository.save(any())).thenReturn(VALID_EVENT);
 
-        ResponseEntity<ApiResponse> response = eventManagementServiceImpl.createEvent(VALID_EVENT_REQUEST);
+        ResponseEntity<ApiResponse> response = eventManagementService.createEvent(VALID_EVENT_REQUEST);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(response, VALID_EVENT_SUCCESS_RESPONSE);
-        assertNotNull(eventManagementServiceImpl.createEvent(VALID_EVENT_REQUEST));
-        verify(eventManagementServiceImpl, times(2)).createEvent(VALID_EVENT_REQUEST);
+        assertNotNull(eventManagementService.createEvent(VALID_EVENT_REQUEST));
+        verify(eventManagementService, times(2)).createEvent(VALID_EVENT_REQUEST);
     }
 
     @Test
     public void test_createEvent_throw_null_request_parameters() {
         BadRequestException exception = assertThrows(BadRequestException.class,
-                () -> eventManagementServiceImpl.createEvent(null));
+                () -> eventManagementService.createEvent(null));
         assertEquals(INVALID_REQUEST_PARAMETERS, exception.getMessage());
     }
 
@@ -66,7 +66,7 @@ public class EventManagementServiceTest {
     public void test_createEvent_throw_event_name_already_exists() {
         when(eventRepository.findEventByName(anyString())).thenReturn(Optional.of(VALID_EVENT));
         DuplicateRecordException exception = assertThrows(DuplicateRecordException.class,
-                () -> eventManagementServiceImpl.createEvent(VALID_EVENT_REQUEST));
+                () -> eventManagementService.createEvent(VALID_EVENT_REQUEST));
         assertEquals(EVENT_ALREADY_TAKEN, exception.getMessage());
     }
 
@@ -75,20 +75,20 @@ public class EventManagementServiceTest {
         when(eventRepository.findById(anyLong())).thenReturn(Optional.of(VALID_EVENT));
         when(eventRepository.save(any())).thenReturn(VALID_EVENT);
 
-        ResponseEntity<ApiResponse> response = eventManagementServiceImpl.updateEvent(VALID_EVENT_UPDATE_REQUEST);
+        ResponseEntity<ApiResponse> response = eventManagementService.updateEvent(VALID_EVENT_UPDATE_REQUEST);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(response.getBody().getSuccess(), true);
         assertEquals(response.getBody().getCode(), HttpStatus.OK.value());
         assertEquals(response.getBody().getStatus(), HttpStatus.OK);
         assertEquals(response.getBody().getMessage(), EVENT_UPDATED_SUCCESSFULLY);
-        assertNotNull(eventManagementServiceImpl.updateEvent(VALID_EVENT_UPDATE_REQUEST));
-        verify(eventManagementServiceImpl, times(2)).updateEvent(VALID_EVENT_UPDATE_REQUEST);
+        assertNotNull(eventManagementService.updateEvent(VALID_EVENT_UPDATE_REQUEST));
+        verify(eventManagementService, times(2)).updateEvent(VALID_EVENT_UPDATE_REQUEST);
     }
 
     @Test
     public void test_updateEvent_throw_null_request_parameters() {
         BadRequestException exception = assertThrows(BadRequestException.class,
-                () -> eventManagementServiceImpl.updateEvent(null));
+                () -> eventManagementService.updateEvent(null));
         assertEquals(INVALID_REQUEST_PARAMETERS, exception.getMessage());
     }
 
@@ -96,7 +96,7 @@ public class EventManagementServiceTest {
     public void test_updateEvent_throw_event_id_not_found() {
         when(eventRepository.findById(anyLong())).thenReturn(Optional.empty());
         RecordNotFoundException exception = assertThrows(RecordNotFoundException.class,
-                () -> eventManagementServiceImpl.updateEvent(VALID_EVENT_UPDATE_REQUEST));
+                () -> eventManagementService.updateEvent(VALID_EVENT_UPDATE_REQUEST));
         assertEquals(NO_EVENT_FOUND_WITH_ID, exception.getMessage());
     }
 }

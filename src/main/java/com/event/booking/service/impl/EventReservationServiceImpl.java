@@ -41,7 +41,6 @@ public class EventReservationServiceImpl implements EventReservationService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final UserEventRepository userEventRepository;
-    //private final EmailNotificationService notificationService;
     private final MessageProducer messageProducer;
     private final JwtUtils jwtUtils;
 
@@ -108,7 +107,6 @@ public class EventReservationServiceImpl implements EventReservationService {
         UserEvent userEvent = buildNewUserEventModel(ticketRequest, users, event);
         ReservationResponseDTO reservationResponseDTO = Mapper.mapUserEventToReservationResponseDTO(userEvent);
         messageProducer.sendMessage(EMAIL_TICKET_RESERVATION, reservationResponseDTO);
-        //notificationService.sendTicketReservationEmail(reservationResponseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ApiResponse<>(true,
                         HttpStatus.CREATED.value(),
