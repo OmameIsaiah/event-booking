@@ -47,6 +47,7 @@ public class AppMessages {
     public static final String NEGATIVE_AVAILABLE_ATTENDEES_COUNT = "Oops! Available attendees count cannot be negative, please check.";
     public static final String NEGATIVE_ATTENDEES_COUNT = "Oops! Attendees count cannot be negative, please check.";
     public static final String INVALID_REQUEST_PARAMETERS = "Oops! Your request parameters is either incomplete or invalid, please check.";
+    public static final String PASSED_EVENT_DATE = "Oops! The event date your entered is in the past, please check.";
     public static final String INVALID_TICKET_REQUEST_PARAMETERS = "Oops! Your ticket request parameters is either incomplete or invalid, please check.";
     public static final String INVALID_ACCESS_TOKEN = "Oops! Invalid access token, please check.";
     public static final String ACCOUNT_NOT_VERIFIED = "Oops! Your account is not verified. Kindly check for the OTP sent to your registered email or resent a new one to verify your account";

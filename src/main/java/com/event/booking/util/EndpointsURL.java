@@ -40,8 +40,8 @@ public class EndpointsURL {
     public static final String SEARCH_EVENTS_NAME = "/search/name";
     public static final String SEARCH_EVENTS_DATE_RANGE = "/search/date-range";
     public static final String RESERVE_TICKET = "/{eventId}/tickets";
-    public static final String VIEW_MY_RESERVATIONS = "/reservations";
-    public static final String DELETE_MY_RESERVATIONS = "/reservations/{reservationNo}";
+    public static final String VIEW_MY_RESERVATIONS = "/my-reservations";
+    public static final String DELETE_MY_RESERVATIONS = "/reservation/{reservationNo}/cancel";
 
     public static final String ROLES_BASE_URL = "/api/v1/roles";
     public static final String VIEW_PERMISSIONS = "/permissions";

@@ -64,6 +64,9 @@ public class EventManagementServiceImpl implements EventManagementService {
         if (Objects.isNull(event)) {
             throw new BadRequestException(INVALID_REQUEST_PARAMETERS);
         }
+        /*if (Utils.convertDateStringToLocalDateTime(event.getEventDate()).isBefore(LocalDateTime.now())) {
+            throw new BadRequestException(PASSED_EVENT_DATE);
+        }*/
         Optional<Event> optional = eventRepository.findEventByName(event.getName());
         if (optional.isPresent()) {
             throw new DuplicateRecordException(EVENT_ALREADY_TAKEN);

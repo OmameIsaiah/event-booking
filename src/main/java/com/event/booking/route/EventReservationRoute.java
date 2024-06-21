@@ -79,7 +79,7 @@ public class EventReservationRoute {
     }
 
     @DeleteMapping(value = DELETE_MY_RESERVATIONS, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation("Endpoint for deleting a reservation")
+    @ApiOperation("Endpoint for deleting or cancelling a reservation")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ApiResponse> deleteMyEventReservation(@PathVariable("reservationNo") String reservationNo,
                                                                 HttpServletRequest httpServletRequest) {

@@ -19,7 +19,7 @@ spring:
       settings.trace: false
       settings.web-allow-others: false
   datasource:
-    url: jdbc:h2:mem:event_booking_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:event_booking_store;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password: password
     driverClassName: org.h2.Driver
@@ -31,8 +31,7 @@ spring:
     validateOnMigrate: false
     enabled: true
     locations: classpath:db/migration/h2
-    schemas: event_booking_db
-    url: jdbc:h2:file:/data/event_booking_db
+    url: jdbc:h2:mem:event_booking_store;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     user: sa
     password: password
     depends-on: entityManagerFactory
@@ -40,7 +39,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: false
     hibernate:
-      ddl-auto: create #none, create, create-drop, update
+      ddl-auto: none #none, create, create-drop, update
       show-sql: 'true'
     properties:
       hibernate:

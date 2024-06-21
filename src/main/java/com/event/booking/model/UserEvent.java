@@ -19,16 +19,16 @@ import static com.event.booking.util.AppMessages.*;
 @Setter
 @Getter
 public class UserEvent extends BaseEntity {
-    @Column(name = "\"attendees_count\"")
+    @Column(name = "attendees_count")
     @Min(value = 1, message = MIN_ATTENDEES_COUNT_EXCEEDED)
     @Positive(message = NEGATIVE_ATTENDEES_COUNT)
     @NotNull(message = NULL_ATTENDEES_COUNT)
     private Integer attendeesCount;
-    @JoinColumn(name = "\"eventid\"", referencedColumnName = "\"id\"")
+    @JoinColumn(name = "eventid", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore
     private Event eventid;
-    @JoinColumn(name = "\"userevent\"", referencedColumnName = "\"id\"")
+    @JoinColumn(name = "userevent", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore
     private UsersTable userevent;

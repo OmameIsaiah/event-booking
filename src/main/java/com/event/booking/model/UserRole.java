@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class UserRole extends BaseEntity {
-    @JoinColumn(name = "\"roleid\"", referencedColumnName = "\"id\"")
+    @JoinColumn(name = "roleid", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore
     private Role roleid;
-    @JoinColumn(name = "\"userrole\"", referencedColumnName = "\"id\"")
+    @JoinColumn(name = "userrole", referencedColumnName = "id")
     @ManyToOne
     @JsonIgnore
     private UsersTable userrole;

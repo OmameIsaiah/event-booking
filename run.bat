@@ -1,11 +1,5 @@
 
 @echo off
-SET DEVELOPMENT_HOME=C:\MusalaSoft\Projects
-
-cd %DEVELOPMENT_HOME%\event-booking\
-
-REM Create the docker network for the application
-call docker network rm event_b_network
 
 REM Create the docker network for the application
 call docker network create --driver bridge event_b_network
