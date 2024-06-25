@@ -52,7 +52,7 @@ As you examine the API, be sure to make recommendation or report any issue to th
     
 
 ## General Information
-This API captures the basic functionalities of and event booking system including the following:
+This API captures the basic functionalities of an event booking system including the following:
 * Account creation.
 * Account verification via OTP.
 * Sign in and authorization.
@@ -228,6 +228,7 @@ After successful login/authentication, a bearer token is generated, copy the tok
 
 ![Event Management Logo](src/main/resources/images/eventmanagement.png)
 
+> ⚠️ Kindly note that when creating a new event, the event date is in the format: 2024-06-30 10:30:00
 
 ### Event Reservation Route
 

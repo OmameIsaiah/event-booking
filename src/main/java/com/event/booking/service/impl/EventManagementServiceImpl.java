@@ -200,7 +200,9 @@ public class EventManagementServiceImpl implements EventManagementService {
                     continue;
                 }
                 if (Utils.checkIfTimeIsExactly1HourToEventTime(event.getEventDate())) {
+                    log.info("Sending event reminder email 1 hour to the event...");
                     for (UserEvent userEvent : event.getUserEvents()) {
+                        log.info("Event reminder sent to: {} ....", userEvent.getUserevent().getName());
                         messageProducer.sendMessage(EMAIL_EVENT_REMINDER, Mapper.mapUserEventToReservationResponseDTO(userEvent));
                     }
                 }

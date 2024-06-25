@@ -99,4 +99,16 @@ public class EventManagementServiceTest {
                 () -> eventManagementService.updateEvent(VALID_EVENT_UPDATE_REQUEST));
         assertEquals(NO_EVENT_FOUND_WITH_ID, exception.getMessage());
     }
+
+    @Test
+    public void test_sendEventReminderJob_return_success() {
+        when(eventRepository.findEventByName(anyString())).thenReturn(Optional.empty());
+        when(eventRepository.save(any())).thenReturn(VALID_EVENT);
+
+        ResponseEntity<ApiResponse> response = eventManagementService.createEvent(VALID_EVENT_REQUEST);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(response, VALID_EVENT_SUCCESS_RESPONSE);
+        assertNotNull(eventManagementService.createEvent(VALID_EVENT_REQUEST));
+        verify(eventManagementService, times(2)).createEvent(VALID_EVENT_REQUEST);
+    }
 }

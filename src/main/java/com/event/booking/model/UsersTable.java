@@ -53,7 +53,7 @@ public class UsersTable extends BaseEntity implements Serializable {
     private String otpExpireTime;
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userrole")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userrole")
     private List<UserRole> userRoles;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userevent")
