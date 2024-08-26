@@ -6,14 +6,18 @@ spec:
   selector:
     matchLabels:
       app: event-booking-app
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
         app: event-booking-app
     spec:
+      hostNetwork: true
       containers:
         - name: event-booking-container
           image: omameazy/event-booking-img-v1
           ports:
             - containerPort: 8086
+          #env:
+          #  - name: KAFKA_BROKER
+          #    value: event-booking-kafka-connection.default.svc.cluster.local:9092
