@@ -62,9 +62,9 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
   mail:
     host: smtp.gmail.com
-    username: omameazy@gmail.com
+    username: <YourEmail>
     port: 465
-    password: lrtciqzoohrtkmuq
+    password: <emailAccessToken>
     properties:
       mail:
         smtp:
@@ -93,7 +93,7 @@ app:
   mail:
     sender:
       name: Event Booking Ltd.
-      email: omameazy@gmail.com
+      email: <YourEmail>
   jwt:
     authorities:
       key: roles
