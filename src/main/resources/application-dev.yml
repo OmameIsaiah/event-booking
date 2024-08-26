@@ -79,7 +79,7 @@ app:
   mail:
     sender:
       name: Event Booking Ltd.
-      email: isaiahomame@gmail.com
+      email: <YourEmail>
   jwt:
     authorities:
       key: roles
