@@ -10,6 +10,7 @@ spec:
       protocol: TCP
       port: 8086
       targetPort: 8086
+      nodePort: 30086
   #type: LoadBalancer
-  #type: NodePort
-  type: ClusterIP
+  type: NodePort
+  #type: ClusterIP
