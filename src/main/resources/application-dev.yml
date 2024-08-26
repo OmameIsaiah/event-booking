@@ -95,7 +95,7 @@ app:
   mail:
     sender:
       name: Event Booking Ltd.
-      email: omameazy@gmail.com
+      email: <yourEmail>
   jwt:
     authorities:
       key: roles
