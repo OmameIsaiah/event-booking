@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #echo "Running integration and unit testing"
 #mvn verify -Pfailsafe
-#
+
 #echo "Building artifact"
 #mvn clean install -DskipTests
 

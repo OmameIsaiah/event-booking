@@ -22,7 +22,7 @@ WORKDIR /app/eventbooking
 COPY --from=build /app/eventbooking/target/event-booking.jar ./event-booking.jar
 
 # Expose the desired port(s)
-EXPOSE 8080
+EXPOSE 8086
 
 # Define the command to run the application
 ENTRYPOINT ["java", "-jar", "event-booking.jar"]

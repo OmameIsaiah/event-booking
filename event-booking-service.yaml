@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-booking-service-001
+spec:
+  selector:
+    app: event-booking-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+  #type: LoadBalancer
+  #type: NodePort
+  type: ClusterIP

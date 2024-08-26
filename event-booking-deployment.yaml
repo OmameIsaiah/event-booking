@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-booking-rocket-001
+spec:
+  selector:
+    matchLabels:
+      app: event-booking-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: event-booking-app
+    spec:
+      containers:
+        - name: event-booking-container
+          image: omameazy/event-booking-img-v1
+          ports:
+            - containerPort: 8086
