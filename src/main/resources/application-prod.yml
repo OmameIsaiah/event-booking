@@ -57,11 +57,9 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
   mail:
     host: smtp.gmail.com
-    username: omameazy@gmail.com
-    #Put in Docker Environment Variable File
+    username: <YourEmail>
     port: 465
-    password: lrtciqzoohrtkmuq
-    #Put in Docker Environment Variable File
+    password: <emailAccessToken>
     properties:
       mail:
         smtp:
@@ -90,7 +88,7 @@ app:
   mail:
     sender:
       name: Event Booking Ltd.
-      email: omameazy@gmail.com
+      email: <YourEmail>
   jwt:
     authorities:
       key: roles
