@@ -15,7 +15,7 @@ spec:
       hostNetwork: true
       containers:
         - name: event-booking-container
-          image: omameazy/event-booking-img-v1
+          image: <ReplaceWithYourRegistryURL>/event-booking-img-v1
           ports:
             - containerPort: 8086
           #env:
