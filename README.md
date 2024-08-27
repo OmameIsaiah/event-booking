@@ -1,8 +1,8 @@
 # Event Booking API
 ![Event Booking API Logo](src/main/resources/images/api.png)
 ## Overview
-The Event Booking API is a comprehensive and robust API built using the Java Spring Boot framework. 
-It facilitates the management and participation in events, providing a seamless experience for both administrators and general users. 
+The Event Booking API is a comprehensive and robust API built using the Java Spring Boot framework.
+It facilitates the management and participation in events, providing a seamless experience for both administrators and general users.
 The API supports various user roles and functionalities, ensuring secure and user-friendly operations.
 
 NB: This API is just a proof of concept, hence, H2 in-memory storage was used.
@@ -49,7 +49,7 @@ As you examine the API, be sure to make recommendation or report any issue to th
     - [Testing](#testing)
     - [Contributor](#contributor)
 
-    
+
 
 ## General Information
 This API captures the basic functionalities of and event booking system including the following:
@@ -112,6 +112,18 @@ In addition, there are two files called run.sh and run.bat that handles the enti
 To run the application:
 * Ensure Docker Desktop is running
 * Ensure you are able to login to Docker environment
+* Replace the email property values with yours. Open the application-dev.yml and application-prod.yml files and update the mail properties
+```
+spring:
+  mail:
+    username: <ReplaceWithYourEmail>
+    password: <ReplaceWithYourEmailAccessToken>
+app:
+  mail:
+    sender:
+      email: <ReplaceWithYourEmail>
+```
+
 * On Terminal/Command prompt, change to the event-booking directory
 ```
 cd event-booking
@@ -225,6 +237,8 @@ After successful login/authentication, a bearer token is generated, copy the tok
 | Endpoint for viewing all events reservations                                        | GET    | /api/v1/events/all/reservations        | 
 | Endpoint for filtering event reservations by category                               | GET    | /api/v1/events/all/reservations/filter | 
 | Endpoint for sending event reminder to all users that reserve a ticket for an event | POST   | /api/v1/events/send-reminder           | 
+
+> ⚠️ Note: When creating or updating an event, eventDate is in the format: YYYY-MM-dd hh:mm:ss. Eg.: 2024-09-25 10:30:00
 
 ![Event Management Logo](src/main/resources/images/eventmanagement.png)
 
