@@ -10,6 +10,7 @@ import com.event.booking.security.user.JwtTokenService;
 import com.event.booking.service.AuthenticationService;
 import com.event.booking.util.AppMessages;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import static com.event.booking.util.ConfigParams.TOKEN_PREFIX;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserRepository userRepository;
     private final JwtTokenService jwtTokenService;
@@ -45,6 +47,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         HashMap<String, String> data = new HashMap<>();
         data.put("authorizationToken", TOKEN_PREFIX + " " + jwt);
         data.put("type", TOKEN_PREFIX);
+        log.info("SIGN IN SUCCESSFULLY FOR: {}", credentials.getEmail());
         return new ResponseEntity<>(
                 new ApiResponse(true, HttpStatus.OK.value(), HttpStatus.OK,
                         AUTHORIZATION_PROCESSED_SUCCESSFULLY,

@@ -21,6 +21,7 @@ import com.event.booking.repository.UserRoleRepository;
 import com.event.booking.service.SignUpService;
 import com.event.booking.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +35,7 @@ import static com.event.booking.util.Utils.EMAIL_SIGNUP_OTP;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SignUpServiceImpl implements SignUpService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -54,6 +56,7 @@ public class SignUpServiceImpl implements SignUpService {
         UsersTable users = buildNewUserModel(request, otpAndTime);
         assignRolesToNewUser(users);
         sendSignupOTP(users, otpAndTime);
+        log.info("USER CREATED SUCCESSFULLY: {}", request.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new ApiResponse<>(true,
                         HttpStatus.CREATED.value(),
@@ -156,6 +159,7 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     private void sendSignupOTP(UsersTable users, String[] otpAndTime) {
+        log.info("OTP CODE '{}' SENT TO : {}", otpAndTime[0], users.getEmail());
         messageProducer.sendMessage(EMAIL_SIGNUP_OTP,
                 OTPNotificationRequest
                         .builder()
@@ -177,6 +181,7 @@ public class SignUpServiceImpl implements SignUpService {
                             ACCOUNT_ALREADY_ACTIVATED));
         }
         verifyAndActivateUserAccount(request, users);
+        log.info("OTP CODE VERIFIED SUCCESSFULLY FOR: {}", users.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),
