@@ -1,0 +1,38 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: event-booking-hpa-v1
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: event-booking-rocket-001
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+
+#    - type: Pods
+#      pods:
+#        metric:
+#          name: event_booking_requests_per_second
+#        target:
+#          type: AverageValue
+#          averageValue: 2
+
+#X = N * (c/t)
+#Where X is the desired number of replicas, N is the current number of replicas, c is the current value of the metric, and t is the target value.
+#If the target value is 10 req/sec and the current value is 20 req/sec, the Horizontal Pod Autoscaler will scale the app up (i.e. increasing the number of replicas) to make the metric decrease and get closer to the target value.
+#If the target value is 10 req/sec and the current value is 2 req/sec, the Horizontal Pod Autoscaler will scale the app down (i.e. decreasing the number of replicas) to make the metric increase and get closer to the target value.
+
+
+#kubectl apply -f event-booking-deployment.yaml
+#kubectl apply -f event-booking-service.yaml
+#kubectl apply -f event-booking-hpa-v1.yaml
+#kubectl get hpa
+#kubectl get hpa event-booking-hpa-v1

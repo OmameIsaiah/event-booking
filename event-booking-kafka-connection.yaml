@@ -4,7 +4,7 @@ metadata:
   name: event-booking-kafka-connection
 spec:
   type: ExternalName
-  externalName: 172.26.0.3  # Replace with the actual DNS or IP of Kafka
+  externalName: 172.26.0.3  # Replace with the actual DNS/container name or IP of Kafka
 
 #Command to find the Kafka container Ip Address
 #docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' kafka

@@ -14,6 +14,7 @@ import com.event.booking.security.user.JwtTokenService;
 import com.event.booking.service.SignInService;
 import com.event.booking.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ import static com.event.booking.util.AppMessages.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SignInServiceImpl implements SignInService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -41,6 +43,7 @@ public class SignInServiceImpl implements SignInService {
         UsersTable users = validateSignInParamAndPassword(credentials);
         UserData userData = getUserData(users);
         JwtResponse jwtResponse = jwtTokenService.getAccessToken(credentials.getEmail(), credentials.getPassword());
+        log.info("SIGN IN SUCCESSFULLY FOR: {}", credentials.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse<>(true,
                         HttpStatus.OK.value(),

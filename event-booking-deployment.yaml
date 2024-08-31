@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: event-booking-app
-  replicas: 2
+  replicas: 10
   template:
     metadata:
       labels:
@@ -15,7 +15,7 @@ spec:
       hostNetwork: true
       containers:
         - name: event-booking-container
-          image: <ReplaceWithYourRegistryURL>/event-booking-img-v1
+          image: omameazy/event-booking-img-v1
           ports:
             - containerPort: 8086
           #env:

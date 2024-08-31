@@ -1,0 +1,23 @@
+apiVersion: http.keda.sh/v1alpha1
+kind: HTTPScaledObject
+metadata:
+  name: event-booking-hpa-v2
+spec:
+  host: example.com
+  targetPendingRequests: 100
+  scaleTargetRef:
+    deployment: event-booking-rocket-001
+    service: event-booking-service-001
+    port: 8086
+  replicas:
+    min: 0
+    max: 20
+
+
+#kubectl apply -f event-booking-deployment.yaml
+#kubectl apply -f event-booking-service.yaml
+#kubectl apply -f event-booking-hpa-v2.yaml
+#kubectl get hpa event-booking-hpa-v2
+
+#error: resource mapping not found for name: "event-booking-hpa-v2" namespace: "" from ".\\event-booking-hpa-v2.yaml": no matches for kind "HTTPScaledObject" in version "http.keda.sh/v1alpha1"
+#ensure CRDs are installed first
