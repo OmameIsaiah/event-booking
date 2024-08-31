@@ -56,7 +56,7 @@ public class UsersTable extends BaseEntity implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userrole")
     private List<UserRole> userRoles;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "userevent")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userevent")
     private List<UserEvent> userEvents;
 
     @Override
