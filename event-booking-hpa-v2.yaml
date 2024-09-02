@@ -1,17 +1,44 @@
-apiVersion: http.keda.sh/v1alpha1
 kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
 metadata:
   name: event-booking-hpa-v2
+  namespace: default
+  labels:
+    deploymentName: event-booking-rocket-001
 spec:
-  host: example.com
-  targetPendingRequests: 100
+  hosts:
+    - localhost
+  pathPrefixes:
+    - /event-booking
+  targetPendingRequests: 20
   scaleTargetRef:
-    deployment: event-booking-rocket-001
+    name: event-booking-rocket-001
+    kind: Deployment
+    apiVersion: apps/v1
     service: event-booking-service-001
     port: 8086
   replicas:
-    min: 0
-    max: 20
+    min: 1
+    max: 10
+
+
+#FIRST, Install KEDA CRDs: Ensure that the KEDA CRDs are installed in your cluster. You can do this by running the following command:
+#kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.10.0/keda-2.10.0.yaml
+#kubectl apply -f https://raw.githubusercontent.com/kedacore/http-add-on/main/config/crd/bases/http.keda.sh_httpscaledobjects.yaml
+#kubectl get crds
+#kubectl get crd httpscaledobjects.http.keda.sh
+#kubectl apply -f .\event-booking-hpa-v2.yaml
+#kubectl describe httpscaledobject event-booking-hpa-v2
+#kubectl get deployment event-booking-rocket-001
+#kubectl describe deployment event-booking-rocket-001
+
+#Monitoring Scaling:
+#kubectl get deployment event-booking-rocket-001 -w
+
+
+#Check the KEDA Operator Logs:
+#To get insights into what KEDA is doing, you can check the logs of the KEDA operator:
+#kubectl logs -l app=keda-operator -n keda
 
 
 #kubectl apply -f event-booking-deployment.yaml
@@ -19,5 +46,49 @@ spec:
 #kubectl apply -f event-booking-hpa-v2.yaml
 #kubectl get hpa event-booking-hpa-v2
 
-#error: resource mapping not found for name: "event-booking-hpa-v2" namespace: "" from ".\\event-booking-hpa-v2.yaml": no matches for kind "HTTPScaledObject" in version "http.keda.sh/v1alpha1"
-#ensure CRDs are installed first
+#Steps to Check Scaled Apps
+#kubectl get httpscaledobjects -A
+#kubectl describe httpscaledobject event-booking-hpa-v2 -n default
+#kubectl delete httpscaledobjects event-booking-hpa-v2
+
+
+
+#Send Test HTTP Requests:
+#Basic curl Command for a Single Request:
+
+#curl -X POST http://localhost:30086/event-booking/api/v1/auth \
+#-H "Content-Type: application/json" \
+#-d '{"email": "omameazy@gmail.com", "password": "1234567890"}'
+
+
+#Simulate Multiple Requests Using a Loop:
+#for i in {1..100}
+#do
+#  curl -X POST http://localhost:30086/event-booking/api/v1/auth \
+#  -H "Content-Type: application/json" \
+#  -d '{"email": "omameazy@gmail.com", "password": "1234567890"}'
+#done
+
+
+#Simulate Traffic with Parallel Requests:
+
+#for i in {1..100}
+#  do
+#  curl -X POST http://localhost:30086/event-booking/api/v1/auth \
+#  -H "Content-Type: application/json" \
+#  -d '{"email": "omameazy@gmail.com", "password": "1234567890"}' &
+#done
+
+
+#Use a Tool Like Apache Benchmark or hey for Load Testing:
+#Installing apache benchmark using Chocolatey:
+#choco install apache-httpd
+#The install of apache-httpd was successful.  Software installed to 'C:\Users\USER\AppData\Roaming'
+#Then add it to Path in System's environmental variables: C:\Users\USER\AppData\Roaming\Apache24\bin
+
+#ab -n 3000 -c 1000 -p data.json -T 'application/json' http://localhost:30086/event-booking/api/v1/auth
+
+
+
+
+

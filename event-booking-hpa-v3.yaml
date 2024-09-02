@@ -1,0 +1,38 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: event-booking-hpa-v3
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: event-booking-rocket-001
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 50
+    - type: External
+      external:
+        metric:
+          name: queue_length_metric
+        target:
+          type: AverageValue
+          averageValue: 50
+
+#kubectl apply -f event-booking-deployment.yaml
+#kubectl apply -f event-booking-service.yaml
+#kubectl apply -f event-booking-hpa-v1.yaml
+#kubectl delete -f event-booking-hpa-v1.yaml
+#kubectl get hpa
+#kubectl get hpa event-booking-hpa-v1

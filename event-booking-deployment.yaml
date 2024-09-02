@@ -6,18 +6,24 @@ spec:
   selector:
     matchLabels:
       app: event-booking-app
-  replicas: 10
+  #replicas: 10
   template:
     metadata:
       labels:
         app: event-booking-app
     spec:
-      hostNetwork: true
+      hostNetwork: true #Might prevent replicas from starting
       containers:
         - name: event-booking-container
           image: omameazy/event-booking-img-v1
           ports:
             - containerPort: 8086
+          resources:
+            requests:
+              cpu: "100m"  # Minimum CPU request. 100m means 0.1 core
+            limits:
+              cpu: "500m"  # Maximum CPU limit
           #env:
           #  - name: KAFKA_BROKER
           #    value: event-booking-kafka-connection.default.svc.cluster.local:9092
+      restartPolicy: Always #OnFailure#Never

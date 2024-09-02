@@ -34,5 +34,18 @@ spec:
 #kubectl apply -f event-booking-deployment.yaml
 #kubectl apply -f event-booking-service.yaml
 #kubectl apply -f event-booking-hpa-v1.yaml
+#kubectl delete -f event-booking-hpa-v1.yaml
 #kubectl get hpa
 #kubectl get hpa event-booking-hpa-v1
+
+
+#Ensure Metrics Server is Running:
+#The HPA relies on the Kubernetes Metrics Server to retrieve CPU metrics. Ensure that the Metrics Server is installed and running:
+
+#kubectl get deployment metrics-server -n kube-system
+#kubectl get pods -n kube-system
+#kubectl logs <metrics-server-5c4bc9cf56-kzzwd>  -n kube-system
+
+#If the Metrics Server is not installed, you can install it using
+#kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+

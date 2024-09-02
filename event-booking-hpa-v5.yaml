@@ -1,0 +1,29 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: event-booking-hpa-v5
+  namespace: default
+  labels:
+    deploymentName: event-booking-rocket-001
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: event-booking-rocket-001
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+    - type: http
+      metadata:
+        scalerAddress: "http://event-booking-service-001.default.svc.cluster.local"
+        method: "POST"
+        path: "/event-booking/api/v1/auth"
+        targetPendingRequests: "100"
+        host: "localhost"
+
+
+#kubectl apply -f event-booking-deployment.yaml
+#kubectl apply -f event-booking-service.yaml
+#kubectl apply -f event-booking-hpa-v1.yaml
+#kubectl delete -f event-booking-hpa-v5.yaml
+#kubectl get hpa
+#kubectl get hpa event-booking-hpa-v5
