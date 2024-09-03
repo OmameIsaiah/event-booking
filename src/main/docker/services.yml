@@ -40,7 +40,7 @@ services:
   event_booking_mysql:
     image: mysql:latest
     restart: always
-    container_name: event_b_container
+    container_name: event_booking_mysql
     volumes:
       #- mysql_event_booking_data:/var/lib/mysql
       - ./config/mysql:/etc/mysql/conf.d
