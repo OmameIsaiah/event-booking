@@ -12,40 +12,45 @@ spring:
       group-id: event-booking-group-id
     producer:
       bootstrap-servers: http://${server.host}:19092
-  h2:
-    console.enabled: true
-    console:
-      path: /h2-console
-      enabled: true
-      settings:
-        trace: false
-        web-allow-others: true
   datasource:
-    url: jdbc:h2:mem:event_booking_store;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-    initialize: true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${server.host}:5505/event_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://event_mysql:5505/event_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    username: root
+    password: bookingE_2024
+    jmx:
+      default-domain: event-booking
     jpa:
-      database-platform: org.hibernate.dialect.H2Dialect
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+  liquibase:
+    contexts: dev
+    url: jdbc:mysql://${server.host}:5505/event_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://event_mysql:5505/event_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    user: root
+    password: bookingE_2024
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    enabled: true
+    dropFirst: false
+
   flyway:
     baselineOnMigrate: true
     validateOnMigrate: false
     enabled: true
-    locations: classpath:db/migration/h2
-    url: jdbc:h2:mem:event_booking_store;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    user: sa
-    password: password
+    locations: classpath:db/migration/mysql
+    url: jdbc:mysql://${server.host}:5505/event_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:mysql://event_mysql:5505/event_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    user: root
+    password: bookingE_2024
     depends-on: entityManagerFactory
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     defer-datasource-initialization: false
     hibernate:
       ddl-auto: none #none, create, create-drop, update
       show-sql: 'true'
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
         id:
           new_generator_mappings: false
@@ -64,9 +69,9 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
   mail:
     host: smtp.gmail.com
-    username: <YourEmail>
+    username: <Email>
     port: 465
-    password: <emailAccessToken>
+    password: <EmailAccessToken>
     properties:
       mail:
         smtp:
@@ -95,7 +100,7 @@ app:
   mail:
     sender:
       name: Event Booking Ltd.
-      email: <YourEmail>
+      email: <Email>
   jwt:
     authorities:
       key: roles

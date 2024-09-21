@@ -1,11 +1,11 @@
 
 @echo off
 
-REM Create the docker network for the application
-call docker network create --driver bridge event_b_network
-
 REM Shutdown or stop any previous kafka server that is running
 call docker-compose -f src/main/docker/services.yml down
+
+REM Create the docker network for the application
+call docker network create --driver bridge event_b_network
 
 REM Build the docker container for kafka server that is running
 call docker-compose -f src/main/docker/services.yml up -d --build

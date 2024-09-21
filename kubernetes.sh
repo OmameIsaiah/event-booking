@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-echo "Create the docker network for the application"
-docker network create --driver bridge event_b_network
-
 echo "Shutdown or stop any previous kafka server that is running"
 docker-compose -f src/main/docker/services.yml down
+
+echo "Create the docker network for the application"
+docker network create --driver bridge event_b_network
 
 echo "Build the docker container for kafka server that is running"
 docker-compose -f src/main/docker/services.yml up -d --build

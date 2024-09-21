@@ -37,10 +37,10 @@ services:
       event_b_network:
         ipv4_address: 173.23.1.2
 
-  event_booking_mysql:
+  event_mysql:
     image: mysql:latest
     restart: always
-    container_name: event_booking_mysql
+    container_name: event_b_mysql
     volumes:
       #- mysql_event_booking_data:/var/lib/mysql
       - ./config/mysql:/etc/mysql/conf.d
@@ -48,7 +48,7 @@ services:
       MYSQL_ROOT_PASSWORD: "bookingE_2024"
       MYSQL_USER: 'docker'
       MYSQL_PASSWORD: "bookingE_2024"
-      MYSQL_DATABASE: 'eb_container'
+      MYSQL_DATABASE: 'event_db'
     command: >
       --max-connections=10000 --bind-address=0.0.0.0
 
