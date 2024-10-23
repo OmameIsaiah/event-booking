@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="Isaiah Omame" id="insert_roles_1">
+        <sql>
+            <![CDATA[
+
+               INSERT INTO roles (date_created, last_modified, uuid, description, name, permissions)
+               VALUES
+                    (TIMESTAMP '2024-06-05 10:30:10', TIMESTAMP '2024-06-05 10:30:10', '18b56dc6-9813-440a-8c82-baf2eb10f264', 'Role for administrators', 'ROLE_ADMIN',
+                    '["CAN_VIEW_EVENTS", "CAN_SEARCH_EVENTS", "CAN_RESERVE_EVENT_TICKET", "CAN_CREATE_EVENT", "CAN_UPDATE_EVENT", "CAN_DELETE_EVENT", "CAN_VIEW_ALL_RESERVATIONS", "CAN_SEND_EVENT_NOTIFICATION", "CAN_VIEW_USERS", "CAN_DELETE_USERS", "CAN_ADD_ROLE", "CAN_UPDATE_ROLE", "CAN_DELETE_ROLE"]')
+                ON CONFLICT (name) DO NOTHING;  -- This handles uniqueness like INSERT IGNORE
+
+                INSERT INTO roles (date_created, last_modified, uuid, description, name, permissions)
+                VALUES
+                    (TIMESTAMP '2024-06-05 10:30:10', TIMESTAMP '2024-06-05 10:30:10', 'cae15553-1148-49c1-8e9d-f3dea70fb4d1', 'Role for users', 'ROLE_USER',
+                    '["CAN_VIEW_EVENTS", "CAN_SEARCH_EVENTS", "CAN_RESERVE_EVENT_TICKET"]')
+                ON CONFLICT (name) DO NOTHING;  -- This handles uniqueness like INSERT IGNORE
+
+            ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+
+    <changeSet author="Isaiah Omame" id="create_tables_1">
+        <sql>
+            <![CDATA[
+                CREATE TABLE IF NOT EXISTS users_table (
+                    id BIGSERIAL PRIMARY KEY,
+                    date_created TIMESTAMP(6) DEFAULT NULL,
+                    last_modified TIMESTAMP(6) DEFAULT NULL,
+                    uuid VARCHAR(255) DEFAULT NULL,
+                    email VARCHAR(255) NOT NULL UNIQUE,
+                    is_online BOOLEAN DEFAULT NULL,
+                    last_login TIMESTAMP(6) DEFAULT NULL,
+                    name VARCHAR(100) DEFAULT NULL,
+                    onboarding_stage VARCHAR(255) DEFAULT NULL,
+                    otp_code VARCHAR(255) DEFAULT NULL,
+                    otp_expire_time VARCHAR(255) DEFAULT NULL,
+                    password VARCHAR(255) DEFAULT NULL,
+                    user_token VARCHAR(255) DEFAULT NULL,
+                    user_type VARCHAR(255) DEFAULT NULL,
+                    verified BOOLEAN DEFAULT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS roles (
+                    id BIGSERIAL PRIMARY KEY,
+                    date_created TIMESTAMP(6) DEFAULT NULL,
+                    last_modified TIMESTAMP(6) DEFAULT NULL,
+                    uuid VARCHAR(255) DEFAULT NULL,
+                    description TEXT,
+                    name VARCHAR(255) UNIQUE DEFAULT NULL,
+                    permissions TEXT DEFAULT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS user_role (
+                    id BIGSERIAL PRIMARY KEY,
+                    date_created TIMESTAMP(6) DEFAULT NULL,
+                    last_modified TIMESTAMP(6) DEFAULT NULL,
+                    uuid VARCHAR(255) DEFAULT NULL,
+                    roleid BIGINT DEFAULT NULL,
+                    userrole BIGINT DEFAULT NULL,
+                    FOREIGN KEY (userrole) REFERENCES users_table (id),
+                    FOREIGN KEY (roleid) REFERENCES roles (id)
+                );
+
+                CREATE TABLE IF NOT EXISTS event (
+                    id BIGSERIAL PRIMARY KEY,
+                    date_created TIMESTAMP(6) DEFAULT NULL,
+                    last_modified TIMESTAMP(6) DEFAULT NULL,
+                    uuid VARCHAR(255) DEFAULT NULL,
+                    available_attendees_count INT NOT NULL,
+                    category VARCHAR(255) DEFAULT NULL,
+                    description TEXT,
+                    event_date TIMESTAMP(6) DEFAULT NULL,
+                    name VARCHAR(100) NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS user_event (
+                    id BIGSERIAL PRIMARY KEY,
+                    date_created TIMESTAMP(6) DEFAULT NULL,
+                    last_modified TIMESTAMP(6) DEFAULT NULL,
+                    uuid VARCHAR(255) DEFAULT NULL,
+                    attendees_count INT NOT NULL,
+                    eventid BIGINT DEFAULT NULL,
+                    userevent BIGINT DEFAULT NULL,
+                    FOREIGN KEY (eventid) REFERENCES event (id),
+                    FOREIGN KEY (userevent) REFERENCES users_table (id)
+                );
+
+             
+            ]]>
+        </sql>
+    </changeSet>
+</databaseChangeLog>

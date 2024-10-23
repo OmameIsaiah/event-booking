@@ -1,4 +1,5 @@
 spring:
   profiles:
-    active: dev
+    active: postgres
+    #active: dev
     #active: prod
