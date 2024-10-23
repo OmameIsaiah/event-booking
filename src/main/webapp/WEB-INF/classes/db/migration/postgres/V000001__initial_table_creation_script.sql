@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS roles (
     date_created TIMESTAMP(6) DEFAULT NULL,
     last_modified TIMESTAMP(6) DEFAULT NULL,
     uuid VARCHAR(255) DEFAULT NULL,
-    description VARCHAR(255) DEFAULT NULL,
+    description TEXT,
     name VARCHAR(255) UNIQUE DEFAULT NULL,
     permissions TEXT DEFAULT NULL
 );

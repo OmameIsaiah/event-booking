@@ -14,7 +14,8 @@ spring:
       bootstrap-servers: http://${server.host}:19092
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${server.host}:5459/event_db
+    #url: jdbc:postgresql://${server.host}:5459/event_db
+    url: jdbc:postgresql://${server.host}:5459/event_container
     username: postgres #postgresu
     password: david_ISAIAH_1234#$ #postgres*LpW24
     jmx:
@@ -23,7 +24,8 @@ spring:
       database-platform: org.hibernate.dialect.PostgreSQLDialect
   liquibase:
     contexts: dev
-    url: jdbc:postgresql://${server.host}:5459/event_db
+    #url: jdbc:postgresql://${server.host}:5459/event_db
+    url: jdbc:postgresql://${server.host}:5459/event_container
     user: postgres #postgresu
     password: david_ISAIAH_1234#$ #postgres*LpW24
     change-log: classpath:/db/changelog/postgresdb.changelog-master.xml
@@ -36,8 +38,8 @@ spring:
     enabled: true
     #locations: classpath:db/migration/mysql
     locations: classpath:db/migration/postgres
-    url: jdbc:postgresql://${server.host}:5459/event_db
-    #url: jdbc:mysql://event_mysql:5505/event_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true&useSSL=false&noAccessToProcedureBodies=true
+    #url: jdbc:postgresql://${server.host}:5459/event_db
+    url: jdbc:postgresql://${server.host}:5459/event_container
     user: postgres #postgresu
     password: david_ISAIAH_1234#$ #postgres*LpW24
     depends-on: entityManagerFactory
